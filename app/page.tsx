@@ -23,9 +23,21 @@ import { Image } from 'primereact/image';
 import { Carousel } from 'primereact/carousel';
 import { Paginator } from 'primereact/paginator';
 import { Tag } from 'primereact/tag';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation'
+import  Menu  from '../components/menu'
 
 
 export default function Home() {
+
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push('/admin');
+  };
+
+
+
   const [date, setDate] = useState(null);
 
   const prefix_api = 'http://localhost:3000/coins/download/';
@@ -49,8 +61,9 @@ export default function Home() {
   const items = [
     { label: 'Home', icon: 'pi pi-fw pi-home' },
     { label: 'Coins', icon: 'pi pi-fw pi-bitcoin' },
-    { label: 'Orders', icon: 'pi pi-fw pi-list' },
-    { label: 'About', icon: 'pi pi-fw pi-user' }
+    { label: 'Order', icon: 'pi pi-fw pi-list' },
+    { label: 'About', icon: 'pi pi-fw pi-user' },
+    { label: 'Admin', icon: 'pi pi-fw pi-cog' }
   ];
 
   const [first, setFirst] = useState(0);
@@ -63,11 +76,25 @@ export default function Home() {
 
   return (
     <PrimeReactProvider>
-
-      <div className="card">
-        <TabMenu model={items} activeIndex={activeMenuIndex} onTabChange={(e) => setMenuIndex(e.index)} />
-      </div>
-
+        <Menu />
+      {/* <div className="card">
+        <TabMenu model={items} activeIndex={activeMenuIndex} 
+        onTabChange={(e) => {
+          setMenuIndex(e.index)
+          switch(e.index){
+            case 4: 
+              router.push('/admin');
+              break;
+            case 2: 
+              router.push('/order');
+              break;
+            
+          }
+          console.log(e.index);
+        }
+          
+          } />
+      </div> */}
 
       <ScrollPanel style={{
         width: '100%', height: '790px'
@@ -78,29 +105,28 @@ export default function Home() {
               <ul>
                 {
                   coins.map(
-                    nested => nested.fileinfos.map(element =>
-                      <Splitter style={{ height: '200px' }}>
+                    nested =>
+                     nested.fileinfos.map(element =>
+                      <Splitter style={{ height: '180px' }}>
                         <SplitterPanel className="flex align-items-center justify-content-center" size={25} minSize={10}>
                           <img src={prefix_api + element.filename} width="150" />
                         </SplitterPanel>
 
                         <SplitterPanel className="flex align-items-center justify-content-center" size={75}>
-                          <Card title={nested.Value} style={{ width: '100%', height: '100%' }} header="Detalii">
-                            <div>
-                                {nested.Value} 
-                                ${nested.Price}
-                                {nested.Weight}
-                                {nested.Year}
-                            </div>
-                            <div className="mt-1 flex flex-wrap gap-1 justify-content-center">
-                              <Button icon="pi pi-search" className="p-button p-button-rounded" style={{ fontSize: '0.5rem' }}/>
-                              <Button icon="pi pi-star-fill" className="p-button-success p-button-rounded" style={{ fontSize: '1rem' }}/>
-                            </div>
+                          <Card title= {'Weight: '+nested.Weight} style={{ width: '100%', height: '100%' }} header={nested.Value}>
+                            <span className="flex align-items-center gap-1">
+                                    <i className="pi pi-tag"></i>
+                                    <span className="font-semibold">Year: {nested.Year}</span>
+                                </span>
+                            <div className="flex sm:flex-column align-items-center sm:align-items-end gap-2 sm:gap-1">
+                            <span className="font-semibold">Pret: {nested.Price}</span>
+                            <Button icon="pi pi-shopping-cart" className="p-button-rounded" style={{ height: "5px" }}></Button>
+                           </div>
                           </Card>
 
                         </SplitterPanel>
                       </Splitter>
-                    ))}s
+                    ))}
               </ul>
             )}
           </div>
