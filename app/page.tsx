@@ -8,13 +8,16 @@ import React, { useState, useEffect } from 'react';
 import Menu from '../components/menu'
 import Item from '../components/item'
 import Filters from '../components/filters'
+import Exchange from '../components/exchange'
 
 export default function Home() {
 
   return (
 
     <PrimeReactProvider>
+   
       <Menu />
+      <Exchange />
       <div className="grid">
         <div className="col-12 lg:col-3 px-2 lg:px-5">
         <Filters />
