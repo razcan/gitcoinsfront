@@ -20,7 +20,7 @@ export default function Filters() {
   return (
 
     <PrimeReactProvider>
-          <Panel header="Sterge toate filtrele" style={{paddingTop:15}}>
+          <Panel header="Delete all filters:" style={{paddingTop:15}}>
             <Accordion activeIndex={0} multiple >
               <AccordionTab header="Type">
                 <div className="flex align-items-center">

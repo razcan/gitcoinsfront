@@ -29,7 +29,7 @@ export default function Exchange() {
         <PrimeReactProvider>
 
             {exchangeRate > 0 &&
-                <div style={{ color: 'var(--highlight-text-color)', textAlign: 'right'}  }>
+                <div style={{ color:'blue' , textAlign: 'right'}  }>
                     Curs EUR: {exchangeRate}
                 </div>
             }

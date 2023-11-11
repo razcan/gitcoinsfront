@@ -88,9 +88,9 @@ export default function Item() {
                                         nested =>
 
                                             nested.fileinfos.map(element =>
-                                                <Splitter style={{ height: '180px' }}>
+                                                <Splitter style={{ height: '148.8px' }}>
                                                     <SplitterPanel className="flex align-items-center justify-content-center" size={35} minSize={10}>
-                                                        <img src={prefix_api + element.filename} width="150" onClick={()=> chooseModalItem(prefix_api) }/>
+                                                        <img src={prefix_api + element.filename} width="120" onClick={()=> chooseModalItem(prefix_api) }/>
                                                     </SplitterPanel>
 
                                                     <SplitterPanel className="flex align-items-center justify-content-center" size={65}>
@@ -99,7 +99,7 @@ export default function Item() {
                                                                 <i className="pi pi-tag"></i>
                                                                 <span className="font-semibold">Year: {nested.Year}</span>
                                                             </span>
-                                                            <div className="flex sm:flex-column align-items-center sm:align-items-end gap-2 sm:gap-1">
+                                                            <div className="flex sm:flex-column align-items-center sm:align-items-end gap-1 sm:gap-1">
                                                                 <span className="font-semibold"> {nested.Price} Lei</span>
                                                                 <div>
                                                                     <Button icon="pi pi-shopping-cart" className="p-button-rounded" onClick={() => chooseModalItem(element.filename)}
