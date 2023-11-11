@@ -7,6 +7,7 @@ import 'primeflex/primeflex.css';
 import React, { useState, useEffect } from 'react';
 import { TabMenu } from 'primereact/tabmenu';
 import { useRouter } from 'next/navigation'
+import '../css/style.css';
 
 export default function Menu() {
 
@@ -20,11 +21,10 @@ export default function Menu() {
     { label: 'Admin', icon: 'pi pi-fw pi-cog' }
   ];
  
+ return (
+    <PrimeReactProvider >
 
-  return (
-    <PrimeReactProvider>
-
-      <div className="card">
+      <div className="sticky">
         <TabMenu model={items} activeIndex={activeMenuIndex} 
         onTabChange={(e) => {
           setMenuIndex(e.index)
