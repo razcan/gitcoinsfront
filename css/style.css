@@ -1,5 +1,5 @@
 html {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 body {
@@ -28,3 +28,6 @@ position: sticky;
     background-color: #ffffff; /* Adjust the background color as needed */
   }
   
+  .newspaper {
+    column-count: 3;
+  }

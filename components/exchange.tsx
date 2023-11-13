@@ -15,7 +15,7 @@ export default function Exchange() {
             axios.get('http://localhost:3000/')
                 .then(function (response) {
                     setaExchangeRate(response.data);
-                    console.log(response.data);
+                    // console.log(response.data);
                 })
                 .catch(function (error) {
                     console.log(error);

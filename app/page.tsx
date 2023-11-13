@@ -31,15 +31,10 @@ export default function Home() {
         <div className="col-12 lg:col-3 px-2 lg:px-5">
         <Filters />
         </div>
-        <div className="col-12 lg:col-6 px-2 lg:px-5" style={{height:'80vh'}}>
+        <div className="col-12 lg:col-8 px-2 lg:px-5">
           <Item />
-          <Paginator className="flex align-items-center justify-content-center" style={{paddingTop:'3px', width: '157%',backgroundColor: '#FAFAFA'}}   
-          first={first} rows={rows} totalRecords={120} rowsPerPageOptions={[10, 20, 30]} onPageChange={onPageChange} />
-          {/* <div  className="flex align-items-right justify-content-right">
-            <Paginator first={first} rows={rows} totalRecords={120} rowsPerPageOptions={[10, 20, 30]} onPageChange={onPageChange} />
-        </div> */}
         </div>
-        <div className="col-12 lg:col-3 px-2 lg:px-5">
+        <div className="col-12 lg:col-2 px-2 lg:px-5">
 
         </div>
 

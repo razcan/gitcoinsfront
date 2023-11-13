@@ -14,17 +14,18 @@ import { InputText } from "primereact/inputtext";
 export default function Filters() {
 
   const [value, setValue] = useState([0, 100]);
-  const [type, setType] = useState('');
-  const [continent, setContinent] = useState('');
+  const [type, setType] = useState('Coins');
+  const [continent, setContinent] = useState('Europe');
 
   return (
 
     <PrimeReactProvider>
           <Panel header="Delete all filters:" style={{paddingTop:15}}>
-            <Accordion activeIndex={0} multiple >
+            <Accordion multiple activeIndex={[0,1,2]}  >
               <AccordionTab header="Type">
                 <div className="flex align-items-center">
-                  <RadioButton inputId="Coins" name="Coins" value="Coins" p-radiobutton-icon="pi-folder-open" onChange={(e) => setType(e.value)} checked={type === 'Coins'} />
+                  <RadioButton inputId="Coins" name="Coins" value="Coins" p-radiobutton-icon="pi-folder-open" 
+                  onChange={(e) => setType(e.value)} checked={type === 'Coins'} />
                   <label htmlFor="Coins" className="ml-2">Coins</label>
                 </div>
                 <div className="flex align-items-center">
