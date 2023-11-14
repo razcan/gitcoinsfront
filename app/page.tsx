@@ -9,23 +9,14 @@ import Menu from '../components/menu'
 import Item from '../components/item'
 import Filters from '../components/filters'
 import Exchange from '../components/exchange'
-import { Paginator } from 'primereact/paginator';
 
 export default function Home() {
-
-  const [first, setFirst] = useState(0);
-  const [rows, setRows] = useState(10);
-
-  const onPageChange = (event) => {
-      setFirst(event.first);
-      setRows(event.rows);
-  };
 
   return (
 
     <PrimeReactProvider>
    
-      <Menu />
+   <Menu activatedIndex={0} />
       <Exchange />
       <div className="grid">
         <div className="col-12 lg:col-3 px-2 lg:px-5">

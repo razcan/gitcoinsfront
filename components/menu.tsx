@@ -9,10 +9,9 @@ import { TabMenu } from 'primereact/tabmenu';
 import { useRouter } from 'next/navigation'
 import '../css/style.css';
 
-export default function Menu() {
-
+export default function Menu(props) {
   const router = useRouter();
-  const [activeMenuIndex, setMenuIndex] = useState(0);
+  const [activeMenuIndex, setMenuIndex] = useState(props.activatedIndex);
   const items = [
     { label: 'Home', icon: 'pi pi-fw pi-home' },
     { label: 'Coins', icon: 'pi pi-fw pi-bitcoin' },
@@ -20,23 +19,31 @@ export default function Menu() {
     { label: 'About', icon: 'pi pi-fw pi-user' },
     { label: 'Admin', icon: 'pi pi-fw pi-cog' }
   ];
- 
+
+// setMenuIndex(activeIndex); 
  return (
     <PrimeReactProvider >
 
       <div className="sticky">
         <TabMenu model={items} activeIndex={activeMenuIndex} 
         onTabChange={(e) => {
-          setMenuIndex(e.index)
+          setMenuIndex(activeMenuIndex)
           switch(e.index){
             case 4: 
               router.push('/admin');
+              
+              break;
+            case 3: 
+              router.push('/about');
+             
               break;
             case 2: 
               router.push('/order');
+              
               break;
             case 0: 
               router.push('/');
+              
               break;           
           }
         }
