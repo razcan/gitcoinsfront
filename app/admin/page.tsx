@@ -13,6 +13,7 @@ import countries_all from "../../css/country.json";
 import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
+import { Splitter, SplitterPanel } from 'primereact/splitter';
 
 export default function Admin() {
 
@@ -86,12 +87,12 @@ const coin_composition = [
       <Menu activatedIndex={4} />
 
       {/* <div className="card" style={{width:"30%"}}> */}
-      <div className="align-content-center" style={{width:"30%", padding:"20px"}}>
+      <div  style={{padding:"10px", maxHeight: "100vh"}} className="md:w-28rem">
         
-        <div className="flex flex-wrap gap-3 mb-12">
+        <div className="flex flex-wrap gap-3 mb-4">
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
-              <label htmlFor="catalog">Country</label>
+              {/* <label htmlFor="catalog">Country</label> */}
               <Dropdown value={selectedCountry} onChange={(e) => {
                       setSelectedCountry(e.value);
                       console.log(selectedCountry);
@@ -106,7 +107,7 @@ const coin_composition = [
         <div className="flex flex-wrap gap-3 mb-4">
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
-              <label htmlFor="catalog">Catalog</label>
+              {/* <label htmlFor="catalog">Catalog</label> */}
               <InputText id="catalog"  placeholder="Enter catalog code"/>
             </div>
           </div>
@@ -114,7 +115,7 @@ const coin_composition = [
         <div className="flex flex-wrap gap-3 mb-4">
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
-              <label htmlFor="value">Value</label>
+              {/* <label htmlFor="value">Value</label> */}
               <InputText id="value"  placeholder="Enter value"/>
             </div>
           </div>
@@ -122,7 +123,7 @@ const coin_composition = [
         <div className="flex flex-wrap gap-3 mb-4">
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
-              <label htmlFor="name">Name</label>
+              {/* <label htmlFor="name">Name</label> */}
               <InputText id="name"  placeholder="Enter name"/>
             </div>
           </div>
@@ -130,7 +131,7 @@ const coin_composition = [
         <div className="flex flex-wrap gap-3 mb-4">
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
-              <label htmlFor="year">Year</label>
+              {/* <label htmlFor="year">Year</label> */}
               <InputNumber useGrouping={false}/>
             </div>
           </div>
@@ -138,7 +139,7 @@ const coin_composition = [
         <div className="flex flex-wrap gap-3 mb-4">
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
-              <label htmlFor="status">Composition</label>
+              {/* <label htmlFor="status">Composition</label> */}
               <Dropdown value={selectedComposition} options={coin_composition} optionLabel="name" onChange={(e) => setSelectedComposition(e.value)} 
                 placeholder="Select composition"/>
             </div>
@@ -147,7 +148,7 @@ const coin_composition = [
         <div className="flex flex-wrap gap-3 mb-4">
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
-              <label htmlFor="price">Price</label>
+              {/* <label htmlFor="price">Price</label> */}
               <InputNumber showButtons mode="currency" currency="RON" value={Price} onValueChange={(e) => setPrice(e.value)}/>
             </div>
           </div>
@@ -155,7 +156,7 @@ const coin_composition = [
         <div className="flex flex-wrap gap-3 mb-4">
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
-              <label htmlFor="status">Status</label>
+              {/* <label htmlFor="status">Status</label> */}
               <Dropdown value={selectedStatus} options={coin_status} optionLabel="name" onChange={(e) => setSelectedStatus(e.value)} 
                 placeholder="Select status"/>
             </div>
@@ -165,7 +166,7 @@ const coin_composition = [
         <div className="flex flex-wrap gap-3 mb-4">
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
-              <label htmlFor="stock">Stock</label>
+              {/* <label htmlFor="stock">Stock</label> */}
               <InputNumber useGrouping={false}/>
             </div>
           </div>
@@ -178,7 +179,7 @@ const coin_composition = [
             </div>
           </div>
         </div>
-        <div className="card flex flex-wrap justify-content-center gap-3 mb-4">
+        <div className="card flex flex-wrap justify-content-left gap-3 mb-4">
         <Button label="Save" icon="pi pi-check" iconPos="right" />
         <Button label="Delete" icon="pi pi-delete-left" iconPos="right" severity="danger"/>
         </div></div>
