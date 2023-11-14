@@ -20,10 +20,17 @@ export default function Admin() {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const countries = countries_all;
 
-  const [selectedStatus, setSelectedStatus] = useState(null);
-  const [selectedComposition, setSelectedComposition] = useState(null);
+ 
+
 
   const [Price, setPrice] = useState(1);
+  const [Year, setYear] = useState(1900);
+  const [Catalog, setCatalog] = useState(null);
+  const [Value, setValue] = useState(null);
+  const [Status, setStatus] = useState(null);
+  const [Composition, setComposition] = useState(null);
+  const [Name, setName] = useState(null);
+  const [Stock, setStock] = useState(null);
 
   const selectedCountryTemplate = (option, props) => {
     if (option) {
@@ -81,6 +88,38 @@ const coin_composition = [
   { name: 'Gold', id: 79 }
 ]
 
+interface CoinJson {
+  //Continent: string;	
+   Country: string;
+   Catalog: string;
+   Value: string;
+   Name: string;
+   Year: number
+   Composition: string;
+   Status: string;
+   Price: number;
+  // References: string;
+   Stock: number;
+  // Photo1: string;
+  // Photo2: string;	
+}
+
+const jsonCoin: CoinJson = {
+  // Continent: selectedCountry.continent,
+  Country: {selectedCountry},
+  Catalog: {Catalog},
+  Value: {Value},
+  Name: {Name},
+  Year: {Year},
+  Composition: {Composition},
+  Status: {Status},
+  Price: {Price},
+  // References: 
+   Stock: {Stock},
+  // Photo1: 
+  // Photo2: 	
+};
+
   return (
     <PrimeReactProvider>
 
@@ -108,7 +147,8 @@ const coin_composition = [
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
               {/* <label htmlFor="catalog">Catalog</label> */}
-              <InputText id="catalog"  placeholder="Enter catalog code"/>
+              <InputText id="catalog"  placeholder="Enter catalog code" 
+              value={Catalog} onChange={(e) => setCatalog(e.target.value)} />
             </div>
           </div>
         </div>
@@ -116,7 +156,9 @@ const coin_composition = [
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
               {/* <label htmlFor="value">Value</label> */}
-              <InputText id="value"  placeholder="Enter value"/>
+              <InputText id="value"  placeholder="Enter value"
+              value={Value} onChange={(e) => setValue(e.target.value)}
+              />
             </div>
           </div>
         </div>
@@ -124,7 +166,9 @@ const coin_composition = [
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
               {/* <label htmlFor="name">Name</label> */}
-              <InputText id="name"  placeholder="Enter name"/>
+              <InputText id="name"  placeholder="Enter name"
+              value={Name} onChange={(e) => setName(e.target.value)}
+              />
             </div>
           </div>
         </div>
@@ -132,7 +176,7 @@ const coin_composition = [
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
               {/* <label htmlFor="year">Year</label> */}
-              <InputNumber useGrouping={false}/>
+              <InputNumber useGrouping={false} placeholder="Enter year" value={Year} onValueChange={(e) => setYear(e.value)}/>
             </div>
           </div>
         </div>
@@ -140,7 +184,7 @@ const coin_composition = [
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
               {/* <label htmlFor="status">Composition</label> */}
-              <Dropdown value={selectedComposition} options={coin_composition} optionLabel="name" onChange={(e) => setSelectedComposition(e.value)} 
+              <Dropdown value={Composition} options={coin_composition} optionLabel="name" onChange={(e) => setComposition(e.value)} 
                 placeholder="Select composition"/>
             </div>
           </div>
@@ -157,7 +201,7 @@ const coin_composition = [
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
               {/* <label htmlFor="status">Status</label> */}
-              <Dropdown value={selectedStatus} options={coin_status} optionLabel="name" onChange={(e) => setSelectedStatus(e.value)} 
+              <Dropdown value={Status} options={coin_status} optionLabel="name" onChange={(e) => setStatus(e.value)} 
                 placeholder="Select status"/>
             </div>
           </div>
@@ -167,7 +211,7 @@ const coin_composition = [
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
               {/* <label htmlFor="stock">Stock</label> */}
-              <InputNumber useGrouping={false}/>
+              <InputNumber useGrouping={false} placeholder="Enter initial stock" value={Stock} onValueChange={(e) => setStock(e.value)}/>
             </div>
           </div>
         </div>
@@ -180,7 +224,7 @@ const coin_composition = [
           </div>
         </div>
         <div className="card flex flex-wrap justify-content-left gap-3 mb-4">
-        <Button label="Save" icon="pi pi-check" iconPos="right" />
+        <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => console.log(jsonCoin)} />
         <Button label="Delete" icon="pi pi-delete-left" iconPos="right" severity="danger"/>
         </div></div>
     </PrimeReactProvider>
