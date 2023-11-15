@@ -17,20 +17,18 @@ import { Splitter, SplitterPanel } from 'primereact/splitter';
 
 export default function Admin() {
 
-  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState([]);
   const countries = countries_all;
-
- 
-
-
-  const [Price, setPrice] = useState(1);
-  const [Year, setYear] = useState(1900);
-  const [Catalog, setCatalog] = useState(null);
-  const [Value, setValue] = useState(null);
-  const [Status, setStatus] = useState(null);
-  const [Composition, setComposition] = useState(null);
-  const [Name, setName] = useState(null);
-  const [Stock, setStock] = useState(null);
+  const [Price, setPrice] = useState([]);
+  const [Continent, setContinent] = useState([]);
+  const [Year, setYear] = useState([1900]);
+  const [Catalog, setCatalog] = useState([]);
+  const [Value, setValue] = useState([]);
+  const [Status, setStatus] = useState([]);
+  const [Composition, setComposition] = useState([]);
+  const [Name, setName] = useState([]);
+  const [Stock, setStock] = useState([]);
+  const [files, setfiles] = useState([0]);
 
   const selectedCountryTemplate = (option, props) => {
     if (option) {
@@ -38,7 +36,7 @@ export default function Admin() {
         <div className="flex align-items-center">
           <div className={`fi fi-${option.code}`} style={{ width: "30px" }}>
             <div style={{ paddingLeft: "40px" }}>
-              {option.name}
+            {option.name}
             </div>
           </div>
         </div>
@@ -75,6 +73,12 @@ export default function Admin() {
     );
   };
 
+  const onUpload = async ({ files }) => {
+    const [file] = files;
+   console.log(files[0]);
+  }
+
+
   const coin_status = [
     { name: 'UNC/AUNC', id: 1},
     { name: 'VF/F', id: 2 },
@@ -88,8 +92,8 @@ const coin_composition = [
   { name: 'Gold', id: 79 }
 ]
 
-interface CoinJson {
-  //Continent: string;	
+interface CoinInterface {
+  Continent: string;	
    Country: string;
    Catalog: string;
    Value: string;
@@ -98,27 +102,55 @@ interface CoinJson {
    Composition: string;
    Status: string;
    Price: number;
-  // References: string;
+   References: string;
    Stock: number;
-  // Photo1: string;
-  // Photo2: string;	
+   files: number;
+   Photo1: string;
+   Photo2: string;	
 }
 
-const jsonCoin: CoinJson = {
-  // Continent: selectedCountry.continent,
-  Country: {selectedCountry},
-  Catalog: {Catalog},
-  Value: {Value},
-  Name: {Name},
-  Year: {Year},
-  Composition: {Composition},
-  Status: {Status},
-  Price: {Price},
-  // References: 
-   Stock: {Stock},
-  // Photo1: 
-  // Photo2: 	
-};
+
+const jsonCoinRezult: CoinInterface = ({
+  Continent: Continent,
+  Country: selectedCountry.name,
+  Catalog: Catalog,
+  Value: Value,
+  Name: Name,
+  Year: Year,
+  Composition: Composition.name,
+  Status: Status.name,
+  Price: Price,
+  References: 0,
+  Stock: Stock,
+  files: 0,
+  Photo1: "poza1.jpg",
+  Photo2: "poza2.jpg"	
+});
+
+
+const jsonData = JSON.stringify(jsonCoinRezult);
+
+// Send jsonData to the backend
+const handleSubmit = async () => {
+  // let formData = new FormData();
+  // formData.append('Photo1', jsonCoinRezult.Photo1);
+   console.log(jsonData);
+try {
+  const response = await fetch('http://localhost:3000/coins/uploadm', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: jsonData,
+  });
+  // Handle the response as needed
+  // const data = await response.json();
+  console.log(response);
+} catch (error) {
+  console.error('Error:', error);
+}
+}
+
 
   return (
     <PrimeReactProvider>
@@ -132,10 +164,13 @@ const jsonCoin: CoinJson = {
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
               {/* <label htmlFor="catalog">Country</label> */}
-              <Dropdown value={selectedCountry} onChange={(e) => {
+              <Dropdown value= {selectedCountry} 
+              onChange={(e) => {
+                      // setSelectedCountry(e.value.name);
                       setSelectedCountry(e.value);
+                      setContinent(e.value.continent);
                       console.log(selectedCountry);
-                      console.log(e.value);
+                      console.log('tara : ',e.value.name);
                     }}
                       options={countries} optionLabel="name" placeholder="Select a Country"
                       filter valueTemplate={selectedCountryTemplate}
@@ -219,29 +254,23 @@ const jsonCoin: CoinJson = {
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
               <label htmlFor="value">File Upload</label>
-              <FileUpload name="demo[]" url={'/api/upload'} multiple accept="image/*" maxFileSize={1000000}/>
+              <FileUpload  
+              //  url={'http://localhost:3000/coins/uploadm'} 
+              multiple accept="image/*" 
+              // mode="basic"
+              maxFileSize={1000000} 
+              customUpload={true}
+              uploadHandler={onUpload}
+              chooseLabel="Upload photos"
+              />
             </div>
           </div>
         </div>
         <div className="card flex flex-wrap justify-content-left gap-3 mb-4">
-        <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => console.log(jsonCoin)} />
+        <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => handleSubmit()} />  
         <Button label="Delete" icon="pi pi-delete-left" iconPos="right" severity="danger"/>
         </div></div>
     </PrimeReactProvider>
 
   )
 }
-
-// Continent: string;	
-// Country: string;
-// Catalog: string;
-// Value: string;
-// Name: string;
-// Year: number
-// Composition: string;
-// Status: string;
-// Price: number;
-// References: string;
-// Stock: number;
-// Photo1: string;
-// Photo2: string;	 
