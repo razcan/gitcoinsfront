@@ -19,16 +19,16 @@ export default function Admin() {
 
   const [selectedCountry, setSelectedCountry] = useState([]);
   const countries = countries_all;
-  const [Price, setPrice] = useState([]);
+  const [Price, setPrice] = useState([1]);
   const [Continent, setContinent] = useState([]);
   const [Year, setYear] = useState([1900]);
-  const [Catalog, setCatalog] = useState([]);
-  const [Value, setValue] = useState([]);
+  const [Catalog, setCatalog] = useState([1]);
+  const [Value, setValue] = useState([1]);
   const [Status, setStatus] = useState([]);
-  const [Composition, setComposition] = useState([]);
+  const [Composition, setComposition] = useState(['Silver']);
   const [Name, setName] = useState([]);
-  const [Stock, setStock] = useState([]);
-  const [files, setfiles] = useState([0]);
+  const [Stock, setStock] = useState([1]);
+  const [picturefiles, setPicturefiles] = useState([]);
 
   const selectedCountryTemplate = (option, props) => {
     if (option) {
@@ -73,10 +73,17 @@ export default function Admin() {
     );
   };
 
-  const onUpload = async ({ files }) => {
-    const [file] = files;
-   console.log(files[0]);
+
+  const onUpload =  ({ files }) => {
+   setPicturefiles(files);
   }
+
+  useEffect(() => {
+    console.log('xx',{picturefiles});
+    picturefiles.forEach(element => {
+      console.log('eee',element);
+    });
+}, [picturefiles])
 
 
   const coin_status = [
@@ -104,7 +111,7 @@ interface CoinInterface {
    Price: number;
    References: string;
    Stock: number;
-   files: number;
+   files: string;
    Photo1: string;
    Photo2: string;	
 }
@@ -122,7 +129,7 @@ const jsonCoinRezult: CoinInterface = ({
   Price: Price,
   References: 0,
   Stock: Stock,
-  files: 0,
+ // files: picturefiles, 
   Photo1: "poza1.jpg",
   Photo2: "poza2.jpg"	
 });
@@ -130,26 +137,73 @@ const jsonCoinRezult: CoinInterface = ({
 
 const jsonData = JSON.stringify(jsonCoinRezult);
 
+const axios = require('axios');
+
+
+
+var formData = new FormData();
+formData.append('Continent', Continent);
+formData.append('Country', selectedCountry.name);
+formData.append('Catalog', Catalog);
+formData.append('Value', Value);
+formData.append('Name', Name);
+formData.append('Year', Year);
+formData.append('Composition', Composition.name);
+formData.append('Status', Status.name);
+formData.append('Price', Price);
+formData.append('References', 0);
+formData.append('Stock', Stock);
+formData.append('files', picturefiles );
+formData.append('Photo1', "Photo1");
+formData.append('Photo2', "Photo2" );
+
+
+
+// Display the key/value pairs
+// for (var pair of formData.entries()) {
+//     console.log(pair[0]+ ', ' + pair[1]); 
+// }
+
+
+const handlerAxios = async () => {
+{
+  await axios.post('http://localhost:3000/coins/uploadm', {
+    Continent: Continent,
+    Country: selectedCountry.name,
+    Catalog: Catalog,
+    Value: Value,
+    Name: Name,
+    Year: Year,
+    Composition: Composition.name,
+    Status: Status.name,
+    Price: Price,
+    References: 0,
+    Stock: Stock,
+    //files: picturefiles[0], 
+    Photo1: "poza1.jpg",
+    Photo2: "poza2.jpg"	
+  }, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  }
+)
+}
+}
+
+
 // Send jsonData to the backend
 const handleSubmit = async () => {
-  // let formData = new FormData();
-  // formData.append('Photo1', jsonCoinRezult.Photo1);
-   console.log(jsonData);
-try {
-  const response = await fetch('http://localhost:3000/coins/uploadm', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: jsonData,
-  });
-  // Handle the response as needed
-  // const data = await response.json();
-  console.log(response);
-} catch (error) {
-  console.error('Error:', error);
-}
-}
+  for (var pair of formData.entries()) {
+       console.log(pair[0]+ ', ' + pair[1]); }
+
+ await axios.post('http://localhost:3000/coins/uploadm', formData),
+{
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  }
+
+}}
 
 
   return (
@@ -255,11 +309,12 @@ try {
             <div className="flex flex-column gap-2">
               <label htmlFor="value">File Upload</label>
               <FileUpload  
-              //  url={'http://localhost:3000/coins/uploadm'} 
               multiple accept="image/*" 
               // mode="basic"
               maxFileSize={1000000} 
               customUpload={true}
+              //onValueChange={(e) => setPicturefiles(files)}
+              //uploadHandler={setPicturefiles(files)}
               uploadHandler={onUpload}
               chooseLabel="Upload photos"
               />
@@ -267,7 +322,7 @@ try {
           </div>
         </div>
         <div className="card flex flex-wrap justify-content-left gap-3 mb-4">
-        <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => handleSubmit()} />  
+        <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => handlerAxios()} />  
         <Button label="Delete" icon="pi pi-delete-left" iconPos="right" severity="danger"/>
         </div></div>
     </PrimeReactProvider>
