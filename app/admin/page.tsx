@@ -17,18 +17,22 @@ import { Splitter, SplitterPanel } from 'primereact/splitter';
 
 export default function Admin() {
 
+  const axios = require('axios');
   const [selectedCountry, setSelectedCountry] = useState([]);
   const countries = countries_all;
-  const [Price, setPrice] = useState([1]);
+  const [Price, setPrice] = useState([10]);
   const [Continent, setContinent] = useState([]);
   const [Year, setYear] = useState([1900]);
   const [Catalog, setCatalog] = useState([1]);
-  const [Value, setValue] = useState([1]);
+  const [Value, setValue] = useState([10]);
   const [Status, setStatus] = useState([]);
   const [Composition, setComposition] = useState(['Silver']);
-  const [Name, setName] = useState([]);
+  const [Name, setName] = useState(['10 bani']);
   const [Stock, setStock] = useState([1]);
   const [picturefiles, setPicturefiles] = useState([]);
+  const [byteArray, setbyteArray] = useState([]);
+  const [jsonDataByte, setJsonDataByte] = useState([]);
+  
 
   const selectedCountryTemplate = (option, props) => {
     if (option) {
@@ -75,15 +79,64 @@ export default function Admin() {
 
 
   const onUpload =  ({ files }) => {
+  console.log('files:',files[0]);
    setPicturefiles(files);
+
+   var filesArray = Array.from(files);
+   console.log('fff1',filesArray)
+   console.log('fff2',files)
+   console.log('jsss',JSON.stringify({ files: filesArray }));
+   setJsonDataByte(JSON.stringify({ files: filesArray }));
+   console.log('sssssss',jsonDataByte);
   }
 
+const handlerFormData = async () => {
+var formdata2 = new FormData();
+// console.log('p0',picturefiles[0])
+// console.log('p1',picturefiles[1])
+
+formdata2.append('Continent', Continent);
+formdata2.append('Country', selectedCountry.name);
+formdata2.append('Catalog', Catalog);
+formdata2.append('Value', Value);
+formdata2.append('Name', Name);
+formdata2.append('Year', Year);
+formdata2.append('Composition', Composition.name);
+formdata2.append('Status', Status.name);
+formdata2.append('Price', Price);
+formdata2.append('References', 0);
+formdata2.append('Stock', Stock);
+formdata2.append("files", picturefiles[0]);
+formdata2.append("files", picturefiles[1]);
+formdata2.append('Photo1', "Photo1");
+formdata2.append('Photo2', "Photo2" );
+
+// Display the key/value pairs
+for (var pair of formdata2.entries()) {
+    console.log(pair[0]+ ', ' + pair[1]); 
+}
+
+
+var requestOptions = {
+  method: 'POST',
+  body: formdata2,
+  redirect: 'follow'
+};
+
+fetch("http://localhost:3000/coins/uploadm", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+}
+
+
   useEffect(() => {
-    console.log('xx',{picturefiles});
+  // console.log('xx',{picturefiles});
+  console.log('sssssss',jsonDataByte);
     picturefiles.forEach(element => {
       console.log('eee',element);
     });
-}, [picturefiles])
+}, [picturefiles,jsonDataByte])
 
 
   const coin_status = [
@@ -129,16 +182,13 @@ const jsonCoinRezult: CoinInterface = ({
   Price: Price,
   References: 0,
   Stock: Stock,
- // files: picturefiles, 
+  files: picturefiles, 
   Photo1: "poza1.jpg",
   Photo2: "poza2.jpg"	
 });
 
 
 const jsonData = JSON.stringify(jsonCoinRezult);
-
-const axios = require('axios');
-
 
 
 var formData = new FormData();
@@ -153,10 +203,21 @@ formData.append('Status', Status.name);
 formData.append('Price', Price);
 formData.append('References', 0);
 formData.append('Stock', Stock);
-formData.append('files', picturefiles );
+formData.append('files', jsonDataByte );
 formData.append('Photo1', "Photo1");
 formData.append('Photo2', "Photo2" );
 
+const handleUploadV1 = () => {
+  console.log('xxx',jsonDataByte);
+  console.log('date:', formData)
+//   axios.post('http://localhost:3000/coins/uploadm', formData),
+// {
+//   headers: {
+//     'Content-Type': //'multipart/form-data'
+//     'application/json'
+//   }
+// }
+} 
 
 
 // Display the key/value pairs
@@ -166,6 +227,12 @@ formData.append('Photo2', "Photo2" );
 
 
 const handlerAxios = async () => {
+console.log('din post',jsonDataByte, Continent, Catalog);
+
+
+// picturefiles.forEach(element => {
+//   console.log('post',element);}
+// )
 {
   await axios.post('http://localhost:3000/coins/uploadm', {
     Continent: Continent,
@@ -179,14 +246,14 @@ const handlerAxios = async () => {
     Price: Price,
     References: 0,
     Stock: Stock,
-    //files: picturefiles[0], 
+    files: jsonDataByte, //picturefiles[0], 
     Photo1: "poza1.jpg",
     Photo2: "poza2.jpg"	
   }, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
-  }
+ }
 )
 }
 }
@@ -322,7 +389,7 @@ const handleSubmit = async () => {
           </div>
         </div>
         <div className="card flex flex-wrap justify-content-left gap-3 mb-4">
-        <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => handlerAxios()} />  
+        <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => handlerFormData()} />  
         <Button label="Delete" icon="pi pi-delete-left" iconPos="right" severity="danger"/>
         </div></div>
     </PrimeReactProvider>
