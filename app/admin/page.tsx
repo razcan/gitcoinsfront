@@ -14,9 +14,12 @@ import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
 import { Splitter, SplitterPanel } from 'primereact/splitter';
+import { Toast } from 'primereact/toast';
+import { useMountEffect } from 'primereact/hooks';
+import { Messages } from 'primereact/messages';
 
 export default function Admin() {
-
+  const toast = useRef(null);
   const axios = require('axios');
   const [selectedCountry, setSelectedCountry] = useState([]);
   const countries = countries_all;
@@ -32,6 +35,10 @@ export default function Admin() {
   const [picturefiles, setPicturefiles] = useState([]);
   const [byteArray, setbyteArray] = useState([]);
   const [jsonDataByte, setJsonDataByte] = useState([]);
+
+  const showSuccess = () => {
+    toast.current.show({severity:'success', summary: 'The coin was saved succesfully', detail:'Message Content', life: 3000});
+}
   
 
   const selectedCountryTemplate = (option, props) => {
@@ -79,21 +86,13 @@ export default function Admin() {
 
 
   const onUpload =  ({ files }) => {
-  console.log('files:',files[0]);
    setPicturefiles(files);
-
-   var filesArray = Array.from(files);
-   console.log('fff1',filesArray)
-   console.log('fff2',files)
-   console.log('jsss',JSON.stringify({ files: filesArray }));
-   setJsonDataByte(JSON.stringify({ files: filesArray }));
-   console.log('sssssss',jsonDataByte);
   }
 
 const handlerFormData = async () => {
+
+  
 var formdata2 = new FormData();
-// console.log('p0',picturefiles[0])
-// console.log('p1',picturefiles[1])
 
 formdata2.append('Continent', Continent);
 formdata2.append('Country', selectedCountry.name);
@@ -112,10 +111,13 @@ formdata2.append('Photo1', "Photo1");
 formdata2.append('Photo2', "Photo2" );
 
 // Display the key/value pairs
-for (var pair of formdata2.entries()) {
-    console.log(pair[0]+ ', ' + pair[1]); 
-}
+// for (var pair of formdata2.entries()) {
+//     console.log(pair[0]+ ', ' + pair[1]); 
+// }
 
+// const showSuccess = () => {
+//   toast.current.show({severity:'success', summary: 'Success', detail:'Message Content', life: 3000});
+// }
 
 var requestOptions = {
   method: 'POST',
@@ -125,14 +127,25 @@ var requestOptions = {
 
 fetch("http://localhost:3000/coins/uploadm", requestOptions)
   .then(response => response.text())
-  .then(result => console.log(result))
+  .then(result => 
+    
+    {
+      const obj  = JSON.parse(result);
+      if (obj.statusCode = 201){
+        showSuccess();
+        
+      }
+      
+    // 
+    }
+    )
   .catch(error => console.log('error', error));
 }
 
 
+
+
   useEffect(() => {
-  // console.log('xx',{picturefiles});
-  console.log('sssssss',jsonDataByte);
     picturefiles.forEach(element => {
       console.log('eee',element);
     });
@@ -152,131 +165,12 @@ const coin_composition = [
   { name: 'Gold', id: 79 }
 ]
 
-interface CoinInterface {
-  Continent: string;	
-   Country: string;
-   Catalog: string;
-   Value: string;
-   Name: string;
-   Year: number
-   Composition: string;
-   Status: string;
-   Price: number;
-   References: string;
-   Stock: number;
-   files: string;
-   Photo1: string;
-   Photo2: string;	
-}
-
-
-const jsonCoinRezult: CoinInterface = ({
-  Continent: Continent,
-  Country: selectedCountry.name,
-  Catalog: Catalog,
-  Value: Value,
-  Name: Name,
-  Year: Year,
-  Composition: Composition.name,
-  Status: Status.name,
-  Price: Price,
-  References: 0,
-  Stock: Stock,
-  files: picturefiles, 
-  Photo1: "poza1.jpg",
-  Photo2: "poza2.jpg"	
-});
-
-
-const jsonData = JSON.stringify(jsonCoinRezult);
-
-
-var formData = new FormData();
-formData.append('Continent', Continent);
-formData.append('Country', selectedCountry.name);
-formData.append('Catalog', Catalog);
-formData.append('Value', Value);
-formData.append('Name', Name);
-formData.append('Year', Year);
-formData.append('Composition', Composition.name);
-formData.append('Status', Status.name);
-formData.append('Price', Price);
-formData.append('References', 0);
-formData.append('Stock', Stock);
-formData.append('files', jsonDataByte );
-formData.append('Photo1', "Photo1");
-formData.append('Photo2', "Photo2" );
-
-const handleUploadV1 = () => {
-  console.log('xxx',jsonDataByte);
-  console.log('date:', formData)
-//   axios.post('http://localhost:3000/coins/uploadm', formData),
-// {
-//   headers: {
-//     'Content-Type': //'multipart/form-data'
-//     'application/json'
-//   }
-// }
-} 
-
-
-// Display the key/value pairs
-// for (var pair of formData.entries()) {
-//     console.log(pair[0]+ ', ' + pair[1]); 
-// }
-
-
-const handlerAxios = async () => {
-console.log('din post',jsonDataByte, Continent, Catalog);
-
-
-// picturefiles.forEach(element => {
-//   console.log('post',element);}
-// )
-{
-  await axios.post('http://localhost:3000/coins/uploadm', {
-    Continent: Continent,
-    Country: selectedCountry.name,
-    Catalog: Catalog,
-    Value: Value,
-    Name: Name,
-    Year: Year,
-    Composition: Composition.name,
-    Status: Status.name,
-    Price: Price,
-    References: 0,
-    Stock: Stock,
-    files: jsonDataByte, //picturefiles[0], 
-    Photo1: "poza1.jpg",
-    Photo2: "poza2.jpg"	
-  }, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
- }
-)
-}
-}
-
-
-// Send jsonData to the backend
-const handleSubmit = async () => {
-  for (var pair of formData.entries()) {
-       console.log(pair[0]+ ', ' + pair[1]); }
-
- await axios.post('http://localhost:3000/coins/uploadm', formData),
-{
-  headers: {
-    'Content-Type': 'multipart/form-data'
-  }
-
-}}
-
 
   return (
     <PrimeReactProvider>
 
       <Menu activatedIndex={4} />
+      <Toast ref={toast} />
 
       {/* <div className="card" style={{width:"30%"}}> */}
       <div  style={{padding:"10px", maxHeight: "100vh"}} className="md:w-28rem">
