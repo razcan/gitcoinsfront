@@ -72,11 +72,13 @@
     "name": "Anguilla"
   },
   {
+    "capital": "The Valley",
     "code": "aq",
+    "continent": "North America",
     "flag_1x1": "flags/1x1/aq.svg",
     "flag_4x3": "flags/4x3/aq.svg",
     "iso": true,
-    "name": "Antarctica"
+    "name": "kkt"
   },
   {
     "capital": "St. John's",
