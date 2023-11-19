@@ -27,21 +27,20 @@ import { OrderList } from 'primereact/orderlist';
 import { ProgressBar } from 'primereact/progressbar';
 import { Calendar } from 'primereact/calendar';
 import { Slider } from 'primereact/slider';
+import { InputSwitch } from 'primereact/inputswitch';
 
 
 export default function Admin() {
   const prefix_api = 'http://localhost:3000/coins/download/';
   const [products, setProducts] = useState([]);
   const countries = countries_all;
-
-  const formatCurrency = (value) => {
-    return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-};
-
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [rowClick, setRowClick] = useState(false);
+  const toast = useRef(null);
 
   const [filters, setFilters] = useState({
       global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      'Name': { value: null, matchMode: FilterMatchMode.CONTAINS },
+      'Name': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
       'Country': { value: null, matchMode: FilterMatchMode.STARTS_WITH },
       'Status': { value: null, matchMode: FilterMatchMode.EQUALS },
       'Stock': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
@@ -58,7 +57,6 @@ export default function Admin() {
     setGlobalFilterValue(value);
 };
 
-
 const clearFilter = () => {
   setFilters();
 };
@@ -70,22 +68,22 @@ const renderHeader = () => {
     <Button type="button" icon="pi pi-filter-slash" label="Clear" outlined onClick={clearFilter} />
     <span className="p-input-icon-left">
         <i className="pi pi-search" />
-        <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
+        <InputText value={globalFilterValue} 
+        onChange={onGlobalFilterChange} placeholder="Keyword Search" />
     </span>
     </div>
   );
 };
-
-
-
 
   const itemTemplate = (item) => {
     return (
         <div className="flex align-items-center gap-4">
         <div className={`fi fi-${item.Code}`} style={{ width: "40px" }}>
         {/* <span>{item.Country}</span> */}
-          <div style={{ paddingLeft: "40px" }}>
+          <div style={{ paddingLeft: "50px" }}>
+          <div className="w-16rem h-2rem text-xl font-bold">
           {item.Country}
+          </div>
           </div>
         </div>
         </div>
@@ -117,17 +115,15 @@ useEffect(() => {
 
 const header = renderHeader();
 
-
 const stockFilterTemplate = (options) => {
-  return <InputNumber value={options.value} onChange={(e) => 
-    options.filterCallback(e.value, options.index)} 
-    mode="currency" currency="USD" />;
+  return <InputNumber value={options.value} onChange={(e) => options.filterCallback(e.value, options.index)} 
+  mode="currency" currency="USD" locale="en-US" />;
 };
 
 
-
 const stockBodyTemplate = (product) => {
-  return <Tag value={`Stock: ${product.Stock}`} severity={getSeverity(product)}></Tag>;
+  // return <Tag value={`Stock: ${product.Stock}`} severity={getSeverity(product)}></Tag>;
+  return <Tag value={product.Stock} severity={getSeverity(product)}></Tag>;
 };
 
 const getSeverity = (product) => {
@@ -158,9 +154,6 @@ const getStatus = (product) => {
 }
   };
 
-const statusItemTemplate = (option) => {
-  return <Tag value={option} severity={getSeverity(option)} />;
-};
 
 const [statuses] = useState(['UNC/AUNC','VF/F' , 'VG/G']);
 
@@ -169,6 +162,11 @@ const statusBodyTemplate = (product) => {
   return <Tag value={`Status: ${product.Status}`} severity={getStatus(product.Status)}></Tag>;
 };
 
+const onRowSelect = (event) => {
+  toast.current.show({ severity: 'info', summary: 'Coin Selected', detail: `Name: ${event.data.Name}`, life: 3000 });
+};
+
+
 const statusRowFilterTemplate = (options) => {
   return (
       <Dropdown value={options.value} options={statuses} 
@@ -176,34 +174,45 @@ const statusRowFilterTemplate = (options) => {
       placeholder="Select One" 
       className="p-column-filter" showClear style={{ minWidth: '12rem' }} />
   );
+
+
 };
  
   return (
     <PrimeReactProvider>
 
-      <Menu activatedIndex={4} />
-      <div>Admin Page</div>
+      {/* <Menu activatedIndex={4} /> */}
+      <div>Admin Page
+      <Toast ref={toast} />
+      </div>
+      
 
       <div className="card">
-            <DataTable value={products} paginator rows={10}  
-            globalFilterFields={['Country','Status']}
+            <Toast ref={toast} />
+            <DataTable value={products} paginator rows={4}  showGridlines
+            selectionMode={'radiobutton'}      
+            filters={filters} filterDisplay="menu"     
+            selection={selectedProduct} 
+            // onSelectionChange={(e) => setSelectedProduct(e.value)}
+            onRowSelect={onRowSelect}
+            globalFilterFields={['Country','Status','Stock', 'Name']}
             dataKey="id"
-            filters={filters} filterDisplay="row"
             header={header}
-            tableStyle={{ minWidth: '50rem' }}>
+            columnResizeMode="expand" resizableColumns tableStyle={{ minWidth: '50rem' }}>
                 <Column header="Image" body={imageTemplate}></Column>
-                <Column field="Name" filterField="Name" filter filterPlaceholder="Search by name" 
+                <Column field="Name" filterField="Name" sortable filter filterPlaceholder="Search by name" 
                 header="Name"></Column>
                 <Column header="Country" filterField="Country" style={{ minWidth: '12rem' }} 
-                body={itemTemplate} filter filterPlaceholder="Search by country" />
+                body={itemTemplate} sortable filter filterPlaceholder="Search by country" />
                 
                 <Column field="Stock" 
+                header="Stock"
+                filterField="Stock"   
                 body={stockBodyTemplate} 
-                filter filterElement={stockFilterTemplate}
-                filterField="Stock"
-                dataType="numeric"
-                style={{ minWidth: '10rem' }}
-                header="Stock"></Column>
+                sortable filter filterPlaceholder="Search by Stock" 
+                         
+               
+                ></Column>
                 
                 <Column field="Status" header="Status" 
                 filterField="Status"
