@@ -25,21 +25,21 @@ export default function Admin() {
   const [selectedCountry, setSelectedCountry] = useState([]);
   const [Code, setCode] = useState([]);
   const countries = countries_all;
-  const [Price, setPrice] = useState([10]);
+  const [Price, setPrice] = useState([1]);
   const [Continent, setContinent] = useState([]);
-  const [Year, setYear] = useState([1900]);
-  const [Catalog, setCatalog] = useState([1]);
-  const [Value, setValue] = useState([10]);
+  const [Year, setYear] = useState([]);
+  const [Catalog, setCatalog] = useState([]);
+  const [Value, setValue] = useState([]);
   const [Status, setStatus] = useState([]);
   const [Composition, setComposition] = useState(['Silver']);
-  const [Name, setName] = useState(['10 bani']);
-  const [Stock, setStock] = useState([1]);
+  const [Name, setName] = useState([]);
+  const [Stock, setStock] = useState([]);
   const [picturefiles, setPicturefiles] = useState([]);
   const [byteArray, setbyteArray] = useState([]);
   const [jsonDataByte, setJsonDataByte] = useState([]);
 
   const showSuccess = () => {
-    toast.current.show({severity:'success', summary: 'The coin was saved succesfully', detail:'Message Content', life: 3000});
+    toast.current.show({severity:'success', summary: 'Result', detail:'The coin was saved succesfully', life: 3000});
 }
   
 
@@ -89,11 +89,10 @@ export default function Admin() {
 
   const onUpload =  ({ files }) => {
    setPicturefiles(files);
-  //  console.log(selectedCountry.code)
   }
 
 const handlerFormData = async () => {
-
+onUpload(picturefiles);
   
 var formdata2 = new FormData();
 
@@ -143,11 +142,7 @@ fetch("http://localhost:3000/coins/uploadm", requestOptions)
 }
 
 
-  useEffect(() => {
-    picturefiles.forEach(element => {
-      console.log('eee',element);
-    });
-}, [picturefiles,jsonDataByte])
+  useEffect(() => {}, [picturefiles,jsonDataByte])
 
 
   const coin_status = [
@@ -195,37 +190,45 @@ const coin_composition = [
         <div className="flex flex-wrap gap-3 mb-4">
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
-              {/* <label htmlFor="catalog">Catalog</label> */}
+            <span className="p-float-label">
               <InputText id="catalog"  placeholder="Enter catalog code" 
               value={Catalog} onChange={(e) => setCatalog(e.target.value)} />
+              <label htmlFor="catalog">Catalog</label>
+              </span>
             </div>
           </div>
         </div>
         <div className="flex flex-wrap gap-3 mb-4">
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
-              {/* <label htmlFor="value">Value</label> */}
+            <span className="p-float-label">             
               <InputText id="value"  placeholder="Enter value"
               value={Value} onChange={(e) => setValue(e.target.value)}
               />
+               <label htmlFor="value">Value</label>
+              </span>
             </div>
           </div>
         </div>
         <div className="flex flex-wrap gap-3 mb-4">
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
-              {/* <label htmlFor="name">Name</label> */}
+            <span className="p-float-label">
               <InputText id="name"  placeholder="Enter name"
               value={Name} onChange={(e) => setName(e.target.value)}
               />
+              <label htmlFor="name">Name</label>
+              </span>
             </div>
           </div>
         </div>
         <div className="flex flex-wrap gap-3 mb-4">
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
-              {/* <label htmlFor="year">Year</label> */}
-              <InputNumber useGrouping={false} placeholder="Enter year" value={Year} onValueChange={(e) => setYear(e.value)}/>
+              <span className="p-float-label">
+                <InputNumber useGrouping={false} placeholder="Enter year" value={Year} onValueChange={(e) => setYear(e.value)}/>
+                <label htmlFor="year">Year</label>
+              </span>
             </div>
           </div>
         </div>
@@ -259,8 +262,10 @@ const coin_composition = [
         <div className="flex flex-wrap gap-3 mb-4">
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
-              {/* <label htmlFor="stock">Stock</label> */}
+            <span className="p-float-label">  
               <InputNumber useGrouping={false} placeholder="Enter initial stock" value={Stock} onValueChange={(e) => setStock(e.value)}/>
+              <label htmlFor="stock">Stock</label>
+            </span>
             </div>
           </div>
         </div>
@@ -273,9 +278,8 @@ const coin_composition = [
               // mode="basic"
               maxFileSize={1000000} 
               customUpload={true}
-              //onValueChange={(e) => setPicturefiles(files)}
               //uploadHandler={setPicturefiles(files)}
-              uploadHandler={onUpload}
+              uploadHandler={onUpload} auto
               chooseLabel="Upload photos"
               />
             </div>

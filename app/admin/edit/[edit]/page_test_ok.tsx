@@ -155,36 +155,6 @@ fetch("http://localhost:3000/coins/uploadm", requestOptions)
  .catch(error => console.log('error', error));
 }
 
-const getStatus = (product) => {
-  switch (product) {
-    case 'VG/G':
-        return { name: 'VG/G', id: 3 };
-
-    case 'UNC/AUNC':
-        return { name: 'UNC/AUNC', id: 1 };
-
-    case 'VF/F':
-        return { name: 'VF/F', id: 2 };
-}
-  };
-
-  const getComposition = (product) => {
-    switch (product) {
-      case 'Others':
-          return { name: 'Others', id: 1};
-  
-      case 'Copper':
-          return { name: 'Copper', id: 29 };
-  
-      case 'Silver':
-          return { name: 'Silver', id: 47 };
-
-      case 'Gold':
-          return { name: 'Gold', id: 79 };
-  }
-    };
-
-
   return (
     <PrimeReactProvider>
 
@@ -198,14 +168,13 @@ const getStatus = (product) => {
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
               {/* <label htmlFor="catalog">Country</label> */}
-              {product.Country} 
-              <Dropdown value= {product.Country} 
+              <Dropdown value= {selectedCountry} 
               onChange={(e) => {
                       // setSelectedCountry(e.value.name);
                       setSelectedCountry(e.value);
                       setContinent(e.value.continent);
                       setCode(e.value.code)
-                     // console.log(selectedCountry);
+                      console.log(selectedCountry);
                       console.log('tara : ',e.value.name);
                     }}
                       options={countries} optionLabel="name" placeholder="Select a Country"
@@ -266,7 +235,11 @@ const getStatus = (product) => {
               {/* {product.Composition} */}
               {/* { name: 'Gold', id: 79 } */}
               <Dropdown 
-              value={getComposition(product.Composition)}
+               value={if ({product.Composition}='Gold')
+               {
+                 `{ name: 'Gold', id: 79 }`    
+               } 
+              
               options={coin_composition} 
               optionLabel="name" onChange={(e) => setComposition(e.value)} 
                 placeholder="Select composition"/>
@@ -285,7 +258,7 @@ const getStatus = (product) => {
           <div className="flex-auto">
             <div className="flex flex-column gap-2">
               {/* <label htmlFor="status">Status</label> */}
-              <Dropdown value={getStatus(product.Status)} options={coin_status} 
+              <Dropdown value={product.Status} options={coin_status} 
               optionLabel="name" onChange={(e) => setStatus(e.value)} 
                 placeholder="Select status"/>
             </div>
