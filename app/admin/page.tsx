@@ -28,15 +28,21 @@ import { ProgressBar } from 'primereact/progressbar';
 import { Calendar } from 'primereact/calendar';
 import { Slider } from 'primereact/slider';
 import { InputSwitch } from 'primereact/inputswitch';
-
+import { useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 
 export default function Admin() {
+
+const router = useRouter()
+
   const prefix_api = 'http://localhost:3000/coins/download/';
   const [products, setProducts] = useState([]);
   const countries = countries_all;
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [rowClick, setRowClick] = useState(false);
   const toast = useRef(null);
+  const [slug, setSlug] = useState(false);
 
   const [filters, setFilters] = useState({
       global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -61,11 +67,16 @@ const clearFilter = () => {
   setFilters();
 };
 
+const addNewItem = () =>{
+  router.push('/admin/add');
+}
+
 const renderHeader = () => {
   return (
 
     <div className="flex justify-content-between">
     <Button type="button" icon="pi pi-filter-slash" label="Clear" outlined onClick={clearFilter} />
+    <Button type="button" icon="pi pi-plus-circle" label="Add new Item" outlined onClick={addNewItem} />
     <span className="p-input-icon-left">
         <i className="pi pi-search" />
         <InputText value={globalFilterValue} 
@@ -91,7 +102,7 @@ const renderHeader = () => {
 };
 
 const imageTemplate = (products) => {
-  return <img className="w-9 sm:w-16rem xl:w-8rem shadow-2 block xl:block mx-auto border-round" 
+  return <img className="w-9 sm:w-16rem xl:w-6rem shadow-2 block xl:block mx-auto border-round" 
   src={`http://localhost:3000/coins/download/${products.Photo1}`} alt={products.Photo1} />
 };
 
@@ -115,15 +126,9 @@ useEffect(() => {
 
 const header = renderHeader();
 
-const stockFilterTemplate = (options) => {
-  return <InputNumber value={options.value} onChange={(e) => options.filterCallback(e.value, options.index)} 
-  mode="currency" currency="USD" locale="en-US" />;
-};
-
-
 const stockBodyTemplate = (product) => {
-  // return <Tag value={`Stock: ${product.Stock}`} severity={getSeverity(product)}></Tag>;
-  return <Tag value={product.Stock} severity={getSeverity(product)}></Tag>;
+  return <Tag value={`Stock: ${product.Stock}`} severity={getSeverity(product)}></Tag>;
+  // return <Tag value={product.Stock} severity={getSeverity(product)}></Tag>;
 };
 
 const getSeverity = (product) => {
@@ -139,9 +144,6 @@ if ( product.Stock =0 ) {
 };
 
 const getStatus = (product) => {
-
-  console.log(product)
-  // console.log(product.status)
   switch (product) {
     case 'VG/G':
         return 'danger';
@@ -162,9 +164,19 @@ const statusBodyTemplate = (product) => {
   return <Tag value={`Status: ${product.Status}`} severity={getStatus(product.Status)}></Tag>;
 };
 
+
+
 const onRowSelect = (event) => {
-  toast.current.show({ severity: 'info', summary: 'Coin Selected', detail: `Name: ${event.data.Name}`, life: 3000 });
+// console.log(slug)
+   router.push(`/admin/edit/${event.data.id}`)
+  // toast.current.show({ severity: 'info', summary: 'Coin Selected', 
+  // detail: `Name: ${event.data.Name}`, life: 3000 });
+ 
+
+// console.log(event.data.id)
 };
+
+
 
 
 const statusRowFilterTemplate = (options) => {
@@ -181,15 +193,15 @@ const statusRowFilterTemplate = (options) => {
   return (
     <PrimeReactProvider>
 
-      {/* <Menu activatedIndex={4} /> */}
-      <div>Admin Page
+      <Menu activatedIndex={4} />
+      <div>Admin Page 
       <Toast ref={toast} />
       </div>
       
 
       <div className="card">
             <Toast ref={toast} />
-            <DataTable value={products} paginator rows={4}  showGridlines
+            <DataTable value={products} paginator rows={6}  showGridlines
             selectionMode={'radiobutton'}      
             filters={filters} filterDisplay="menu"     
             selection={selectedProduct} 
@@ -198,11 +210,11 @@ const statusRowFilterTemplate = (options) => {
             globalFilterFields={['Country','Status','Stock', 'Name']}
             dataKey="id"
             header={header}
-            columnResizeMode="expand" resizableColumns tableStyle={{ minWidth: '50rem' }}>
+            columnResizeMode="expand" resizableColumns tableStyle={{ minWidth: '40rem' }}>
                 <Column header="Image" body={imageTemplate}></Column>
                 <Column field="Name" filterField="Name" sortable filter filterPlaceholder="Search by name" 
                 header="Name"></Column>
-                <Column header="Country" filterField="Country" style={{ minWidth: '12rem' }} 
+                <Column header="Country" filterField="Country" style={{ minWidth: '10rem' }} 
                 body={itemTemplate} sortable filter filterPlaceholder="Search by country" />
                 
                 <Column field="Stock" 
@@ -217,7 +229,7 @@ const statusRowFilterTemplate = (options) => {
                 <Column field="Status" header="Status" 
                 filterField="Status"
                 body={statusBodyTemplate}
-                showFilterMenu={false} filterMenuStyle={{ width: '14rem' }} 
+                showFilterMenu={false} filterMenuStyle={{ width: '10rem' }} 
                 style={{ minWidth: '12rem' }} 
                 filter filterElement={statusRowFilterTemplate}
                 ></Column>
