@@ -18,21 +18,22 @@ import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 
 interface PageProps {
-  params: {edit: string},
+  params: { edit: string },
 }
 
-export default  function CoinEdit({params: {edit}}: PageProps) {
+export default function CoinEdit({ params: { edit } }: PageProps) {
   // const pathname = usePathname()
   // const searchParams = useSearchParams()
   const [products, setProducts] = useState([]);
   const [items, setItems] = useState([]);
-  // const toast = useRef(null);
+  const toast = useRef(null);
   const axios = require('axios');
   const [selectedCountry, setSelectedCountry] = useState([]);
   const [Code, setCode] = useState([]);
   const countries = countries_all;
   const [Price, setPrice] = useState([1]);
   const [Continent, setContinent] = useState([]);
+  const [Country, setCountry] = useState([]);
   const [Year, setYear] = useState([]);
   const [Catalog, setCatalog] = useState([]);
   const [Value, setValue] = useState([]);
@@ -40,65 +41,72 @@ export default  function CoinEdit({params: {edit}}: PageProps) {
   const [Composition, setComposition] = useState(['Silver']);
   const [Name, setName] = useState([]);
   const [Stock, setStock] = useState([]);
+  const [Photo1, setPhoto1] = useState([]);
+  const [Photo2, setPhoto2] = useState([]);
   const [picturefiles, setPicturefiles] = useState([]);
   const [byteArray, setbyteArray] = useState([]);
   const [jsonDataByte, setJsonDataByte] = useState([]);
- 
-  const fetchCoinData = async() => {
-   await fetch(`http://localhost:3000/coins/${edit}`)
-        .then(response => {
-          // setItems(response.json())
-            return response.json()
-        })
-        .then(coins => {
-            setProducts(coins);
-            
-        })
-
-}
-
-
-useEffect(() => {
-     fetchCoinData()
-     //fetchCoinDataIntoForm()
-}, [])
-
-
-const coin_status = [
-  { name: 'UNC/AUNC', id: 1},
-  { name: 'VF/F', id: 2 },
-  { name: 'VG/G', id: 3 }
-];
-
-const coin_composition = [
-{ name: 'Others', id: 1},
-{ name: 'Copper', id: 29 },
-{ name: 'Silver', id: 47 },
-{ name: 'Gold', id: 79 }
-]
 
 
 
-const onUpload =  ({ files }) => {
-  setPicturefiles(files);
- }
+  const deleteItem = async () => {
+    fetch(`http://localhost:3000/coins/${edit}`, { method: 'DELETE' })
+      .then(() => console.log({ status: 'Delete successful' }));
+  }
 
- const showSuccess = () => {
-  toast.current.show({severity:'success', summary: 'Result', detail:'The coin was saved succesfully', life: 3000});
-}
+  useEffect(() => {
+    fetchCoinData()
+  }, [])
 
-const selectedCountryTemplate = (option, props) => {
-  if (option) {
-    return (
-      <div className="flex align-items-center">
-        <div className={`fi fi-${option.code}`} style={{ width: "30px" }}>
-          <div style={{ paddingLeft: "40px" }}>
-          {option.name}
+  const coin_status = [
+    { name: 'UNC/AUNC', id: 1 },
+    { name: 'VF/F', id: 2 },
+    { name: 'VG/G', id: 3 }
+  ];
+
+  const getStatus = (status) => {
+    return coin_status.find((obj) => obj.name === status)
+  };
+
+
+  const coin_composition = [
+    { name: 'Others', id: 1 },
+    { name: 'Copper', id: 29 },
+    { name: 'Silver', id: 47 },
+    { name: 'Gold', id: 79 }
+  ]
+
+  const getCompositionJson = (status: string) => {
+    return coin_composition.find((obj) => obj.name === status);
+  };
+
+  const getCountry = (countryToFind: string) => {
+    return countries.find((obj) => obj.name === countryToFind);
+  };
+
+
+
+  const onUpload = ({ files }) => {
+    setPicturefiles(files);
+  }
+
+  const showSuccess = () => {
+    toast.current.show({ severity: 'success', summary: 'Result', detail: 'The coin was saved succesfully', life: 3000 });
+  }
+
+  const selectedCountryTemplate = (option, props) => {
+    if (option) {
+      return (
+        <div className="flex align-items-center">
+          <div className={`fi fi-${option.code}`} style={{ width: "30px" }}>
+            <div style={{ paddingLeft: "40px" }}>
+              {option.name}
+            </div>
           </div>
         </div>
-      </div>
-    );
-  }}
+      );
+    }
+  }
 
   const countryOptionTemplate = (option) => {
     return (
@@ -113,218 +121,221 @@ const selectedCountryTemplate = (option, props) => {
     );
   };
 
-const handlerFormData = async () => {
-onUpload(picturefiles);
- 
-var formdata2 = new FormData();
+  const fetchCoinData = async () => {
+    await fetch(`http://localhost:3000/coins/${edit}`)
+      .then(response => {
+        // setItems(response.json())
+        return response.json()
+      })
+      .then(coins => {
+        setProducts(coins);
+        coins.map(product=> (          
+          setCode(product.Code),
+          setPrice(product.Price),
+          setContinent(product.Continent),
+          setYear(product.Year),
+          setCatalog(product.Catalog),
+          setValue(product.Value),
+          setStatus(product.Status),
+          setComposition(product.Composition),
+          setName(product.Name),
+          setStock(product.Stock),
+          setCountry(product.Country),
+          setPhoto1(product.Photo1),
+          setPhoto2(product.Photo2)
 
-formdata2.append('Continent', Continent);
-formdata2.append('Country', selectedCountry.name);
-formdata2.append('Code', selectedCountry.code);
-formdata2.append('Catalog', Catalog);
-formdata2.append('Value', Value);
-formdata2.append('Name', Name);
-formdata2.append('Year', Year);
-formdata2.append('Composition', Composition.name);
-formdata2.append('Status', Status.name);
-formdata2.append('Price', Price);
-formdata2.append('References', 0);
-formdata2.append('Stock', Stock);
-formdata2.append("files", picturefiles[0]);
-formdata2.append("files", picturefiles[1]);
-formdata2.append('Photo1', "Photo1");
-formdata2.append('Photo2', "Photo2" );
-
-
-var requestOptions = {
- method: 'POST',
- body: formdata2,
- redirect: 'follow'
-};
-
-fetch("http://localhost:3000/coins/uploadm", requestOptions)
- .then(response => response.text())
- .then(result => 
-   {
-     const obj  = JSON.parse(result);
-     if (obj.statusCode = 201){
-       showSuccess(); 
-     }
-   }
-   )
- .catch(error => console.log('error', error));
-}
-
-const getStatus = (product) => {
-  switch (product) {
-    case 'VG/G':
-        return { name: 'VG/G', id: 3 };
-
-    case 'UNC/AUNC':
-        return { name: 'UNC/AUNC', id: 1 };
-
-    case 'VF/F':
-        return { name: 'VF/F', id: 2 };
-}
-  };
-
-  const getComposition = (product) => {
-    switch (product) {
-      case 'Others':
-          return { name: 'Others', id: 1};
-  
-      case 'Copper':
-          return { name: 'Copper', id: 29 };
-  
-      case 'Silver':
-          return { name: 'Silver', id: 47 };
-
-      case 'Gold':
-          return { name: 'Gold', id: 79 };
+          ))
+      })
   }
+
+  const handlerFormData = async () => {
+    onUpload(picturefiles);
+
+
+    var formdata2 = new FormData();
+
+    formdata2.append('Continent', Continent);
+    formdata2.append('Country', selectedCountry.name);
+    formdata2.append('Code', selectedCountry.code);
+    formdata2.append('Catalog', Catalog);
+    formdata2.append('Value', Value);
+    formdata2.append('Name', Name);
+    formdata2.append('Year', Year);
+    formdata2.append('Composition', Composition.name);
+    formdata2.append('Status', Status.name);
+    formdata2.append('Price', Price);
+    formdata2.append('References', 0);
+    formdata2.append('Stock', Stock);
+    formdata2.append("files", picturefiles[0]);
+    formdata2.append("files", picturefiles[1]);
+    formdata2.append('Photo1', "Photo1");
+    formdata2.append('Photo2', "Photo2");
+
+    //to be implemented
+    //console.log('marime:', picturefiles.length)
+
+    var requestOptions = {
+      method: 'POST',
+      body: formdata2,
+      redirect: 'follow'
     };
 
+    fetch("http://localhost:3000/coins/uploadm", requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        const obj = JSON.parse(result);
+        if (obj.statusCode = 201) {
+          showSuccess();
+        }
+      }
+      )
+      .catch(error => console.log('error', error));
+  }
 
   return (
-    <PrimeReactProvider>
+    <PrimeReactProvider>                 
 
       <Menu activatedIndex={4} />
-      {/* <Toast ref={toast} /> */}
-      {/* <div>Id page details Id: {edit}</div> */}
-      {products.map(product=> (//product.Continent))}    
-      <div  style={{padding:"10px", maxHeight: "100vh"}} className="md:w-28rem">
+      <Toast ref={toast} />
+      <img src={`http://localhost:3000/coins/download/${Photo1}`} alt={Photo1} style={{ width: '10%', padding: '10px' }} />
+      <img src={`http://localhost:3000/coins/download/${Photo2}`} alt={Photo2} style={{ width: '10%', padding: '10px' }} />
+   
+        <div style={{ padding: "10px", maxHeight: "100vh" }} className="md:w-28rem">
 
-        <div className="flex flex-wrap gap-3 mb-4">
-          <div className="flex-auto">
-            <div className="flex flex-column gap-2">
-              {/* <label htmlFor="catalog">Country</label> */}
-              {product.Country} 
-              <Dropdown value= {product.Country} 
-              onChange={(e) => {
-                      // setSelectedCountry(e.value.name);
-                      setSelectedCountry(e.value);
-                      setContinent(e.value.continent);
-                      setCode(e.value.code)
-                     // console.log(selectedCountry);
-                      console.log('tara : ',e.value.name);
-                    }}
-                      options={countries} optionLabel="name" placeholder="Select a Country"
-                      filter valueTemplate={selectedCountryTemplate}
-                      itemTemplate={countryOptionTemplate} />
+          <div className="flex flex-wrap gap-3 mb-4">
+            <div className="flex-auto">
+              <div className="flex flex-column gap-2">
+                {/* <label htmlFor="catalog">Country</label> */}
+               
+                <Dropdown 
+                 value={getCountry(Country)}
+                  onChange={(e) => {
+                    
+                    setSelectedCountry(e.value);
+                    setContinent(e.value.continent);
+                    setCode(e.value.code)
+                    console.log(selectedCountry);
+                    console.log('tara : ', e.value);
+                  }}
+                  options={countries} optionLabel="name" placeholder="Select a Country"
+                  filter valueTemplate={selectedCountryTemplate}
+                  itemTemplate={countryOptionTemplate} />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-wrap gap-3 mb-4">
-          <div className="flex-auto">
-            <div className="flex flex-column gap-2">
-            <span className="p-float-label">
-              <InputText id="catalog"  placeholder="Enter catalog code" 
-              value={product.Catalog} onChange={(e) => setCatalog(e.target.value)} />
-              <label htmlFor="catalog">Catalog</label>
-              </span>
+          <div className="flex flex-wrap gap-3 mb-4">
+            <div className="flex-auto">
+              <div className="flex flex-column gap-2">
+                <span className="p-float-label">
+                  <InputText id="catalog" placeholder="Enter catalog code"
+                    value={Catalog} onChange={(e) => setCatalog(e.target.value)} />
+                  <label htmlFor="catalog">Catalog</label>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-wrap gap-3 mb-4">
-          <div className="flex-auto">
-            <div className="flex flex-column gap-2">
-            <span className="p-float-label">             
-              <InputText id="value"  placeholder="Enter value"
-              value={product.Value} onChange={(e) => setValue(e.target.value)}
-              />
-               <label htmlFor="value">Value</label>
-              </span>
+          <div className="flex flex-wrap gap-3 mb-4">
+            <div className="flex-auto">
+              <div className="flex flex-column gap-2">
+                <span className="p-float-label">
+                  <InputText id="value" placeholder="Enter value"
+                    value={Value} onChange={(e) => setValue(e.target.value)}
+                  />
+                  <label htmlFor="value">Value</label>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-wrap gap-3 mb-4">
-          <div className="flex-auto">
-            <div className="flex flex-column gap-2">
-            <span className="p-float-label">
-              <InputText id="name"  placeholder="Enter name"
-              value={product.Name} onChange={(e) => setName(e.target.value)}
-              />
-              <label htmlFor="name">Name</label>
-              </span>
+          <div className="flex flex-wrap gap-3 mb-4">
+            <div className="flex-auto">
+              <div className="flex flex-column gap-2">
+                <span className="p-float-label">
+                  <InputText id="name" placeholder="Enter name"
+                    value={Name} onChange={(e) => setName(e.target.value)}
+                  />
+                  <label htmlFor="name">Name</label>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-wrap gap-3 mb-4">
-          <div className="flex-auto">
-            <div className="flex flex-column gap-2">
-              <span className="p-float-label">
-                <InputNumber useGrouping={false} placeholder="Enter year" value={product.Year} onValueChange={(e) => setYear(e.value)}/>
-                <label htmlFor="year">Year</label>
-              </span>
+          <div className="flex flex-wrap gap-3 mb-4">
+            <div className="flex-auto">
+              <div className="flex flex-column gap-2">
+                <span className="p-float-label">
+                  <InputNumber useGrouping={false} placeholder="Enter year" 
+                  value={Year} onValueChange={(e) => setYear(e.value)} />
+                  <label htmlFor="year">Year</label>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-wrap gap-3 mb-4">
-          <div className="flex-auto">
-            <div className="flex flex-column gap-2">
-              {/* <label htmlFor="status">Composition</label> */}
-              {/* {product.Composition} */}
-              {/* { name: 'Gold', id: 79 } */}
-              <Dropdown 
-              value={getComposition(product.Composition)}
-              options={coin_composition} 
-              optionLabel="name" onChange={(e) => setComposition(e.value)} 
-                placeholder="Select composition"/>
+          <div className="flex flex-wrap gap-3 mb-4">
+            <div className="flex-auto">
+              <div className="flex flex-column gap-2">
+                <Dropdown
+                  value={getCompositionJson(Composition)}
+                  options={coin_composition}
+                  optionLabel="name" onChange={(e) => setComposition(e.value)}
+                  placeholder="Select composition" />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-wrap gap-3 mb-4">
-          <div className="flex-auto">
-            <div className="flex flex-column gap-2">
-              {/* <label htmlFor="price">Price</label> */}
-              <InputNumber showButtons mode="currency" currency="RON" value={product.Price} onValueChange={(e) => setPrice(e.value)}/>
+          <div className="flex flex-wrap gap-3 mb-4">
+            <div className="flex-auto">
+              <div className="flex flex-column gap-2">
+                {/* <label htmlFor="price">Price</label> */}
+                <InputNumber showButtons mode="currency" currency="RON" 
+                value={Price} onValueChange={(e) => setPrice(e.value)} />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-wrap gap-3 mb-4">
-          <div className="flex-auto">
-            <div className="flex flex-column gap-2">
-              {/* <label htmlFor="status">Status</label> */}
-              <Dropdown value={getStatus(product.Status)} options={coin_status} 
-              optionLabel="name" onChange={(e) => setStatus(e.value)} 
-                placeholder="Select status"/>
+          <div className="flex flex-wrap gap-3 mb-4">
+            <div className="flex-auto">
+              <div className="flex flex-column gap-2">
+                {/* <label htmlFor="status">Status</label> */}
+                <Dropdown value={getStatus(Status)} options={coin_status}
+                  optionLabel="name" onChange={(e) => setStatus(e.value)}
+                  placeholder="Select status" />
+              </div>
             </div>
           </div>
+
+          <div className="flex flex-wrap gap-3 mb-4">
+            <div className="flex-auto">
+              <div className="flex flex-column gap-2">
+                <span className="p-float-label">
+                  <InputNumber useGrouping={false} placeholder="Enter initial stock" 
+                  value={Stock} onValueChange={(e) => setStock(e.value)} />
+                  <label htmlFor="stock">Stock</label>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-3 mb-4">
+            <div className="flex-auto">
+              <div className="flex flex-column gap-2">
+                <label htmlFor="value">File Upload</label>
+                <FileUpload
+                  multiple accept="image/*"
+                  // mode="basic"
+                  maxFileSize={1000000}
+                  customUpload={true}
+                  //uploadHandler={setPicturefiles(files)}
+                  uploadHandler={onUpload} auto
+                  chooseLabel="Change photos"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="card flex flex-wrap justify-content-left gap-3 mb-4">
+            <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => handlerFormData()} />
+            <Button label="Delete" icon="pi pi-delete-left"
+              iconPos="right" severity="danger" onClick={() => deleteItem()} />
+          </div>
+
         </div>
 
-        <div className="flex flex-wrap gap-3 mb-4">
-          <div className="flex-auto">
-            <div className="flex flex-column gap-2">
-            <span className="p-float-label">  
-              <InputNumber useGrouping={false} placeholder="Enter initial stock" value={product.Stock} onValueChange={(e) => setStock(e.value)}/>
-              <label htmlFor="stock">Stock</label>
-            </span>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-wrap gap-3 mb-4">
-          <div className="flex-auto">
-            <div className="flex flex-column gap-2">
-              <label htmlFor="value">File Upload</label>
-              <FileUpload  
-              multiple accept="image/*" 
-              // mode="basic"
-              maxFileSize={1000000} 
-              customUpload={true}
-              //uploadHandler={setPicturefiles(files)}
-              uploadHandler={onUpload} auto
-              chooseLabel="Upload photos"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="card flex flex-wrap justify-content-left gap-3 mb-4">
-        <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => handlerFormData()} />  
-        <Button label="Delete" icon="pi pi-delete-left" iconPos="right" severity="danger"/>
-        </div>
-  
-  </div>
-  ))}
+      {/* ))} */}
 
     </PrimeReactProvider>
 

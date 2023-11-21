@@ -24,7 +24,9 @@ export default function Menu(props) {
  return (
     <PrimeReactProvider >
 
-      <div className="sticky">
+      <div 
+      // className="sticky"
+      >
         <TabMenu model={items} activeIndex={activeMenuIndex} 
         onTabChange={(e) => {
           setMenuIndex(activeMenuIndex)
