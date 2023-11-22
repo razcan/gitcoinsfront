@@ -29,11 +29,14 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
   const toast = useRef(null);
   const axios = require('axios');
   const [selectedCountry, setSelectedCountry] = useState([]);
-  const [Code, setCode] = useState([]);
+ 
   const countries = countries_all;
   const [Price, setPrice] = useState([1]);
+
+  const [Code, setCode] = useState([]);
   const [Continent, setContinent] = useState([]);
   const [Country, setCountry] = useState([]);
+  
   const [Year, setYear] = useState([]);
   const [Catalog, setCatalog] = useState([]);
   const [Value, setValue] = useState([]);
@@ -44,8 +47,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
   const [Photo1, setPhoto1] = useState([]);
   const [Photo2, setPhoto2] = useState([]);
   const [picturefiles, setPicturefiles] = useState([]);
-  const [byteArray, setbyteArray] = useState([]);
-  const [jsonDataByte, setJsonDataByte] = useState([]);
+  const [Id, setId] = useState([]);
 
 
 
@@ -68,7 +70,6 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
     return coin_status.find((obj) => obj.name === status)
   };
 
-
   const coin_composition = [
     { name: 'Others', id: 1 },
     { name: 'Copper', id: 29 },
@@ -84,14 +85,12 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
     return countries.find((obj) => obj.name === countryToFind);
   };
 
-
-
   const onUpload = ({ files }) => {
     setPicturefiles(files);
   }
 
   const showSuccess = () => {
-    toast.current.show({ severity: 'success', summary: 'Result', detail: 'The coin was saved succesfully', life: 3000 });
+    toast.current.show({ severity: 'success', summary: 'Result', detail: 'The coin was updated succesfully', life: 3000 });
   }
 
   const selectedCountryTemplate = (option, props) => {
@@ -129,10 +128,14 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
       })
       .then(coins => {
         setProducts(coins);
-        coins.map(product=> (          
-          setCode(product.Code),
+        coins.map(product=> (      
+          setId(product.id),             
           setPrice(product.Price),
+         
           setContinent(product.Continent),
+          setCountry(product.Country),
+          setCode(product.Code),
+
           setYear(product.Year),
           setCatalog(product.Catalog),
           setValue(product.Value),
@@ -140,10 +143,9 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
           setComposition(product.Composition),
           setName(product.Name),
           setStock(product.Stock),
-          setCountry(product.Country),
           setPhoto1(product.Photo1),
           setPhoto2(product.Photo2)
-
+          
           ))
       })
   }
@@ -154,20 +156,25 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
 
     var formdata2 = new FormData();
 
+    formdata2.append('id', Id);
     formdata2.append('Continent', Continent);
-    formdata2.append('Country', selectedCountry.name);
-    formdata2.append('Code', selectedCountry.code);
+    formdata2.append('Country', Country);
+    formdata2.append('Code', Code);
     formdata2.append('Catalog', Catalog);
     formdata2.append('Value', Value);
     formdata2.append('Name', Name);
     formdata2.append('Year', Year);
-    formdata2.append('Composition', Composition.name);
-    formdata2.append('Status', Status.name);
+    formdata2.append('Composition', Composition);
+    formdata2.append('Status', Status);
     formdata2.append('Price', Price);
     formdata2.append('References', 0);
     formdata2.append('Stock', Stock);
-    formdata2.append("files", picturefiles[0]);
-    formdata2.append("files", picturefiles[1]);
+    if (picturefiles.length == 2)
+    {
+      formdata2.append("files", picturefiles[0]);
+      formdata2.append("files", picturefiles[1]);
+    }
+   
     formdata2.append('Photo1', "Photo1");
     formdata2.append('Photo2', "Photo2");
 
@@ -175,12 +182,12 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
     //console.log('marime:', picturefiles.length)
 
     var requestOptions = {
-      method: 'POST',
+      method: 'PATCH',
       body: formdata2,
       redirect: 'follow'
     };
 
-    fetch("http://localhost:3000/coins/uploadm", requestOptions)
+    fetch(`http://localhost:3000/coins/${edit}`, requestOptions)
       .then(response => response.text())
       .then(result => {
         const obj = JSON.parse(result);
@@ -197,9 +204,9 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
 
       <Menu activatedIndex={4} />
       <Toast ref={toast} />
-      <img src={`http://localhost:3000/coins/download/${Photo1}`} alt={Photo1} style={{ width: '10%', padding: '10px' }} />
+      {/* <img src={`http://localhost:3000/coins/download/${Photo1}`} alt={Photo1} style={{ width: '10%', padding: '10px' }} />
       <img src={`http://localhost:3000/coins/download/${Photo2}`} alt={Photo2} style={{ width: '10%', padding: '10px' }} />
-   
+    */}
         <div style={{ padding: "10px", maxHeight: "100vh" }} className="md:w-28rem">
 
           <div className="flex flex-wrap gap-3 mb-4">
@@ -210,12 +217,9 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
                 <Dropdown 
                  value={getCountry(Country)}
                   onChange={(e) => {
-                    
-                    setSelectedCountry(e.value);
-                    setContinent(e.value.continent);
+                    setContinent(e.value.continent),
+                    setCountry(e.value.name),
                     setCode(e.value.code)
-                    console.log(selectedCountry);
-                    console.log('tara : ', e.value);
                   }}
                   options={countries} optionLabel="name" placeholder="Select a Country"
                   filter valueTemplate={selectedCountryTemplate}
