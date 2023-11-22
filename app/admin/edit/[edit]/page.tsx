@@ -16,6 +16,7 @@ import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
+import { useRouter } from 'next/navigation';
 
 interface PageProps {
   params: { edit: string },
@@ -24,6 +25,7 @@ interface PageProps {
 export default function CoinEdit({ params: { edit } }: PageProps) {
   // const pathname = usePathname()
   // const searchParams = useSearchParams()
+  const router = useRouter();
   const [products, setProducts] = useState([]);
   const [items, setItems] = useState([]);
   const toast = useRef(null);
@@ -156,7 +158,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
 
     var formdata2 = new FormData();
 
-    formdata2.append('id', Id);
+    // formdata2.append('id', Id);
     formdata2.append('Continent', Continent);
     formdata2.append('Country', Country);
     formdata2.append('Code', Code);
@@ -175,8 +177,8 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
       formdata2.append("files", picturefiles[1]);
     }
    
-    formdata2.append('Photo1', "Photo1");
-    formdata2.append('Photo2', "Photo2");
+    formdata2.append('Photo1', Photo1);
+    formdata2.append('Photo2', Photo2);
 
     //to be implemented
     //console.log('marime:', picturefiles.length)
@@ -197,6 +199,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
       }
       )
       .catch(error => console.log('error', error));
+      router.push('/admin');
   }
 
   return (

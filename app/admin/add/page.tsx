@@ -18,9 +18,11 @@ import { Splitter, SplitterPanel } from 'primereact/splitter';
 import { Toast } from 'primereact/toast';
 import { useMountEffect } from 'primereact/hooks';
 import { Messages } from 'primereact/messages';
+import { useRouter } from 'next/navigation';
 
 export default function Admin() {
   const toast = useRef(null);
+  const router = useRouter();
   const axios = require('axios');
   const [selectedCountry, setSelectedCountry] = useState([]);
   const [Code, setCode] = useState([]);
@@ -139,6 +141,7 @@ fetch("http://localhost:3000/coins/uploadm", requestOptions)
     }
     )
   .catch(error => console.log('error', error));
+  router.push('/admin');
 }
 
 
