@@ -27,7 +27,9 @@ export default function Menu(props) {
       <div 
       // className="sticky"
       >
-        <TabMenu model={items} activeIndex={activeMenuIndex} 
+        <TabMenu 
+        className ="text-3xl w-10"
+        model={items} activeIndex={activeMenuIndex} 
         onTabChange={(e) => {
           setMenuIndex(activeMenuIndex)
           switch(e.index){

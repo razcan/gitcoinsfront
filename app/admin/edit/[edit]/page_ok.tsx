@@ -332,8 +332,8 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
                 />
                     <div className="flex flex-column gap-2">
                 <label>Actual photos</label>
-                <img src={`http://localhost:3000/coins/download/${Photo1}`} alt={Photo1} style={{ width: '30%', padding: '10px' }} />
-                <img src={`http://localhost:3000/coins/download/${Photo2}`} alt={Photo2} style={{ width: '30%', padding: '10px' }} />
+                <img src={`http://localhost:3000/coins/download/${Photo1}`} alt={Photo1} style={{ width: '80%', padding: '10px' }} />
+                <img src={`http://localhost:3000/coins/download/${Photo2}`} alt={Photo2} style={{ width: '80%', padding: '10px' }} />
             </div>
               </div>
           
@@ -341,7 +341,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
             </div>
        
           </div>
-          <div className="card flex flex-wrap gap-1 mb-1" style ={{paddingLeft : "0"}}>
+          <div className="card flex flex-wrap justify-content-left gap-3 mb-4">
             <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => handlerFormData()} />
             <Button label="Delete" icon="pi pi-delete-left"
               iconPos="right" severity="danger" onClick={() => deleteItem()} />

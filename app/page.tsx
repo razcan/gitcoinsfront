@@ -19,10 +19,10 @@ export default function Home() {
    <Menu activatedIndex={0} />
       <Exchange />
       <div className="grid">
-        <div className="col-12 lg:col-3 px-2 lg:px-5">
+        <div className="col-12 lg:col-2 px-2 lg:px-5">
         <Filters />
         </div>
-        <div className="col-12 lg:col-8 px-2 lg:px-5">
+        <div className="col-12 lg:col-9 px-2 lg:px-5">
           <Item />
         </div>
         <div className="col-12 lg:col-2 px-2 lg:px-5">

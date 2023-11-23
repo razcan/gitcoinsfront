@@ -11,69 +11,72 @@ import { RadioButton } from 'primereact/radiobutton';
 import { Slider } from 'primereact/slider';
 import { InputText } from "primereact/inputtext";
 
+import countries_all from "../css/country.json"
+import "../node_modules/flag-icons/css/flag-icons.min.css";
+import { DataScroller } from 'primereact/datascroller';
+import { Button } from 'primereact/button';
+import { ScrollTop } from 'primereact/scrolltop';
+import { ScrollPanel } from 'primereact/scrollpanel';
+
 export default function Filters() {
 
-  const [value, setValue] = useState([0, 100]);
-  const [type, setType] = useState('Coins');
-  const [continent, setContinent] = useState('Europe');
+  const [input, setInput] = useState<string>('');
+  const [filteredArray, setFilteredArray] = useState<string[]>(countries_all);
+
+
+  const handleInputChange = (event: any) => {
+    const inputValue = event;
+    setInput(inputValue);
+    console.log(event);
+
+    // Filter the array based on the input
+     const newFilteredArray = countries_all.filter(item =>
+       item.name.includes(inputValue)
+     );
+    //  console.log(newFilteredArray);
+
+     setFilteredArray(newFilteredArray);
+  };
+
+
+  const TaraSelectata = (event: any) => {
+    console.log(event.target);
+  }
+
+
+   useEffect(() => {
+   }, [])
+
 
   return (
 
     <PrimeReactProvider>
-          <Panel header="Delete all filters:" style={{paddingTop:15}}>
-            <Accordion multiple activeIndex={[0,1,2]}  >
-              <AccordionTab header="Type">
-                <div className="flex align-items-center">
-                  <RadioButton inputId="Coins" name="Coins" value="Coins" p-radiobutton-icon="pi-folder-open" 
-                  onChange={(e) => setType(e.value)} checked={type === 'Coins'} />
-                  <label htmlFor="Coins" className="ml-2">Coins</label>
-                </div>
-                <div className="flex align-items-center">
-                  <RadioButton inputId="Banknotes" name="Banknotes" value="Banknotes" onChange={(e) => setType(e.value)} checked={type === 'Banknotes'}  />
-                  <label htmlFor="Banknotes" className="ml-2">Banknotes</label>
-                </div>
-              </AccordionTab>
-              <AccordionTab header="Value">
-                <div className="card flex justify-content-center">
-                  <div className="w-14rem">
-                    <InputText value={value} onChange={(e) => setValue(e.target.value)} className="w-full" />
-                    <Slider value={value} onChange={(e) => setValue(e.value)} className="w-14rem" range />
-                  </div>
-                </div>
-              </AccordionTab>
-              <AccordionTab header="Continents">
-                <div className="flex align-items-center">
-                  <RadioButton inputId="Asia" name="Asia" value="Asia"  onChange={(e) => setContinent(e.value)} checked={continent === 'Asia'} />
-                  <label htmlFor="Asia" className="ml-2">Asia</label>
-                </div>
-                <div className="flex align-items-center">
-                  <RadioButton inputId="Africa" name="Africa" value="Africa" onChange={(e) => setContinent(e.value)} checked={continent === 'Africa'}/>
-                  <label htmlFor="Africa" className="ml-2">Africa</label>
-                </div>
-                <div className="flex align-items-center">
-                  <RadioButton inputId="North America" name="North America" value="North America" onChange={(e) => setContinent(e.value)} checked={continent === 'North America'}/>
-                  <label htmlFor="North America" className="ml-2">North America</label>
-                </div>
-                <div className="flex align-items-center">
-                  <RadioButton inputId="South America" name="South America" value="South America" onChange={(e) => setContinent(e.value)} checked={continent === 'South America'}/>
-                  <label htmlFor="South America" className="ml-2">South America</label>
-                </div>
-                <div className="flex align-items-center">
-                  <RadioButton inputId="Antarctica" name="Antarctica" value="Antarctica" onChange={(e) => setContinent(e.value)} checked={continent === 'Antarctica'}/>
-                  <label htmlFor="Antarctica" className="ml-2">Antarctica</label>
-                </div>
-                <div className="flex align-items-center">
-                  <RadioButton inputId="Europe" name="Europe" value="Europe" onChange={(e) => setContinent(e.value)} checked={continent === 'Europe'}/>
-                  <label htmlFor="Europe" className="ml-2">Europe</label>
-                </div>
-                <div className="flex align-items-center">
-                  <RadioButton inputId="Australia" name="Australia" value="Australia" onChange={(e) => setContinent(e.value)} checked={continent === 'Australia'}/>
-                  <label htmlFor="Australia" className="ml-2">Australia</label>
-                </div>
-              </AccordionTab>
-            </Accordion>
-          </Panel>
+          <ScrollPanel key="sc" style={{paddingLeft:5, paddingTop:5, width: 250, height: '800px' }}>
+          <span className="p-input-icon-left">
+              <i className="pi pi-search" />
+              <InputText placeholder="Search country"   
+              onChange={(e) => handleInputChange(e.target.value)}/>
+          </span>
+
+                        {filteredArray.map((item) => (
+                          <Button key={item.name} text onClick={TaraSelectata} >
+                          <div className="grid flex">
+                               <div className="col-6">
+                                  <div>
+                                  <div className={`fi fi-${item.code}`} 
+                                  style={{ width: "50px", height: '30px' }}> 
+                                <div className="p-4">
+                                {item.code.toUpperCase( ).slice(0, 2)}
+                                  </div> 
+                                  </div>
+                              
+                                    </div>
+                              </div>
+            
+                          </div>
+                          </Button>
+                          ))}  
+          </ScrollPanel>
     </PrimeReactProvider>
   )
 }
-

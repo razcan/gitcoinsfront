@@ -38,6 +38,44 @@ export default function Item() {
         console.log(product);
     }
 
+    const addToOrder = () => {
+
+        // Save data to local storage
+                const OrderedCoin = {
+                    Catalog: selected_product.Catalog,
+                    Code: selected_product.Code,
+                    Composition: selected_product.Composition,
+                    Continent: selected_product.Continent,
+                    Country: selected_product.Country,
+                    Name: selected_product.Name,
+                    Photo1: selected_product.Photo1,
+                    Photo2: selected_product.Photo2,
+                    Price: selected_product.Price,
+                    References: selected_product.References,
+                    Status: selected_product.Status,
+                    Value: selected_product.Value,
+                    Year: selected_product.Year,
+                    id: selected_product.id
+                };
+
+            const jsonString = JSON.stringify(OrderedCoin);
+
+            // Save the JSON string to local storage
+            localStorage.setItem('OrderedCoinNew', jsonString);
+        
+            console.log('Data saved to local storage.');
+
+            // Retrieve data from local storage
+            // const retrievedJsonString = localStorage.getItem('myData');
+
+            // Parse the JSON string back into a JavaScript object
+            // const retrievedData = JSON.parse(selected_product);
+
+            // console.log('Retrieved data:', retrievedData);
+
+    }
+
+
 
     const fetchCoinData = () => {
         fetch("http://localhost:3000/coins")
@@ -169,10 +207,10 @@ export default function Item() {
                             References: {selected_product.References}
                             </div>
                             <Divider />
-                            <div className="text-orange-500 w-16rem h-1rem text-sm font-bold">
+                            {/* <div className="text-orange-500 w-16rem h-1rem text-sm font-bold">
                             Stock: {selected_product.Stock}
                             </div>
-                            <Divider />
+                            <Divider /> */}
                             {/* Price: {selected_product.Price}
                             <Divider /> */}
                     </div>
@@ -189,7 +227,7 @@ export default function Item() {
                 </div>
                 <div className="flex-auto">
                 <label className="font-bold block mb-2"></label>
-                <Button label="Order"  ></Button> 
+                <Button label="Check Order"  onClick={addToOrder}></Button> 
                 </div>   
             </div>
                 </p>
