@@ -28,7 +28,6 @@ export default function Item() {
     const [layout, setLayout] = useState('grid');
     const [visible, setVisible] = useState(false);
     const [selected_product, setSelected_product] = useState([]);
-    const [images, setImages] = useState(null);
     const [ordered_qtty, setOrdered_qtty] = useState(1);
 
 
@@ -41,7 +40,22 @@ export default function Item() {
     const addToOrder = () => {
 
         // Save data to local storage
-                const OrderedCoin = {
+                const OrderedCoin: {
+                    Catalog: any;
+                    Code:  any;
+                    Composition: any;
+                    Continent: any;
+                    Country: any;
+                    Name: any;
+                    Photo1: any;
+                    Photo2: any;
+                    Price:  any;
+                    References:  any;
+                    Status: any;
+                    Value: any;
+                    Year: any;
+                    id: any
+                }[]= {
                     Catalog: selected_product.Catalog,
                     Code: selected_product.Code,
                     Composition: selected_product.Composition,
@@ -58,21 +72,23 @@ export default function Item() {
                     id: selected_product.id
                 };
 
-            const jsonString = JSON.stringify(OrderedCoin);
+             const jsonString = JSON.stringify(OrderedCoin);
 
-            // Save the JSON string to local storage
-            localStorage.setItem('OrderedCoinNew', jsonString);
-        
-            console.log('Data saved to local storage.');
+             const existingDataString = localStorage.getItem('OrderedCoinNew');
 
-            // Retrieve data from local storage
-            // const retrievedJsonString = localStorage.getItem('myData');
+             if (!existingDataString){
+                localStorage.setItem('OrderedCoinNew', jsonString);
+             }
+             else{
+                const existingData = existingDataString ? JSON.parse(existingDataString) : {};
+                localStorage.removeItem('OrderedCoinNew');
 
-            // Parse the JSON string back into a JavaScript object
-            // const retrievedData = JSON.parse(selected_product);
-
-            // console.log('Retrieved data:', retrievedData);
-
+                let ret: boolean[] = new Array();
+                ret.push(existingData)
+                ret.push(OrderedCoin)
+                console.log('array:',JSON.stringify(ret));
+                localStorage.setItem('OrderedCoinNew', JSON.stringify(ret));
+             }
     }
 
 
@@ -207,12 +223,16 @@ export default function Item() {
                             References: {selected_product.References}
                             </div>
                             <Divider />
-                            {/* <div className="text-orange-500 w-16rem h-1rem text-sm font-bold">
-                            Stock: {selected_product.Stock}
+                            <div className="text-orange-500 w-16rem h-1rem text-sm font-bold">
+                            Price: {selected_product.Price}
                             </div>
-                            <Divider /> */}
-                            {/* Price: {selected_product.Price}
-                            <Divider /> */}
+                            <Divider /> 
+                            <div className="text-red-800 w-16rem h-2rem text-xl font-bold">
+                            Value: {selected_product.Price * ordered_qtty}
+                            </div>
+                           
+                            
+                           
                     </div>
             <div className="card flex flex-wrap gap-3 p-fluid">
                 <label className="font-bold block mb-2"></label>
@@ -230,7 +250,7 @@ export default function Item() {
                 <Button label="Check Order"  onClick={addToOrder}></Button> 
                 </div>   
             </div>
-                </p>
+            </p>
             </Dialog>
 
             <DataView value={products} itemTemplate={itemTemplate} layout={layout}
