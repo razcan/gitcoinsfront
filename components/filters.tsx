@@ -93,7 +93,7 @@ export default function Filters() {
               <InputText className="w-full md:w-16rem" placeholder="Search country"   
               onChange={(e) => handleInputChange(e.target.value)}/>
           </span>
-          <ScrollPanel key="sc" style={{paddingLeft:5, paddingTop:5, width: 224, height: '800px' }}>
+          <ScrollPanel key="sc" style={{paddingLeft:5, paddingTop:5, width: 224, height: '760px' }}>
 
           <div className="card">
             <DataView value={filteredArray} itemTemplate={itemTemplate}  />

@@ -12,7 +12,8 @@ import { Rating } from 'primereact/rating';
 import { Tag } from 'primereact/tag';
 import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
 import { Divider } from 'primereact/divider';
-
+import { InputText } from 'primereact/inputtext';
+        
 
 export default function Item() {
 
@@ -28,8 +29,14 @@ export default function Item() {
     const setProductVisible = (product: any, bol: boolean) => {
         setSelected_product(product);
         setVisible(true);
-        console.log(product);
+        
     }
+
+    const resetValue = () => {
+        setVisible(false);
+        setOrdered_qtty(1);
+    }
+        
 
     const addToOrder = () => {
 
@@ -112,7 +119,7 @@ export default function Item() {
                     <img className="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round" src={`http://localhost:3000/coins/download/${product.Photo1}`} alt={product.Photo1} />
                     <div className="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
                         <div className="flex flex-column align-items-center sm:align-items-start gap-3">
-                            <div className="text-2xl font-bold text-900">{product.Name}</div>
+                            <div className="text-2xl font-bold text-900">{product.Country}</div>
                             <Rating value={4} readOnly cancel={false}></Rating>
                             <div className="flex align-items-center gap-3">
                                 <span className="flex align-items-center gap-2">
@@ -139,17 +146,17 @@ export default function Item() {
                     <div className="flex flex-wrap align-items-center justify-content-between gap-2">
                         <div className="flex align-items-center gap-2">
                             <i className="pi pi-tag"></i>
-                            <span className="font-semibold">{product.Name}</span>
+                            <span className="text-xl">{product.Country}</span>
                         </div>
-                        <Tag value={5}></Tag>
+                        <Tag value={product.Catalog}></Tag>
                     </div>
                     <div className="flex flex-column align-items-center gap-3 py-5">
-                        <img className="w-9 shadow-2 border-round" src={`http://localhost:3000/coins/download/${product.Photo1}`} alt={product.Photo1} />
-                        <div className="text-2xl font-bold">{product.Name}</div>
-                        <Rating value={4} readOnly cancel={false}></Rating>
+                        <img className="w-12 shadow-2 border-round" src={`http://localhost:3000/coins/download/${product.Photo1}`} alt={product.Photo1} />
+                        <div className="text-xl">{product.Value} / {product.Year}</div>
+                       
                     </div>
                     <div className="flex align-items-center justify-content-between">
-                        <span className="text-2xl font-semibold">${product.price}</span>
+                        <span className="text-xl font-semibold">{product.Status}</span>
                         <Button icon="pi pi-shopping-cart" className="p-button-rounded" onClick={() => setProductVisible(product, true)}></Button>
                     </div>
                 </div>
@@ -177,9 +184,9 @@ export default function Item() {
     return (
         <div className="card">
 
-            <Dialog header="Details" visible={visible} modal={false} style={{ width: '25vw' }} onHide={() => setVisible(false)}>
-                <p className="m-4">
-
+            <Dialog visible={visible} modal={false} style={{ width: '25vw' }} 
+            onHide={() => resetValue()}>
+                <p className="m-1">
                     <img src={`http://localhost:3000/coins/download/${selected_product.Photo1}`} alt={selected_product.Photo1} style={{ width: '50%', padding: '10px' }} />
                     <img src={`http://localhost:3000/coins/download/${selected_product.Photo2}`} alt={selected_product.Photo2} style={{ width: '50%', padding: '10px' }} />
                     <div>
@@ -231,9 +238,8 @@ export default function Item() {
             <div className="card flex flex-wrap gap-3 p-fluid">
                 <label className="font-bold block mb-2"></label>
                 <div className="flex-auto">
-                    <label htmlFor="mile" className="font-bold block mb-2"></label>
-                    <InputNumber value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} 
-                    mode="decimal" showButtons min={0} max={100} />
+                <label htmlFor="mile" className="font-bold block mb-2"></label>
+                    <InputNumber value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} />
                 </div>
                 <div className="flex-auto">
                 <label className="font-bold block mb-2"></label>
