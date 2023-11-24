@@ -5,18 +5,12 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import React, { useState, useEffect } from 'react';
-import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
-import { ScrollPanel } from 'primereact/scrollpanel';
-import { Splitter, SplitterPanel } from 'primereact/splitter';
 import { Dialog } from 'primereact/dialog';
 import { InputNumber } from 'primereact/inputnumber';
-import { Image } from 'primereact/image';
 import { Rating } from 'primereact/rating';
 import { Tag } from 'primereact/tag';
 import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
-import { Galleria } from 'primereact/galleria';
-
 import { Divider } from 'primereact/divider';
 
 

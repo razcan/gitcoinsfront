@@ -5,32 +5,20 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import React, { useState, useEffect, useRef } from 'react';
+
 import Menu from '../../components/menu';
 import { FileUpload } from 'primereact/fileupload';
 import { Dropdown } from 'primereact/dropdown';
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import countries_all from "../../css/country.json";
 import { InputText } from 'primereact/inputtext';
-import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
-import { useMountEffect } from 'primereact/hooks';
-import { Messages } from 'primereact/messages';
-import { classNames } from 'primereact/utils';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { MultiSelect } from 'primereact/multiselect';
 import { Tag } from 'primereact/tag';
-import { TriStateCheckbox } from 'primereact/tristatecheckbox';
-import { OrderList } from 'primereact/orderlist';
-import { ProgressBar } from 'primereact/progressbar';
-import { Calendar } from 'primereact/calendar';
-import { Slider } from 'primereact/slider';
-import { InputSwitch } from 'primereact/inputswitch';
 import { useRouter } from 'next/navigation'
-import { usePathname } from 'next/navigation'
-import { useSearchParams } from 'next/navigation'
 
 export default function Admin() {
 
@@ -193,11 +181,8 @@ const statusRowFilterTemplate = (options) => {
   return (
     <PrimeReactProvider>
 
-      <Menu activatedIndex={4} />
-      <div>Admin Page 
+      <Menu activatedIndex={5} />
       <Toast ref={toast} />
-      </div>
-      
 
       <div className="card">
             <Toast ref={toast} />

@@ -10,14 +10,10 @@ import { FileUpload } from 'primereact/fileupload';
 import { Dropdown } from 'primereact/dropdown';
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import countries_all from "../../../css/country.json";
-
 import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
-import { Splitter, SplitterPanel } from 'primereact/splitter';
 import { Toast } from 'primereact/toast';
-import { useMountEffect } from 'primereact/hooks';
-import { Messages } from 'primereact/messages';
 import { useRouter } from 'next/navigation';
 
 export default function Admin() {

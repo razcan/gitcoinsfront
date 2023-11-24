@@ -7,17 +7,22 @@ import 'primeflex/primeflex.css';
 import React, { useState, useEffect } from 'react';
 import  Menu  from '../../components/menu';
 
-export default function Admin() {
 
+export default function Order() {
+
+  
   return (
     <PrimeReactProvider>
-<Menu activatedIndex={3} />
-    <div>
-      About Page
-    </div>
+   <Menu activatedIndex={1} />
+      <div>
+          News page
+      </div>
 
     </PrimeReactProvider>
 
   )
 }
+
+
+
 
