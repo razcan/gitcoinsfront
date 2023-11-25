@@ -18,9 +18,12 @@ import { Tag } from 'primereact/tag';
 export default function Filters() {
 
   const [selectedCountry, setSelectedCountry] = useState<string>('');
-  const [selectedContinent, setSelectedContinent] = useState({ name: 'All', code: 'All' });
+  const [selectedContinent, setSelectedContinent] = useState();
   const [countriesBE, setCountriesBE] = useState<string[]>([]);
-  const [filteredArray, setFilteredArray] = useState<string[]>();
+  const [filteredArray, setFilteredArray] = useState<string[]>(countriesBE);
+  const [filtruTara, setfiltruTara] =useState([])
+  const [filtruContinent, setfiltruContinent] =useState([])
+
 
   const fetchCountriesBE = () => {
     fetch("http://localhost:3000/coins/countries")
@@ -29,27 +32,62 @@ export default function Filters() {
         })
         .then(country => {
           setCountriesBE(country)
-          setFilteredArray(country)
         })
 }
 
+
+const handleInputChangeCountry = (event: any) => {
+  const selectedCountry = event;
+  setSelectedCountry(selectedCountry);
+  handleFiltering(selectedCountry,selectedContinent)
+};
+
+const handleInputChangeContinent =  (event: any) => {
+  const selectedcontinent = event
+  setSelectedContinent(selectedcontinent);
+  handleFiltering(selectedCountry,selectedcontinent)
+};
+
+
 useEffect(() => {
-  fetchCountriesBE()
+  fetchCountriesBE(),
+  handleFiltering(selectedCountry,selectedContinent)
+  // handleInputChangeCountry(),
+  // handleInputChangeContinent()
 }, [])
 
-  const handleInputChangeCountry = (event: any) => {
-    const selectedCountry = event;
-    console.log(event);
-    setSelectedCountry(selectedCountry);
-    
-    const newFilteredArray = countriesBE
-     .filter(item => item.Country.includes(event))
-     .filter(item => item.Continent.includes(selectedContinent.name))
+// setSelectedContinent(selectedContinent);
 
-     setFilteredArray(newFilteredArray);
-     console.log('f tara',filteredArray)
-     console.log('f tara',newFilteredArray)
-  };
+const handleFiltering = (selectedCountry,selectedContinent) => {
+  
+  console.log('functie',selectedCountry,selectedContinent);
+
+  if (selectedContinent && selectedCountry) {
+        const filteredItems = countriesBE
+        .filter(item =>item.Country.includes(selectedCountry))
+        .filter(item =>item.Continent.includes(selectedContinent.name))
+        setFilteredArray(filteredItems)
+        console.log(filteredItems)
+  } 
+  else if (selectedCountry) 
+        {
+          const filteredItems = countriesBE.filter(item =>item.Country.includes(selectedCountry));
+          console.log(filteredItems)
+          setFilteredArray(filteredItems)
+          console.log(filteredItems)
+        }
+  else if (selectedContinent) 
+        {
+          const filteredItems = countriesBE.filter(item =>item.Continent.includes(selectedContinent.name));
+          console.log(filteredItems)
+          setFilteredArray(filteredItems)
+        }
+
+
+}
+
+//console.log('aici',selectedContinent,selectedCountry)
+
 
 
   const continents = [
@@ -57,21 +95,9 @@ useEffect(() => {
       { name: 'Asia', code: 'AS' },
       { name: 'Africa', code: 'AF' },
       { name: 'America', code: 'AM' },
-      { name: 'Oceania', code: 'OC' },
-      { name: 'All', code: 'All' }
+      { name: 'Oceania', code: 'OC' }
   ];
 
-  const handleInputChangeContinent = async (ContinentSelected) => {
-    setSelectedContinent(ContinentSelected);
-    console.log(ContinentSelected.name);
-     const newFilteredArray =  countriesBE
-     .filter(item =>item.Continent.includes(ContinentSelected.name))
-     .filter(item =>item.Country.includes(selectedCountry))
-
-     setFilteredArray(newFilteredArray);
-     console.log('f cont',filteredArray)
-     console.log(newFilteredArray)
-  };
 
 // Define filter functions
 // const countryFilter = (countryFilter: string) => (item: any) => item.Country === countryFilter;
