@@ -5,41 +5,45 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import React, { useState, useEffect, useRef } from 'react';
-import Menu from '../../components/menu';
 import { useRouter } from 'next/navigation'
-import { usePathname } from 'next/navigation'
-import { useSearchParams } from 'next/navigation'
-
 import ReactDOM from 'react-dom';
 import WorldMap from 'react-world-map';
 import "./styles_map.css"
 
-function YourMainComponent() {
-  const [selected, onSelect] = useState(null);
+//https://github.com/heatherbooker/react-world-map/blob/main/docs/index.jsx
 
-console.log(selected);
+
+function MapWorldContinent() {
+  const [selected, onSelect] = useState(null);
   return (
-    <>
-      <WorldMap selected={ selected } onSelect={ onSelect } />
-    </>
+    
+      <WorldMap
+                multiple={ true }
+                selected={ selected } onSelect={ onSelect } />
+    
   );
 }
 
-
-export default function Contact() {
+export default function MapWorld() {
 
     const router = useRouter()
 
  
   return (
-    <PrimeReactProvider>
+    
+    <div className="min-h-full">
+            <MapWorldContinent />
+    </div>
+        
 
-      <Menu activatedIndex={4} />
-      <div>
-          Contact page
-          <YourMainComponent />
-</div>
-    </PrimeReactProvider>
-
+    
   )
 }
+
+// style= {{
+//     min-height:100%
+//     float:left
+//     width:100px
+//     padding-bottom:10000px
+//     margin-bottom:-10000px
+// }}

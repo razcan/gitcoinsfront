@@ -1,0 +1,39 @@
+.map-selected {
+  fill: #E3DA37;
+}
+
+.map-unselected {
+  fill: #4F46E5;
+}
+
+.map-selected:hover, .map-unselected:hover {
+  cursor: pointer;
+}
+
+.map-img {
+  height: 600 !important;
+}
+
+
+svg {
+  display: inline-block;
+  vertical-align: middle;
+  width: "100%";
+  height: "100%";
+}
+
+.row {
+  height: 600 !important;
+}
+
+#svg5249 {
+  height: 600 !important;
+}
+
+.at-least-as-tall-div {
+  min-height:100%;
+  float:left;
+  width:100px;
+  padding-bottom:10000px;
+  margin-bottom:-10000px;
+}

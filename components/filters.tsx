@@ -21,163 +21,113 @@ export default function Filters() {
   const [selectedContinent, setSelectedContinent] = useState();
   const [countriesBE, setCountriesBE] = useState<string[]>([]);
   const [filteredArray, setFilteredArray] = useState<string[]>(countriesBE);
-  const [filtruTara, setfiltruTara] =useState([])
-  const [filtruContinent, setfiltruContinent] =useState([])
-
 
   const fetchCountriesBE = () => {
     fetch("http://localhost:3000/coins/countries")
-        .then(response => {
-            return response.json()
-        })
-        .then(country => {
-          setCountriesBE(country)
-        })
-}
+      .then(response => {
+        return response.json()
+      })
+      .then(country => {
+        setCountriesBE(country)
+        setFilteredArray(country)
+      })
+  }
+
+  console.log(countriesBE)
+  console.log(filteredArray)
+
+  const handleInputChangeCountry = (event: any) => {
+    const selectedCountry = event;
+    setSelectedCountry(selectedCountry);
+    handleFiltering(selectedCountry, selectedContinent)
+  };
+
+  const handleInputChangeContinent = (event: any) => {
+    const selectedcontinent = event
+    setSelectedContinent(selectedcontinent);
+    handleFiltering(selectedCountry, selectedcontinent)
+  };
 
 
-const handleInputChangeCountry = (event: any) => {
-  const selectedCountry = event;
-  setSelectedCountry(selectedCountry);
-  handleFiltering(selectedCountry,selectedContinent)
-};
-
-const handleInputChangeContinent =  (event: any) => {
-  const selectedcontinent = event
-  setSelectedContinent(selectedcontinent);
-  handleFiltering(selectedCountry,selectedcontinent)
-};
+  useEffect(() => {
+    fetchCountriesBE(),
+      handleFiltering(selectedCountry, selectedContinent)
+  }, [])
 
 
-useEffect(() => {
-  fetchCountriesBE(),
-  handleFiltering(selectedCountry,selectedContinent)
-  // handleInputChangeCountry(),
-  // handleInputChangeContinent()
-}, [])
+  const handleFiltering = (selectedCountry, selectedContinent) => {
 
-// setSelectedContinent(selectedContinent);
-
-const handleFiltering = (selectedCountry,selectedContinent) => {
-  
-  console.log('functie',selectedCountry,selectedContinent);
-
-  if (selectedContinent && selectedCountry) {
-        const filteredItems = countriesBE
-        .filter(item =>item.Country.includes(selectedCountry))
-        .filter(item =>item.Continent.includes(selectedContinent.name))
-        setFilteredArray(filteredItems)
-        console.log(filteredItems)
-  } 
-  else if (selectedCountry) 
-        {
-          const filteredItems = countriesBE.filter(item =>item.Country.includes(selectedCountry));
-          console.log(filteredItems)
-          setFilteredArray(filteredItems)
-          console.log(filteredItems)
-        }
-  else if (selectedContinent) 
-        {
-          const filteredItems = countriesBE.filter(item =>item.Continent.includes(selectedContinent.name));
-          console.log(filteredItems)
-          setFilteredArray(filteredItems)
-        }
+    if (selectedContinent && selectedCountry) {
+      const filteredItems = countriesBE
+        .filter(item => item.Country.includes(selectedCountry))
+        .filter(item => item.Continent.includes(selectedContinent.name))
+      setFilteredArray(filteredItems)
+       console.log(filteredItems)
+    }
+    else if (selectedCountry) {
+      const filteredItems = countriesBE.filter(item => item.Country.includes(selectedCountry));
+      console.log(filteredItems)
+      setFilteredArray(filteredItems)
+       console.log(filteredItems)
+    }
+    else if (selectedContinent) {
+      const filteredItems = countriesBE.filter(item => item.Continent.includes(selectedContinent.name));
+      console.log(filteredItems)
+       setFilteredArray(filteredItems)
+    }
 
 
-}
-
-//console.log('aici',selectedContinent,selectedCountry)
-
-
+  }
 
   const continents = [
-      { name: 'Europe', code: 'EU' },
-      { name: 'Asia', code: 'AS' },
-      { name: 'Africa', code: 'AF' },
-      { name: 'America', code: 'AM' },
-      { name: 'Oceania', code: 'OC' }
+    { name: 'Europe', code: 'EU' },
+    { name: 'Asia', code: 'AS' },
+    { name: 'Africa', code: 'AF' },
+    { name: 'America', code: 'AM' },
+    { name: 'Oceania', code: 'OC' }
   ];
 
 
-// Define filter functions
-// const countryFilter = (countryFilter: string) => (item: any) => item.Country === countryFilter;
-// const continentFilter = (continentFilter: string) => (item: any) => item.Continent === continentFilter;
-
-// Assume filter criteria come from the UI form
-// const formFilters = {
-//   countryFilter: 'Romania',
-//   continentFilter: 'Europe',
-// };
-
-// const filteredItems = countriesBE.filter(item =>item.Continent.includes(ContinentSelected.name));
-
-// Construct filter functions based on form criteria
-// const filtersToApply = [];
-// if (formFilters.countryFilter) {
-//   filtersToApply.push(countryFilter(formFilters.countryFilter));
-// }
-// if (formFilters.continentFilter) {
-//   filtersToApply.push(continentFilter(formFilters.continentFilter));
-// }
-
-// console.log(filtersToApply);
-// Apply filters
-// const filteredItems = filtersToApply.reduce((result:[0], filter) => result.filter(filter), countriesBE);
-
-// console.log(filteredItems);
-
-  const TaraSelectata = (event: any) => {
-    console.log(event.target);
-  }
-
-
-   const itemTemplate = (country) => {
+  const itemTemplate = (country) => {
     return (
-      
-        <div className="col-12">
-            <div className="flex flex-column xl:flex-row xl:align-items-start p-2 gap-2">
-            
-                <div className="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-1">
-                    <div className="flex flex-column align-items-center sm:align-items-start gap-1">
-                      
-                      <div className="text-xl font-bold text-900">
-                      
-                      <Tag className="mr-2 text-md border-indigo-100 bg-indigo-500" 
-                      icon="pi pi-tags" value={country.Nr}></Tag>
-  
-                      {country.Country} 
-                      
-                      </div>
-                      
-                        <Button text >
-                        <div className={`fi fi-${country.Code}`} style={{ width: "40px", height: '40px' }}> </div>
-                        </Button>
-                    </div>
-                </div>
+      <div className="col-12">
+        <div className="flex flex-column xl:flex-row xl:align-items-start p-2 gap-2">
+          <div className="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-1">
+            <div className="flex flex-column align-items-center sm:align-items-start gap-1">
+              <div className="text-xl font-bold text-900">
+                <Tag className="mr-2 text-md border-indigo-100 bg-indigo-500"
+                  icon="pi pi-tags" value={country.Nr}></Tag>
+                {country.Country}
+              </div>
+              <Button text >
+                <div className={`fi fi-${country.Code}`} style={{ width: "40px", height: '40px' }}> </div>
+              </Button>
             </div>
+          </div>
         </div>
+      </div>
     );
-};
+  };
 
   return (
 
     <PrimeReactProvider>
-          <Dropdown value={selectedContinent} 
-          onChange={(e) => handleInputChangeContinent(e.value)} 
-          options={continents} optionLabel="name" 
-          placeholder="Select a Continent" className="w-full md:w-16rem" />
-          <span className="p-input-icon-left ">
-              <i className="pi pi-search" />
-              <InputText className="w-full md:w-16rem" placeholder="Search country"   
-              onChange={(e) => handleInputChangeCountry(e.target.value)}/>
-          </span>
-          <ScrollPanel key="sc" style={{paddingLeft:5, paddingTop:5, width: 224, height: '760px' }}>
+      <Dropdown value={selectedContinent}
+        onChange={(e) => handleInputChangeContinent(e.value)}
+        options={continents} optionLabel="name"
+        placeholder="Select a Continent" className="w-full md:w-16rem" />
+      <span className="p-input-icon-left ">
+        <i className="pi pi-search" />
+        <InputText className="w-full md:w-16rem" placeholder="Search country"
+          onChange={(e) => handleInputChangeCountry(e.target.value)} />
+      </span>
+      <ScrollPanel key="sc" style={{ paddingLeft: 5, paddingTop: 5, width: 224, height: '760px' }}>
 
-          <div className="card">
-            <DataView value={filteredArray} itemTemplate={itemTemplate}  />
+        <div className="card">
+          <DataView value={filteredArray} itemTemplate={itemTemplate} />
         </div>
 
-                        {/* {filteredArray.map((item) => (
+        {/* {filteredArray.map((item) => (
                           <Button key={item.name} text onClick={TaraSelectata} >
                           <div className="grid flex">
                                <div className="col-6">
@@ -195,7 +145,7 @@ const handleFiltering = (selectedCountry,selectedContinent) => {
                           </div>
                           </Button>
                           ))}   */}
-          </ScrollPanel>
+      </ScrollPanel>
     </PrimeReactProvider>
   )
 }
