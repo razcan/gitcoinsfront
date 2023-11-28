@@ -10,21 +10,28 @@ import Item from '../components/item'
 import Filters from '../components/filters'
 import Exchange from '../components/exchange'
 import MapWorld from '../components/worldmap'
+import { Card } from 'primereact/card';
 
 export default function Home() {
 
   return (
 
-    <PrimeReactProvider>
+    <PrimeReactProvider style={{height: "80%"}}>
    
    <Menu activatedIndex={0} />
-      <Exchange />
+   <Card>
+      {/* <Exchange /> */}
       <div className="grid">
-        <div className="col-12 lg:col-9 px-2 lg:px-5">
-          <MapWorld />
-        </div>   
+      <div className="col-12 lg:col-2  ">
+        {/* <Filters /> */}
+        </div>
+        
+          <div className="col-12 lg:col-12">
+            <MapWorld />
+          </div>   
+        
       </div>
-   
+    </Card>
 
     </PrimeReactProvider>
   )

@@ -9,41 +9,72 @@ import { useRouter } from 'next/navigation'
 import ReactDOM from 'react-dom';
 import WorldMap from 'react-world-map';
 import "./styles_map.css"
+import {SelectedContextContinent} from './context'
+import Filters from './filters'
+import { Card } from 'primereact/card';
 
 //https://github.com/heatherbooker/react-world-map/blob/main/docs/index.jsx
 
-
-function MapWorldContinent() {
-  const [selected, onSelect] = useState(null);
-  return (
-    
-      <WorldMap
-                multiple={ true }
-                selected={ selected } onSelect={ onSelect } />
-    
-  );
-}
-
 export default function MapWorld() {
-
-    const router = useRouter()
+  const [selected1, onSelect2] = useState<string>();
+  const [ContinentSelectattrans, setContinentSelectattrans] = useState<string>();
 
  
+  const selectedCont = (selected: any) => {
+      console.log('sss',selected)
+    switch (selected) {
+        case "eu":
+            onSelect2('Europe')
+            break;
+        case 'sa':
+            onSelect2('South America')
+            break;
+        case 'na':
+            onSelect2('North America')
+            break;
+        case 'as':
+            onSelect2('Asia')
+            break;
+        case 'oc':
+            onSelect2('Oceania')
+            break;
+        case 'af':
+            onSelect2('Africa')
+            break;
+        default:
+            console.log("No continent selected!");
+            break;
+    }
+  };
+
+
+
+  useEffect(() => {
+
+     selectedCont(ContinentSelectattrans)
+   
+
+  }, [ContinentSelectattrans])
+
   return (
-    
-    <div className="min-h-full">
-            <MapWorldContinent />
+
+    <div className="grid">
+
+    <div className="col-2">
+        <div className="text-center p-3 border-round-sm  font-bold">
+        <SelectedContextContinent.Provider value={selected1}>
+         <Filters/>
+        </SelectedContextContinent.Provider> 
+        </div>
     </div>
-        
+    <div className="col-8">
+        <div className="text-center p-3 border-round-sm  font-bold ">
+        <WorldMap
+                  multiple={ true }
+                  selected={ ContinentSelectattrans } onSelect={ setContinentSelectattrans } />
+        </div>
+    </div>
 
-    
-  )
+</div>
+          );
 }
-
-// style= {{
-//     min-height:100%
-//     float:left
-//     width:100px
-//     padding-bottom:10000px
-//     margin-bottom:-10000px
-// }}
