@@ -12,18 +12,7 @@ import { useSearchParams } from 'next/navigation'
 
 import ReactDOM from 'react-dom';
 import WorldMap from 'react-world-map';
-import "./styles_map.css"
 
-function YourMainComponent() {
-  const [selected, onSelect] = useState(null);
-
-console.log(selected);
-  return (
-    <>
-      <WorldMap selected={ selected } onSelect={ onSelect } />
-    </>
-  );
-}
 
 
 export default function Contact() {
@@ -37,7 +26,7 @@ export default function Contact() {
       <Menu activatedIndex={4} />
       <div>
           Contact page
-          <YourMainComponent />
+  
 </div>
     </PrimeReactProvider>
 

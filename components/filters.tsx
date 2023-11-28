@@ -36,31 +36,29 @@ export default function Filters() {
       })
       .then(country => {
         setCountriesBE(country)
-        setFilteredArray(country)
+        // setFilteredArray(country)
       })
   }
 
-   console.log('vvv',countriesBE)
-  // console.log(filteredArray)
 
   const handleInputChangeCountry = (event: any) => {
     const selectedCountry = event;
     setSelectedCountry(selectedCountry);
-    handleFiltering(selectedCountry, selectedContinent)
+    handleFiltering(selectedCountry, continentSelectat)
   };
 
   const handleInputChangeContinent = (event: any) => {
     const selectedcontinent = event
-    console.log(selectedcontinent)
+    // console.log(selectedcontinent)
     setSelectedContinent(selectedcontinent);
-    handleFiltering(selectedCountry, selectedcontinent)
+    handleFiltering(selectedCountry, continentSelectat)
   };
 
 
   useEffect(() => {
-    fetchCountriesBE(),
-      handleFiltering(selectedCountry, continentSelectat)
-  }, [])
+      fetchCountriesBE(),
+      handleFiltering( selectedCountry, continentSelectat)
+  }, [continentSelectat])
 
 
   // const handleFiltering = (selectedCountry, selectedContinent) => {
@@ -85,53 +83,28 @@ export default function Filters() {
   // }
 
 
-  const handleFiltering = (selectedCountry, continentSelectat) => {
+  const handleFiltering = (selectedCountry,continentSelectat) => {
 
-    switch (continentSelectat) {
-      case 'eu':
-        setContinentSelectattrans('Europe')
-          break;
-      case 'sa':
-        setContinentSelectattrans('South America')
-          break;
-      case 'na':
-        setContinentSelectattrans('North America')
-          break;
-      case 'as':
-        setContinentSelectattrans('Asia')
-          break;
-      case 'oc':
-        setContinentSelectattrans('Oceania')
-          break;
-      case 'af':
-        setContinentSelectattrans('Africa')
-          break;
-      default:
-          console.log("No continent selected!");
-          break;
-  }
+        if (selectedContinent && selectedCountry) {
+            const filteredItems = countriesBE
+              .filter(item => item.Country.includes(selectedCountry))
+              .filter(item => item.Continent.includes(continentSelectat))
+            setFilteredArray(filteredItems)
+            //  console.log(filteredItems)
+          }
 
-    console.log('xxx',continentSelectat)
-    console.log('yyy',selectedCountry)
-    console.log('tot',continentSelectattrans)
-    if (continentSelectat && selectedCountry) {
-      const filteredItems = countriesBE
-        .filter(item => item.Country.includes(selectedCountry))
-        .filter(item => item.Continent.includes('Europe'))
-      setFilteredArray(filteredItems)
-      console.log(filteredItems)
-    }
     else if (selectedCountry) {
-      const filteredItems = countriesBE.filter(item => item.Country.includes(selectedCountry));
-      console.log(filteredItems)
-      setFilteredArray(filteredItems)
-       console.log(filteredItems)
-    }
-    else if (continentSelectat) {
-      const filteredItems = countriesBE.filter(item => item.Continent.includes('Europe'));
+          const filteredItems = countriesBE.filter(item => item.Country.includes(selectedCountry));
+          console.log(filteredItems)
+          setFilteredArray(filteredItems)
+          //  console.log(filteredItems)
+        }
+
+     else if (continentSelectat) {
+      const filteredItems = countriesBE.filter(item => item.Continent.includes(continentSelectat));
        
        setFilteredArray(filteredItems)
-       console.log(filteredItems)
+      //  console.log('2',filteredItems)
     }
   }
 
@@ -145,7 +118,7 @@ export default function Filters() {
   ];
 
   const clearFilter = () => {
-    setFilteredArray(countriesBE);
+    // setFilteredArray(countriesBE);
     setSelectedCountry();
     setSelectedContinent();
     setInputCountry('');
@@ -153,14 +126,10 @@ export default function Filters() {
 
   const routeCountry = (props) => {
     const buttonText: string = props.target.innerText;
-    console.log(buttonText);
+    // console.log(buttonText);
     router.push(`/item/${buttonText}`);
   };
 
-//  value={selectedContinent}
-//   options={continents} 
-//   {continentSelectat}
-  
 
   const itemTemplate = (country) => {
     return (
@@ -190,43 +159,26 @@ export default function Filters() {
   return (
 
     <PrimeReactProvider>
-      <Dropdown value={selectedContinent}
+      {/* <Dropdown value={selectedContinent}
         onChange={(e) => handleInputChangeContinent(e.value)}
         options={continents} optionLabel="name"
-        placeholder="Select a Continent" className="w-full md:w-16rem" />
+        placeholder="Select a Continent" className="w-full md:w-16rem" /> */}
       <span className="p-input-icon-left ">
         <i className="pi pi-search" />
         <InputText className="w-full md:w-16rem" placeholder="Search country"
          value={inputCountry}
           onChange={(e) => handleInputChangeCountry(e.target.value)} />
       </span>
-      <ScrollPanel key="sc" style={{ paddingLeft: 5, paddingTop: 5, width: 224, height: '760px' }}>
-      <Button label="Clear filters" severity="danger" outlined onClick={clearFilter} />
-      <div>a {continentSelectat}</div>
+      <ScrollPanel key="sc" style={{ height: "auto",
+      width: 224
+    }}>
+      {/* <Button label="Clear filters" severity="danger" outlined onClick={clearFilter} /> */}
+
 
 
         <div className="card">
           <DataView value={filteredArray} itemTemplate={itemTemplate}  />
         </div>
-
-        {/* {filteredArray.map((item) => (
-                          <Button key={item.name} text onClick={TaraSelectata} >
-                          <div className="grid flex">
-                               <div className="col-6">
-                                  <div>
-                                  <div className={`fi fi-${item.code}`} 
-                                  style={{ width: "50px", height: '30px' }}> 
-                                <div className="p-4">
-                                {item.code.toUpperCase( ).slice(0, 2)}
-                                  </div> 
-                                  </div>
-                              
-                                    </div>
-                              </div>
-            
-                          </div>
-                          </Button>
-                          ))}   */}
       </ScrollPanel>
     </PrimeReactProvider>
   )
