@@ -19,7 +19,7 @@ import { useRouter } from 'next/navigation';
 
 
 export default function Item(params:any) {
-    
+    const router = useRouter();
     const [products, setProducts] = useState([]);
     const [layout, setLayout] = useState('grid');
     const [visible, setVisible] = useState(false);
@@ -41,56 +41,36 @@ export default function Item(params:any) {
 
     const addToOrder = () => {
 
-        // Save data to local storage
-                const OrderedCoin: {
-                    Catalog: any;
-                    Code:  any;
-                    Composition: any;
-                    Continent: any;
-                    Country: any;
-                    Name: any;
-                    Photo1: any;
-                    Photo2: any;
-                    Price:  any;
-                    References:  any;
-                    Status: any;
-                    Value: any;
-                    Year: any;
-                    id: any
-                }[]= {
-                    Catalog: selected_product.Catalog,
-                    Code: selected_product.Code,
-                    Composition: selected_product.Composition,
-                    Continent: selected_product.Continent,
-                    Country: selected_product.Country,
-                    Name: selected_product.Name,
-                    Photo1: selected_product.Photo1,
-                    Photo2: selected_product.Photo2,
-                    Price: selected_product.Price,
-                    References: selected_product.References,
-                    Status: selected_product.Status,
-                    Value: selected_product.Value,
-                    Year: selected_product.Year,
-                    id: selected_product.id
-                };
+             var existingData = localStorage.getItem("YourOrder");
 
-             const jsonString = JSON.stringify(OrderedCoin);
+             // Parse existing data (if any)
+             var existingArray = existingData ? JSON.parse(existingData) : [];
+         
+             // Add a new item to the array
+             var newItem = {
+                            Catalog: selected_product.Catalog,
+                            Code: selected_product.Code,
+                            Composition: selected_product.Composition,
+                            Continent: selected_product.Continent,
+                            Country: selected_product.Country,
+                            Name: selected_product.Name,
+                            Photo1: selected_product.Photo1,
+                            Photo2: selected_product.Photo2,
+                            Price: selected_product.Price,
+                            References: selected_product.References,
+                            Status: selected_product.Status,
+                            Value: selected_product.Value,
+                            Year: selected_product.Year,
+                            id: selected_product.id,
+                            Qtty: ordered_qtty
 
-             const existingDataString = localStorage.getItem('OrderedCoinNew');
+                        }
 
-             if (!existingDataString){
-                localStorage.setItem('OrderedCoinNew', jsonString);
-             }
-             else{
-                const existingData = existingDataString ? JSON.parse(existingDataString) : {};
-                localStorage.removeItem('OrderedCoinNew');
-
-                let ret: boolean[] = new Array();
-                ret.push(existingData)
-                ret.push(OrderedCoin)
-                console.log('array:',JSON.stringify(ret));
-                localStorage.setItem('OrderedCoinNew', JSON.stringify(ret));
-             }
+             existingArray.push(newItem);
+         
+             // Convert the updated array to a string and store it back in localStorage
+             localStorage.setItem("YourOrder", JSON.stringify(existingArray));
+   
     }
 
 
@@ -110,6 +90,10 @@ export default function Item(params:any) {
     useEffect(() => {
         fetchCoinData()
     }, [])
+
+    const viewOrder = () => {
+        router.push('/order')
+    }
 
 
 
@@ -188,7 +172,7 @@ export default function Item(params:any) {
     return (
         
         <div className="card">
-  <Menu activatedIndex={4} />
+  <Menu activatedIndex={0} />
             <Dialog visible={visible} modal={false} style={{ width: '25vw' }} 
             onHide={() => resetValue()}>
                 <p className="m-1">
@@ -244,15 +228,15 @@ export default function Item(params:any) {
                 <label className="font-bold block mb-2"></label>
                 <div className="flex-auto">
                 <label htmlFor="mile" className="font-bold block mb-2"></label>
-                    <InputNumber value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} />
+                    <InputNumber allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} />
                 </div>
                 <div className="flex-auto">
                 <label className="font-bold block mb-2"></label>
-                <Button label="Add"></Button>    
+                <Button label="Add" onClick={addToOrder} ></Button>    
                 </div>
                 <div className="flex-auto">
                 <label className="font-bold block mb-2"></label>
-                <Button label="Check Order"  onClick={addToOrder}></Button> 
+                <Button label="Check Order"  onClick={viewOrder}></Button> 
                 </div>   
             </div>
             </p>

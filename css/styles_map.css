@@ -8,6 +8,7 @@
 
 .map-selected:hover, .map-unselected:hover {
   cursor: pointer;
+  fill: #d0e1fd;
 }
 
 .map-img {

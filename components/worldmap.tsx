@@ -8,7 +8,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation'
 import ReactDOM from 'react-dom';
 import WorldMap from 'react-world-map';
-import "./styles_map.css"
+import "../css/styles_map.css";
 import { SelectedContextContinent } from './context'
 import Filters from './filters'
 import { Card } from 'primereact/card';
