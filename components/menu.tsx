@@ -101,11 +101,14 @@ export default function Menu(props) {
         
         {/* <Button  className='border-round font-bold flex' text icon="pi pi-shopping-cart" outlined badge={itemCount} badgeClassName="p-badge-danger" size="large" onClick={goToOrder}/> */}
        
-       <a href="/order">
-        <i className="pi pi-shopping-cart p-overlay-badge" style={{ fontSize: '2rem' }}>
-                <Badge value={itemCount} severity="danger"></Badge>
-        </i>
-        </a>
+      { 
+       itemCount ? 
+            <a href="/order"  >
+            <i className="pi pi-shopping-cart p-overlay-badge" style={{ fontSize: '2rem' }}>
+                    <Badge value={itemCount} severity="danger"></Badge>
+            </i> 
+            </a> 
+        : null} 
       </div>
     </PrimeReactProvider>
   )
