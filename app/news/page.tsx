@@ -6,6 +6,7 @@ import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import React, { useState, useEffect } from 'react';
 import  Menu  from '../../components/menu';
+import { Card } from 'primereact/card';
 
 
 export default function Order() {
@@ -17,9 +18,7 @@ export default function Order() {
       <div>
           News page
       </div>
-
     </PrimeReactProvider>
-
   )
 }
 

@@ -62,7 +62,8 @@ export default function Item(params:any) {
                             Value: selected_product.Value,
                             Year: selected_product.Year,
                             id: selected_product.id,
-                            Qtty: ordered_qtty
+                            Qtty: ordered_qtty,
+                            Amount: null
 
                         }
 

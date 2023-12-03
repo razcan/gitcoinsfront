@@ -19,13 +19,14 @@ export default function Menu(props) {
 
   const items = [
     { label: 'Home', icon: 'pi pi-fw pi-home' },
-    { label: 'News', icon: 'pi pi-fw pi-bitcoin' },
-    { label: 'Lots', icon: 'pi pi-fw pi-list' },
+    { label: 'News', icon: 'pi pi-fw pi-info-circle' },
+    { label: 'Lots', icon: 'pi pi-fw pi-bitcoin' },
     { label: 'Conditions', icon: 'pi pi-fw pi-list' },
     { label: 'Contact', icon: 'pi pi-fw pi-user' },
     { label: 'Admin', icon: 'pi pi-fw pi-cog' },
   ];
 
+ 
   const checkOrderedItem = () => {
 
     var existingData = localStorage.getItem("YourOrder");
