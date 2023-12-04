@@ -13,6 +13,10 @@ import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
+// import nodemailer from 'nodemailer';
+
+//to do - pe butonul de submit trebuie trimis email, stearsa comanda din localstorage si salvata in baza de date - inclusiv datele din formularul de adresa
+
 
 export default function Address() {
 
@@ -21,9 +25,13 @@ export default function Address() {
   const [countyIsSelected, setcountyIsSelected] = useState(true);
   const [listajudete, setListajudete] = useState(null);
   const [listaorase, setListaorase] = useState(null);
-  const [value, setValue] = useState('');
   const judete = Judete;
-  
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [address, setAddress] = useState('');
+  const [phonenumber, setPhonenumber] = useState('');
+  const [remarks, setRemarks] = useState('');
 
 const getJudete = () => {
 const judeteAll = [];
@@ -32,9 +40,19 @@ judete.map(localitate => {
 
 }) 
 setListajudete(judeteAll)
-//console.log(judeteAll)
+
 }
 
+const sendData = () => {
+  console.log('judet',selectedCounty.judet)
+  console.log('oras',selectedOras.localitate)
+  console.log('name',name)
+  console.log('email',email)
+
+  console.log('address',address)
+  console.log('phonenumber',phonenumber)
+  console.log('remarks',remarks)
+}
 
 
 const setSelectedCounty = (value) => {
@@ -43,9 +61,7 @@ const setSelectedCounty = (value) => {
   filterbycounty()
 }
 
-
 const filterbycounty = () => {
-
 
 type MyObject = {
   judet: string;
@@ -77,7 +93,7 @@ const myArray: MyObject[] = []
    <Menu activatedIndex={1} />
    <Card>
       <div>
-          Orders address 
+          Order address 
 <div className="grid">
     <div className="col-2">
         <div className="text-center p-3 border-round-sm  font-bold">
@@ -91,13 +107,15 @@ const myArray: MyObject[] = []
                     <label htmlFor="alphabetic" className="font-bold block mb-2">
                         Nume
                     </label>
-                    <InputText id="alphabetic" keyfilter="alpha" className="w-full" />
+                    <InputText value={name} onChange={(e) => setName(e.target.value)}
+                     id="alphabetic"  className="w-full" />
                 </div>
                 <div className="flex-auto">
                     <label htmlFor="email" className="font-bold block mb-2">
                             Email
                     </label>
-                    <InputText id="email" keyfilter="email" className="w-full" />
+                    <InputText value={email} onChange={(e) => setEmail(e.target.value)}
+                    id="email" keyfilter="email" className="w-full" />
                   </div>
           </div>
         <div className="flex flex-wrap gap-3 mb-4">
@@ -141,13 +159,15 @@ const myArray: MyObject[] = []
                     <label htmlFor="alphabetic" className="font-bold block mb-2">
                         Adresa
                     </label>
-                    <InputText id="alphabetic" keyfilter="alpha" className="w-full" />
+                    <InputText value={address} onChange={(e) => setAddress(e.target.value)}
+                    id="alphabetic"  className="w-full" />
                   </div>
                   <div className="flex-auto">
                     <label htmlFor="number" className="font-bold block mb-2">
                         Numar telefon
                     </label>
-                    <InputText id="number" keyfilter="num" className="w-full" />
+                    <InputText value={phonenumber} onChange={(e) => setPhonenumber(e.target.value)}
+                    id="number" keyfilter="num" className="w-full" />
                   
                 </div>
 
@@ -158,7 +178,9 @@ const myArray: MyObject[] = []
                     <label htmlFor="email" className="font-bold block mb-2">
                             Alte observatii
                     </label>
-                    <InputTextarea className="w-full" value={value} onChange={(e) => setValue(e.target.value)} rows={5} cols={30} />
+                    <InputTextarea 
+                    value={remarks} onChange={(e) => setRemarks(e.target.value)}
+                    className="w-full" rows={5} cols={30} />
                   </div>
 
         </div>
@@ -168,16 +190,13 @@ const myArray: MyObject[] = []
         <div className="text-center p-3 border-round-sm  font-bold "></div>
     </div>
 </div>
-<Button label="Submit" onClick={filterbycounty}/>
+<Button label="Submit" onClick={sendData}/>
 
     </div>
     </Card>
     </PrimeReactProvider>
   )
 }
-
-
-
 
          {/* <div className="card flex justify-content-center">
             <CascadeSelect value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={judete} 
@@ -186,11 +205,3 @@ const myArray: MyObject[] = []
                 //breakpoint="767px" 
                 placeholder="Select a City" style={{ minWidth: '14rem' }}  />
         </div> */}
-        {/* <Dropdown 
-            value={selectedCity} 
-            onChange={(e) => selectedAddress(e.value)} 
-            options={judeteRom} 
-            optionLabel="nume" 
-            placeholder="Select a City" 
-            className="w-full md:w-14rem" />
-      </div> */}
