@@ -27,7 +27,17 @@ position: sticky;
     z-index: 1000;
     background-color: #ffffff; /* Adjust the background color as needed */
   }
-  
-  .newspaper {
-    column-count: 3;
+
+  .sticky-down {
+    position: fixed;
+    top: 6;
+    background-color: #ffffff;
+    padding: 6px;
   }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Ensure the container takes the full height of the viewport */
+  }
+  

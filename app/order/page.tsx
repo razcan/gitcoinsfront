@@ -18,6 +18,7 @@ import { Rating } from 'primereact/rating';
 import { Tag } from 'primereact/tag';
 import { InputNumber } from 'primereact/inputnumber';
 import { number } from 'prop-types';
+import '../../css/style.css'
 
 
 export default function Order() {
@@ -30,23 +31,45 @@ export default function Order() {
   const [sumQttyItem, setSumQttyItem] = useState(0);
   const [sumValueItem, setValueItem] = useState(0);
 
+  const [dataFetched, setDataFetched] = useState(false);
 
-  const summaryOrder = () => {
-    const initialValue = 0;
-    const sumQttyWithInitial = retrievedObject.reduce(
-      (accumulator, currentValue) => accumulator + currentValue.Qtty,
-      initialValue,
-    );
 
-    const sumValueWithInitial = retrievedObject.reduce(
-      (accumulator, currentValue) => accumulator + (currentValue.Qtty * currentValue.Price),
-      initialValue,
-    );
 
-    setSumQttyItem(sumQttyWithInitial)
-    setValueItem(sumValueWithInitial)
 
-  }
+  useEffect(() => {
+    const getValues =  () => {
+      setRetrievedObject(JSON.parse(localStorage.getItem('YourOrder')))
+      setDataFetched(true)
+      console.log('z',dataFetched);
+    }
+
+    getValues();
+    summaryOrder();
+      
+  }, [dataFetched])
+
+  const summaryOrder =  () => {
+    if (dataFetched) {
+      console.log('part',dataFetched);
+      const initialValue = 0;
+      const sumQttyWithInitial =  retrievedObject.reduce(
+        (accumulator, currentValue) => accumulator + currentValue.Qtty,
+        initialValue,
+      )
+  
+      const sumValueWithInitial =  retrievedObject.reduce(
+        (accumulator, currentValue) => accumulator + (currentValue.Qtty * currentValue.Price),
+        initialValue,
+      )
+  
+      setSumQttyItem(sumQttyWithInitial)
+      setValueItem(sumValueWithInitial)
+
+    }
+  };
+  
+  // [sumQttyItem,sumValueItem])
+
 
   const setNewQtty = (e, data) => {
 
@@ -84,7 +107,7 @@ export default function Order() {
     return (
       <Card >
         <div className="grid">
-          <div className="col-12 surface-overlay ">
+          <div className="col-12  ">
             <div className="flex flex-column xl:flex-row xl:align-items-start gap-4 ">
               <img src={`http://localhost:3000/coins/download/${data.Photo1}`} alt={data.Photo1} style={{ width: '140px', padding: '10px' }} />
               <img src={`http://localhost:3000/coins/download/${data.Photo2}`} alt={data.Photo2} style={{ width: '140px', padding: '10px' }} />
@@ -100,7 +123,7 @@ export default function Order() {
                     <div className=" text-indigo-600 text-2xl w-16rem h-1rem"> Price: {data.Price}</div>
                     <div className=" text-indigo-600 text-2xl w-16rem h-1rem"> Status: {data.Status}</div>
                     <div className=" text-indigo-600 text-2xl w-16rem h-1rem"> Name: {data.Name}</div>
-                    <div className=" text-indigo-600 text-2xl w-16rem h-1rem"> Id: {data.Id}</div>
+                    <div className=" text-indigo-600 text-2xl w-16rem h-1rem"> Id: {data.id}</div>
                   </div>
                   <div className="flex flex-column gap-2">
                     <span className="flex align-items-center gap-2 text-indigo-600 text-2xl ">
@@ -139,10 +162,6 @@ export default function Order() {
     );
   };
 
-  useEffect(() => {
-    setRetrievedObject(JSON.parse(localStorage.getItem('YourOrder'))),
-      summaryOrder()
-  }, [])
 
 
   const goToAddress = () => {
@@ -170,32 +189,36 @@ export default function Order() {
 
   return (
     <PrimeReactProvider>
-      <Menu activatedIndex={0} />
+      <div className="container">
+         <Menu activatedIndex={0} />
+         <div className=" grid">
 
-      <div className="grid">
-
-        <div className="col-2">
-          <div className="p-3 border-round-sm "></div>
-        </div>
-
-        <div className="col-8">
-          <div className="p-3 border-round-sm ">
-            <OrderedItems />
+          <div className="col-2">
+            <div className="p-3 border-round-sm "></div>
           </div>
-        </div>
 
-        <div className=" col-2">
-          <div className="p-3 border-round-sm ">
-            <div className="card">
-              <div>Summary </div>
-              <div>Sum of QTTY  {sumQttyItem}</div>
-              <div>Sum of Value {sumValueItem}</div>
-              <Button label="Continue" icon="pi pi-check" onClick={goToAddress} />
+          <div className="col-8">
+            <div className="p-3 border-round-sm ">
+              <OrderedItems />
             </div>
           </div>
-        </div>
 
+          <div className=" pt-4 col-2"  >
+            <div className=" top-8  border-round-sm " >
+              <div className="sticky-down" >
+                <div>Summary </div>
+                <div>Sum of QTTY  {sumQttyItem}</div>
+                <div>Sum of Value {sumValueItem}</div>
+                <Button label="Continue" icon="pi pi-check" onClick={goToAddress} />
+              </div>
+            </div>
+          </div>
+
+          </div>
       </div>
+     
+
+     
     </PrimeReactProvider>
 
   )
