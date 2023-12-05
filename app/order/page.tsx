@@ -19,9 +19,12 @@ import { Tag } from 'primereact/tag';
 import { InputNumber } from 'primereact/inputnumber';
 import { number } from 'prop-types';
 import '../../css/style.css'
-
+import { usePathname, useSearchParams } from 'next/navigation'
 
 export default function Order() {
+
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
 
 
   const [retrievedObject, setRetrievedObject] = useState([]);
@@ -34,13 +37,10 @@ export default function Order() {
   const [dataFetched, setDataFetched] = useState(false);
 
 
-
-
   useEffect(() => {
     const getValues =  () => {
       setRetrievedObject(JSON.parse(localStorage.getItem('YourOrder')))
       setDataFetched(true)
-      console.log('z',dataFetched);
     }
 
     getValues();
@@ -50,7 +50,6 @@ export default function Order() {
 
   const summaryOrder =  () => {
     if (dataFetched) {
-      console.log('part',dataFetched);
       const initialValue = 0;
       const sumQttyWithInitial =  retrievedObject.reduce(
         (accumulator, currentValue) => accumulator + currentValue.Qtty,
@@ -165,8 +164,8 @@ export default function Order() {
 
 
   const goToAddress = () => {
-    router.push('/order/address');
-   }
+    router.push('/order/address' + '?' + `sumQttyItem=${sumQttyItem}`+'&'+`sumValueItem=${sumValueItem}`)
+  }
 
 
   const OrderedItems = () => {
@@ -216,9 +215,6 @@ export default function Order() {
 
           </div>
       </div>
-     
-
-     
     </PrimeReactProvider>
 
   )
