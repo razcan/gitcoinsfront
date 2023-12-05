@@ -16,11 +16,10 @@ import { Card } from 'primereact/card';
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import { isTypedArray } from 'util/types';
-
+import '../../../css/style.css'
 // import nodemailer from 'nodemailer';
 
-//to do - pe butonul de submit trebuie trimis email, stearsa comanda din localstorage si salvata in baza de date - inclusiv datele din formularul de adresa
+//to do - pe butonul de submit trebuie trimis email, 
 //salvare comanda in bd si trimitere link catre utilizator -id uuid - 
 
 export default function Address() {
@@ -108,7 +107,7 @@ export default function Address() {
 
   }
 
-  const sendData2 = () => {
+  const sendData2 = async () => {
     const header: OrderHeader = {
       OrderDate: new Date,
       Customer: name,
@@ -122,8 +121,20 @@ export default function Address() {
       ShippingMethod: 'Curier'
     }
 
-     axios.post('http://localhost:3000/orders', {header, orderDetails});
+    
 
+    try {
+      const response =await axios.post('http://localhost:3000/orders', {header, orderDetails});
+  
+      // Handle the response as needed
+      console.log(response.data);
+      localStorage.removeItem('YourOrder');
+    } catch (error) {
+      // Handle errors
+      console.error('Error submitting :', error);
+    }
+
+ router.push('/');
   }
 
 
@@ -164,9 +175,9 @@ export default function Address() {
 
   return (
     <PrimeReactProvider>
-      <Menu activatedIndex={1} />
-      <Card>
-        <div>
+      <Menu activatedIndex={0} />
+      <Card className='container'>
+        <div className='content'>
           Order address
           <div className="grid">
             <div className="col-2">

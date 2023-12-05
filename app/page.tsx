@@ -11,6 +11,7 @@ import Filters from '../components/filters'
 import Exchange from '../components/exchange'
 import MapWorld from '../components/worldmap'
 import { Card } from 'primereact/card';
+import  '../css/style.css'
 
 export default function Home() {
 
@@ -19,17 +20,15 @@ export default function Home() {
     <PrimeReactProvider style={{height: "80%"}}>
    
    <Menu activatedIndex={0} />
-   <Card>
+   <Card className='container'>
       {/* <Exchange /> */}
-      <div className="grid">
+      <div className="content grid">
       <div className="col-12 lg:col-2  ">
         {/* <Filters /> */}
         </div>
-        
           <div className="col-12 lg:col-12">
             <MapWorld />
-          </div>   
-        
+          </div>      
       </div>
     </Card>
 

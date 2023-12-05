@@ -67,9 +67,6 @@ export default function Order() {
     }
   };
   
-  // [sumQttyItem,sumValueItem])
-
-
   const setNewQtty = (e, data) => {
 
     const elementToUpdate = data;
@@ -105,7 +102,7 @@ export default function Order() {
   const itemTemplate = (data) => {
     return (
       <Card >
-        <div className="grid">
+        <div className=" grid">
           <div className="col-12  ">
             <div className="flex flex-column xl:flex-row xl:align-items-start gap-4 ">
               <img src={`http://localhost:3000/coins/download/${data.Photo1}`} alt={data.Photo1} style={{ width: '140px', padding: '10px' }} />
@@ -190,7 +187,7 @@ export default function Order() {
     <PrimeReactProvider>
       <div className="container">
          <Menu activatedIndex={0} />
-         <div className=" grid">
+         <div className="content grid">
 
           <div className="col-2">
             <div className="p-3 border-round-sm "></div>

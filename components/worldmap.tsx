@@ -57,6 +57,9 @@ export default function MapWorld() {
 
     return (
 
+<Card className='container'>
+    <div className='content'>
+
 <div className="grid">
 
 <div className="col-2">
@@ -103,5 +106,7 @@ export default function MapWorld() {
             </div> */}
 
         </div>
+        </div>
+        </Card>
     );
 }

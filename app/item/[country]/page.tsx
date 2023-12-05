@@ -15,6 +15,7 @@ import { Divider } from 'primereact/divider';
 import { InputText } from 'primereact/inputtext';
 import Menu from '../../../components/menu';
 import { useRouter } from 'next/navigation';
+import '../../../css/style.css'
 
 
 
@@ -128,17 +129,17 @@ export default function Item(params:any) {
 
     const gridItem = (product) => {
         return (
-            <div className="col-6 sm:col-6 lg:col-6 xl:col-2 p-2">
-                <div className="p-4 border-1 surface-border surface-card border-round">
-                    <div className="flex flex-wrap align-items-center justify-content-between gap-2">
+            <div className="col-4 sm:col-4 lg:col-2 xl:col-2 p-4">
+                <div className="p-2 border-1 surface-border surface-card border-round">
+                    <div className="flex flex-wrap align-items-center justify-content-between gap-1">
                         <div className="flex align-items-center gap-2">
                             <i className="pi pi-tag"></i>
                             <span className="text-xl">{product.Country}</span>
                         </div>
                         <Tag value={product.Catalog}></Tag>
                     </div>
-                    <div className="flex flex-column align-items-center gap-3 py-5">
-                        <img className="w-10 shadow-2 border-round" 
+                    <div className="flex flex-column align-items-center gap-1 py-2">
+                        <img className="w-6 shadow-1 border-round" 
                         src={`http://localhost:3000/coins/download/${product.Photo1}`} 
                         alt={product.Photo1} />
                         <div className="text-xl">{product.Value} / {product.Year}</div>
@@ -171,14 +172,16 @@ export default function Item(params:any) {
     };
 
     return (
-        
+        <div className="container">
+<div className="content">
+
         <div className="card">
   <Menu activatedIndex={0} />
             <Dialog visible={visible} modal={false} style={{ width: '25vw' }} 
             onHide={() => resetValue()}>
                 <p className="m-1">
-                    <img src={`http://localhost:3000/coins/download/${selected_product.Photo1}`} alt={selected_product.Photo1} style={{ width: '50%', padding: '10px' }} />
-                    <img src={`http://localhost:3000/coins/download/${selected_product.Photo2}`} alt={selected_product.Photo2} style={{ width: '50%', padding: '10px' }} />
+                    <img src={`http://localhost:3000/coins/download/${selected_product.Photo1}`} alt={selected_product.Photo1} style={{ width: '40%', padding: '10px' }} />
+                    <img src={`http://localhost:3000/coins/download/${selected_product.Photo2}`} alt={selected_product.Photo2} style={{ width: '40%', padding: '10px' }} />
                     <div>
                             <Divider />
                             
@@ -245,7 +248,9 @@ export default function Item(params:any) {
 
             <DataView value={products} itemTemplate={itemTemplate} layout={layout}
                 // header={header()} --if we want buttons for list and grid
-                paginator rows={12} />
+                paginator rows={18} />
+        </div>
+        </div>
         </div>
     )
 }

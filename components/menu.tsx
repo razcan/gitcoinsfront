@@ -100,16 +100,32 @@ export default function Menu(props) {
           }
           } />
         
-        {/* <Button  className='border-round font-bold flex' text icon="pi pi-shopping-cart" outlined badge={itemCount} badgeClassName="p-badge-danger" size="large" onClick={goToOrder}/> */}
-       
-      { 
+        {/* <Button  className='custom-font-button ' label ="Cart"
+             text icon="pi pi-shopping-cart"  badge={itemCount} 
+             badgeClassName="custom-badge-danger" size="large" onClick={goToOrder}/> */}
+        {/* <Button type="button" label="Cart" icon="pi pi-shopping-cart" 
+        outlined badge={itemCount}  size="large" badgeClassName="p-badge-danger" onClick={goToOrder}/> */}
+
+{ 
        itemCount ? 
-            <a href="/order"  >
-            <i className="pi pi-shopping-cart p-overlay-badge" style={{ fontSize: '2rem' }}>
-                    <Badge value={itemCount} severity="danger"></Badge>
+             <a href="/order"  >
+                <i className="pi pi-shopping-cart p-overlay-badge" style={{ fontSize: '2.66rem' }}>
+                    <Badge value={itemCount} 
+                    style={{ height: '1.6rem', width: "1.6rem" }}
+                    // size="large" 
+                    severity="danger"></Badge>
+                </i>
+                </a>
+               : null }
+
+      {/* { 
+       itemCount ? 
+             <a href="/order"  >
+            <i className="pi pi-shopping-cart p-overlay-badge" style={{paddingTop:'1rem', fontSize: '3rem' }}>
+                    <Badge value={itemCount}  severity="danger"></Badge>
             </i> 
             </a> 
-        : null} 
+        : null}  */}
       </div>
     </PrimeReactProvider>
   )
