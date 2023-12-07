@@ -16,7 +16,7 @@ import { InputText } from 'primereact/inputtext';
 import Menu from '../../../components/menu';
 import { useRouter } from 'next/navigation';
 import '../../../css/style.css'
-import OrderSteps from  '../../../components/steps'
+
 
 
 export default function Item(params:any) {
@@ -181,7 +181,7 @@ export default function Item(params:any) {
         <div className="card">
             <div key={menuIndex}>
              <Menu activatedIndex={0} />
-           <OrderSteps />
+           
             </div>
 
             <Dialog visible={visible} modal={false} style={{ width: '25vw' }} 

@@ -19,6 +19,7 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import '../../../css/style.css'
 
+
 // import nodemailer from 'nodemailer';
 
 //to do - pe butonul de submit trebuie trimis email, 
@@ -31,6 +32,7 @@ export default function Address() {
   const searchParams = useSearchParams()
   const sumQttyItem = searchParams.get("sumQttyItem");
   const sumValueItem = searchParams.get("sumValueItem");
+  const [menuIndex, setMenuIndex] = useState(0);
 
   // console.log(sumQttyItem,sumValueItem)
   const router = useRouter();
@@ -42,9 +44,12 @@ export default function Address() {
   const [countyIsSelected, setcountyIsSelected] = useState(true);
   const [listajudete, setListajudete] = useState(null);
   const [listaorase, setListaorase] = useState(null);
-  const [clasaNume, setClasaNume] = useState("w-full");
+  const [clasaName, setClasaName] = useState("w-full");
+  const [clasaEmail, setClasaEmail] = useState("w-full");
+  const [clasaAddress, setClasaAddress] = useState("w-full");
+  const [clasaPhone, setClasaPhone] = useState("w-full");
   const [clasaNumeDropD, setNumeDropD] = useState("w-full md:w-44rem");
-
+  const [clasaNumeDropCity, setNumeDropCity] = useState("w-full md:w-44rem");
   
 
   const judete = Judete;
@@ -118,17 +123,18 @@ export default function Address() {
 
     if (!name) {
       console.log('nu ai bagat numele')
-      setClasaNume( "w-full p-invalid")
+      setClasaName( "w-full p-invalid")
      //
-    } else { setClasaNume( "w-full")}
+    }
+
     if (!email) {
       console.log('nu ai bagat email')
-      setClasaNume( "w-full p-invalid")
+      setClasaEmail( "w-full p-invalid")
      //
     }
     if (!phonenumber) {
       console.log('nu ai bagat tel')
-      setClasaNume( "w-full p-invalid")
+      setClasaPhone( "w-full p-invalid")
      //
     }
     if (!selectedCounty) {
@@ -138,12 +144,12 @@ export default function Address() {
     }
     if (selectedOras == 'Selectati un oras') {
       console.log('nu ai bagat oras')
-      setNumeDropD("w-full md:w-44rem p-invalid");
+      setNumeDropCity("w-full md:w-44rem p-invalid");
      //
     }
     if (!address) {
       console.log('nu ai bagat adresa')
-      setClasaNume( "w-full p-invalid")
+      setClasaAddress( "w-full p-invalid")
      //
     }
 
@@ -220,7 +226,7 @@ router.push('/');
     <PrimeReactProvider>
       <Menu activatedIndex={0} />
       <OrderSteps step={1}/>
-      <Card className='container'>
+      <Card className='container' >
         <div className='content'>
           Order address
           <div className="grid">
@@ -236,15 +242,15 @@ router.push('/');
                     <label htmlFor="alphabetic" className="font-bold block mb-2 ">
                       Nume
                     </label>
-                    <InputText value={name} onChange={(e) => setName(e.target.value)}
-                      id="alphabetic" className={clasaNume} />
+                    <InputText   value={name} onChange={(e) => {setName(e.target.value);  setClasaName( "w-full") }}
+                      id="alphabetic" className={clasaName} />
                   </div>
                   <div className="flex-auto">
                     <label htmlFor="email" className="font-bold block mb-2">
                       Email
                     </label>
-                    <InputText value={email} onChange={(e) => setEmail(e.target.value)}
-                      id="email" keyfilter="email" className={clasaNume} />
+                    <InputText value={email} onChange={(e) => {setEmail(e.target.value); setClasaEmail( "w-full") }}
+                      id="email" keyfilter="email" className={clasaEmail} />
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-3 mb-4">
@@ -257,6 +263,7 @@ router.push('/');
                       onChange={(e) => {
 
                         setSelectedCounty(e.value)
+                        setNumeDropD("w-full md:w-44rem")
                       }
                       }
                       options={listajudete}
@@ -273,14 +280,14 @@ router.push('/');
                     </label>
                     <Dropdown
                       value={selectedOras}
-                      onChange={(e) => setOras(e.value)}
+                      onChange={(e) => {setOras(e.value); setNumeDropCity("w-full md:w-44rem") }}
                       options={listaorase}
                       optionLabel="localitate"
                       editable
                       filter
                       disabled={countyIsSelected}
                       placeholder="Select a City"
-                      className={clasaNumeDropD} />
+                      className={clasaNumeDropCity} />
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-3 mb-4">
@@ -288,15 +295,15 @@ router.push('/');
                     <label htmlFor="alphabetic" className="font-bold block mb-2">
                       Adresa
                     </label>
-                    <InputText value={address} onChange={(e) => setAddress(e.target.value)}
-                      id="alphabetic" className={clasaNume} />
+                    <InputText value={address} onChange={(e) => {setAddress(e.target.value); setClasaAddress( "w-full")}}
+                      id="alphabetic" className={clasaAddress} />
                   </div>
                   <div className="flex-auto">
                     <label htmlFor="number" className="font-bold block mb-2">
                       Numar telefon
                     </label>
-                    <InputText value={phonenumber} onChange={(e) => setPhonenumber(e.target.value)}
-                      id="number" keyfilter="num" className={clasaNume} />
+                    <InputText value={phonenumber} onChange={(e) => {setPhonenumber(e.target.value); setClasaPhone("w-full")}}
+                      id="number" keyfilter="num" className={clasaPhone} />
 
                   </div>
 
