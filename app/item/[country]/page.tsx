@@ -16,7 +16,7 @@ import { InputText } from 'primereact/inputtext';
 import Menu from '../../../components/menu';
 import { useRouter } from 'next/navigation';
 import '../../../css/style.css'
-
+import OrderSteps from  '../../../components/steps'
 
 
 export default function Item(params:any) {
@@ -26,7 +26,7 @@ export default function Item(params:any) {
     const [visible, setVisible] = useState(false);
     const [selected_product, setSelected_product] = useState([]);
     const [ordered_qtty, setOrdered_qtty] = useState(1);
-
+    const [menuIndex, setMenuIndex] = useState(0);
 
     const setProductVisible = (product: any, bol: boolean) => {
         setSelected_product(product);
@@ -72,6 +72,9 @@ export default function Item(params:any) {
          
              // Convert the updated array to a string and store it back in localStorage
              localStorage.setItem("YourOrder", JSON.stringify(existingArray));
+             setVisible(false);
+             setMenuIndex((prevKey) => prevKey + 1);
+            // router.push('/order')
    
     }
 
@@ -176,7 +179,11 @@ export default function Item(params:any) {
 <div className="content">
 
         <div className="card">
-  <Menu activatedIndex={0} />
+            <div key={menuIndex}>
+             <Menu activatedIndex={0} />
+           <OrderSteps />
+            </div>
+
             <Dialog visible={visible} modal={false} style={{ width: '25vw' }} 
             onHide={() => resetValue()}>
                 <p className="m-1">

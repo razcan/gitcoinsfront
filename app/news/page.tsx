@@ -7,9 +7,14 @@ import 'primeflex/primeflex.css';
 import React, { useState, useEffect } from 'react';
 import  Menu  from '../../components/menu';
 import { Card } from 'primereact/card';
+import { Button } from 'primereact/button';
+
+
 
 
 export default function Order() {
+
+
 
   
   return (
@@ -17,6 +22,7 @@ export default function Order() {
    <Menu activatedIndex={1} />
       <div>
           News page
+        
       </div>
     </PrimeReactProvider>
   )

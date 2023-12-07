@@ -6,6 +6,7 @@ import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import React, { useState, useEffect } from 'react';
 import Menu from '../../../components/menu';
+import OrderSteps from '../../../components/steps';
 import { CascadeSelect } from 'primereact/cascadeselect';
 import { Judete } from '../../../public/address/judete'
 import { Dropdown } from 'primereact/dropdown';
@@ -17,6 +18,7 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import '../../../css/style.css'
+
 // import nodemailer from 'nodemailer';
 
 //to do - pe butonul de submit trebuie trimis email, 
@@ -40,6 +42,11 @@ export default function Address() {
   const [countyIsSelected, setcountyIsSelected] = useState(true);
   const [listajudete, setListajudete] = useState(null);
   const [listaorase, setListaorase] = useState(null);
+  const [clasaNume, setClasaNume] = useState("w-full");
+  const [clasaNumeDropD, setNumeDropD] = useState("w-full md:w-44rem");
+
+  
+
   const judete = Judete;
 
   const [name, setName] = useState('');
@@ -108,33 +115,69 @@ export default function Address() {
   }
 
   const sendData2 = async () => {
-    const header: OrderHeader = {
-      OrderDate: new Date,
-      Customer: name,
-      Email: email,
-      Phone: phonenumber,
-      Remarks: remarks,
-      TotalAmount: sumValueItem,
-      OrderStatus: 'Plasata',
-      ShippingAddress: (`Judet ${selectedCounty.judet}, Localitate ${selectedOras.localitate}, ${address}`),
-      PaymentMethod: 'Ramburs',
-      ShippingMethod: 'Curier'
+
+    if (!name) {
+      console.log('nu ai bagat numele')
+      setClasaNume( "w-full p-invalid")
+     //
+    } else { setClasaNume( "w-full")}
+    if (!email) {
+      console.log('nu ai bagat email')
+      setClasaNume( "w-full p-invalid")
+     //
+    }
+    if (!phonenumber) {
+      console.log('nu ai bagat tel')
+      setClasaNume( "w-full p-invalid")
+     //
+    }
+    if (!selectedCounty) {
+      console.log('nu ai bagat judet')
+      setNumeDropD("w-full md:w-44rem p-invalid");
+     //
+    }
+    if (selectedOras == 'Selectati un oras') {
+      console.log('nu ai bagat oras')
+      setNumeDropD("w-full md:w-44rem p-invalid");
+     //
+    }
+    if (!address) {
+      console.log('nu ai bagat adresa')
+      setClasaNume( "w-full p-invalid")
+     //
     }
 
-    
 
-    try {
-      const response =await axios.post('http://localhost:3000/orders', {header, orderDetails});
-  
-      // Handle the response as needed
-      console.log(response.data);
-      localStorage.removeItem('YourOrder');
-    } catch (error) {
-      // Handle errors
-      console.error('Error submitting :', error);
-    }
 
- router.push('/');
+if(address && phonenumber && email && selectedCounty && selectedOras && address ) {
+
+  const header: OrderHeader = {
+    OrderDate: new Date,
+    Customer: name,
+    Email: email,
+    Phone: phonenumber,
+    Remarks: remarks,
+    TotalAmount: sumValueItem,
+    OrderStatus: 'Plasata',
+    ShippingAddress: (`Judet ${selectedCounty.judet}, Localitate ${selectedOras.localitate}, ${address}`),
+    PaymentMethod: 'Ramburs',
+    ShippingMethod: 'Curier'
+  }
+
+  try {
+    const response =await axios.post('http://localhost:3000/orders', {header, orderDetails});
+
+    // Handle the response as needed
+    // console.log(response.data);
+    localStorage.removeItem('YourOrder');
+  } catch (error) {
+    // Handle errors
+    console.error('Error submitting :', error);
+  }
+
+router.push('/');
+}
+
   }
 
 
@@ -176,6 +219,7 @@ export default function Address() {
   return (
     <PrimeReactProvider>
       <Menu activatedIndex={0} />
+      <OrderSteps step={1}/>
       <Card className='container'>
         <div className='content'>
           Order address
@@ -185,22 +229,22 @@ export default function Address() {
 
               </div>
             </div>
-            <div className="col-6">
-              <div className="text-center p-3 border-round-sm  font-bold ">
+            <div className="col-8">
+              <div className="p-3 border-round-sm  font-bold ">
                 <div className="flex flex-wrap gap-3 mb-4">
                   <div className="flex-auto">
-                    <label htmlFor="alphabetic" className="font-bold block mb-2">
+                    <label htmlFor="alphabetic" className="font-bold block mb-2 ">
                       Nume
                     </label>
                     <InputText value={name} onChange={(e) => setName(e.target.value)}
-                      id="alphabetic" className="w-full" />
+                      id="alphabetic" className={clasaNume} />
                   </div>
                   <div className="flex-auto">
                     <label htmlFor="email" className="font-bold block mb-2">
                       Email
                     </label>
                     <InputText value={email} onChange={(e) => setEmail(e.target.value)}
-                      id="email" keyfilter="email" className="w-full" />
+                      id="email" keyfilter="email" className={clasaNume} />
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-3 mb-4">
@@ -220,7 +264,7 @@ export default function Address() {
                       editable
                       filter
                       placeholder="Select a County"
-                      className="w-full md:w-44rem"
+                      className={clasaNumeDropD}
                     />
                   </div>
                   <div className="flex-auto">
@@ -236,7 +280,7 @@ export default function Address() {
                       filter
                       disabled={countyIsSelected}
                       placeholder="Select a City"
-                      className="w-full md:w-44rem" />
+                      className={clasaNumeDropD} />
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-3 mb-4">
@@ -245,14 +289,14 @@ export default function Address() {
                       Adresa
                     </label>
                     <InputText value={address} onChange={(e) => setAddress(e.target.value)}
-                      id="alphabetic" className="w-full" />
+                      id="alphabetic" className={clasaNume} />
                   </div>
                   <div className="flex-auto">
                     <label htmlFor="number" className="font-bold block mb-2">
                       Numar telefon
                     </label>
                     <InputText value={phonenumber} onChange={(e) => setPhonenumber(e.target.value)}
-                      id="number" keyfilter="num" className="w-full" />
+                      id="number" keyfilter="num" className={clasaNume} />
 
                   </div>
 
@@ -269,13 +313,18 @@ export default function Address() {
                   </div>
 
                 </div>
+                <div className="gap-3 mb-4">
+                   <div >
+                        <Button label="PLACE ORDER" onClick={sendData2} className="w-2 right-0"/>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="col-2">
-              <div className="text-center p-3 border-round-sm  font-bold "></div>
+              <div className="text-center p-3 border-round-sm  font-bold  "></div>
             </div>
           </div>
-          <Button label="Submit" onClick={sendData2} />
+          
         </div>
       </Card>
     </PrimeReactProvider>

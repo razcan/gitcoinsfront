@@ -20,6 +20,7 @@ import { InputNumber } from 'primereact/inputnumber';
 import { number } from 'prop-types';
 import '../../css/style.css'
 import { usePathname, useSearchParams } from 'next/navigation'
+import OrderSteps from  '../../components/steps'
 
 export default function Order() {
 
@@ -29,7 +30,7 @@ export default function Order() {
 
   const [retrievedObject, setRetrievedObject] = useState([]);
   const [itemToBeRemoved, setItemToBeRemoved] = useState([]);
-
+  const [menuIndex, setMenuIndex] = useState(0);
 
   const [sumQttyItem, setSumQttyItem] = useState(0);
   const [sumValueItem, setValueItem] = useState(0);
@@ -93,6 +94,7 @@ export default function Order() {
     // Convert the updated array to a string and store it back in localStorage
     localStorage.setItem("YourOrder", JSON.stringify(retrievedObject));
     summaryOrder()
+    setMenuIndex((prevKey) => prevKey + 1);
   }
 
 
@@ -172,7 +174,7 @@ export default function Order() {
         <div className="col-12">
           <div className="card">
             <DataScroller value={retrievedObject} itemTemplate={itemTemplate}
-              rows={4} buffer={0.1} />
+              rows={50} buffer={0.5} />
           </div>
         </div>
 
@@ -186,7 +188,10 @@ export default function Order() {
   return (
     <PrimeReactProvider>
       <div className="container">
-         <Menu activatedIndex={0} />
+      <div key={menuIndex}>
+             <Menu activatedIndex={0} />
+             <OrderSteps step={0}/>
+            </div>
          <div className="content grid">
 
           <div className="col-2">
