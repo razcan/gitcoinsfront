@@ -4,7 +4,7 @@ import 'primereact/resources/themes/tailwind-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import Menu from '../../../components/menu';
 import OrderSteps from '../../../components/steps';
 import { CascadeSelect } from 'primereact/cascadeselect';
@@ -18,7 +18,7 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import '../../../css/style.css'
-
+import { Toast } from 'primereact/toast';
 
 // import nodemailer from 'nodemailer';
 
@@ -26,6 +26,12 @@ import '../../../css/style.css'
 //salvare comanda in bd si trimitere link catre utilizator -id uuid - 
 
 export default function Address() {
+
+  const toast = useRef(null);
+
+  const showSuccess = () => {
+      toast.current.show({severity:'success', summary: 'Order saved succesfully', life: 4000});
+  }
 
 
   const pathname = usePathname()
@@ -176,6 +182,7 @@ if(address && phonenumber && email && selectedCounty && selectedOras && address 
     // Handle the response as needed
     // console.log(response.data);
     localStorage.removeItem('YourOrder');
+    showSuccess();
   } catch (error) {
     // Handle errors
     console.error('Error submitting :', error);
@@ -227,6 +234,7 @@ router.push('/');
       <Menu activatedIndex={0} />
       <OrderSteps step={1}/>
       <Card className='container' >
+      <Toast ref={toast} />
         <div className='content'>
           Order address
           <div className="grid">
