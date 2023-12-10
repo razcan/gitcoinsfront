@@ -15,6 +15,8 @@ import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { useRouter } from 'next/navigation';
+import { Card } from 'primereact/card';
+import  '../../../css/style.css' 
 
 export default function Admin() {
   const toast = useRef(null);
@@ -161,11 +163,13 @@ const coin_composition = [
   return (
     <PrimeReactProvider>
 
-      <Menu activatedIndex={4} />
+<Card className='container'>
+    <div className='content'>
+      <Menu activatedIndex={5} />
       <Toast ref={toast} />
 
       {/* <div className="card" style={{width:"30%"}}> */}
-      <div  style={{padding:"10px", maxHeight: "100vh"}} className="md:w-28rem">
+      <div  style={{padding:"10px", maxHeight: "90vh"}} className="md:w-28rem">
         
         <div className="flex flex-wrap gap-3 mb-4">
           <div className="flex-auto">
@@ -177,8 +181,6 @@ const coin_composition = [
                       setSelectedCountry(e.value);
                       setContinent(e.value.continent);
                       setCode(e.value.code)
-                      console.log(selectedCountry);
-                      console.log('tara : ',e.value.name);
                     }}
                       options={countries} optionLabel="name" placeholder="Select a Country"
                       filter valueTemplate={selectedCountryTemplate}
@@ -288,6 +290,8 @@ const coin_composition = [
         <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => handlerFormData()} />  
         <Button label="Delete" icon="pi pi-delete-left" iconPos="right" severity="danger"/>
         </div></div>
+        </div>
+        </Card>
     </PrimeReactProvider>
 
   )

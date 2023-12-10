@@ -18,6 +18,8 @@ import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { useRouter } from 'next/navigation';
 import { Tag } from 'primereact/tag';
+import  '../../../../css/style.css' 
+import { Card } from 'primereact/card';
 
 interface PageProps {
   params: { edit: string },
@@ -204,12 +206,15 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
   }
 
   return (
-    <PrimeReactProvider>                 
+    <PrimeReactProvider>      
+      <Card className='container'>
+          <div className='content'>
+           
 
-      <Menu activatedIndex={4} />
+      <Menu activatedIndex={5} />
       <Toast ref={toast} />
 
-        <div style={{ padding: "10px", maxHeight: "100vh" }} className="md:w-28rem">
+        <div style={{ padding: "10px", maxHeight: "90vh" }} className="md:w-28rem">
 
           <div className="flex flex-wrap gap-3 mb-4">
             <div className="flex-auto">
@@ -348,6 +353,8 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
           </div>
 
         </div>
+        </div>
+        </Card>
 
       {/* ))} */}
 

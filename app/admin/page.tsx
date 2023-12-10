@@ -19,6 +19,8 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Tag } from 'primereact/tag';
 import { useRouter } from 'next/navigation'
+import { Card } from 'primereact/card';
+import  '../../css/style.css' 
 
 export default function Admin() {
 
@@ -181,12 +183,16 @@ const statusRowFilterTemplate = (options) => {
   return (
     <PrimeReactProvider>
 
+<Card className='container'>
+    <div className='content'>
+
       <Menu activatedIndex={5} />
       <Toast ref={toast} />
 
       <div className="card">
             <Toast ref={toast} />
-            <DataTable value={products} paginator rows={6}  showGridlines
+            <DataTable value={products} paginator rows={5}  showGridlines
+            size="large"
             selectionMode={'radiobutton'}      
             filters={filters} filterDisplay="menu"     
             selection={selectedProduct} 
@@ -195,7 +201,10 @@ const statusRowFilterTemplate = (options) => {
             globalFilterFields={['Country','Status','Stock', 'Name']}
             dataKey="id"
             header={header}
-            columnResizeMode="expand" resizableColumns tableStyle={{ minWidth: '40rem' }}>
+            columnResizeMode="expand" resizableColumns
+            // className='h-full'
+            tableClassName='h-full'
+            tableStyle={{ minWidth: '50rem', minHeight: '48rem' }}>
                 <Column header="Image" body={imageTemplate}></Column>
                 <Column field="Name" filterField="Name" sortable filter filterPlaceholder="Search by name" 
                 header="Name"></Column>
@@ -221,8 +230,8 @@ const statusRowFilterTemplate = (options) => {
               
             </DataTable>
         </div>
-  
-      
+  </div>
+      </Card>
     </PrimeReactProvider>
 
   )
