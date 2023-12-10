@@ -57,7 +57,15 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
 
 
   const deleteItem = async () => {
-    fetch(`http://localhost:3000/coins/${edit}`, { method: 'DELETE' })
+    const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOlt7InVzZXJJZCI6MCwiY3JlYXRlZGF0IjoiMjAyMy0xMi0xMFQwNjoyODo1Mi4wMDBaIiwidXNlcm5hbWUiOiJyYXp2YW4iLCJwYXNzd29yZCI6InZhc2lsaWNhIiwicm9sZSI6ImFkbWluIiwibmFtZSI6InJhenZhbiBtdXN0YXRhIiwiYXZhdGFyIjoibmEifV0sInVzZXJuYW1lIjpbeyJ1c2VySWQiOjAsImNyZWF0ZWRhdCI6IjIwMjMtMTItMTBUMDY6Mjg6NTIuMDAwWiIsInVzZXJuYW1lIjoicmF6dmFuIiwicGFzc3dvcmQiOiJ2YXNpbGljYSIsInJvbGUiOiJhZG1pbiIsIm5hbWUiOiJyYXp2YW4gbXVzdGF0YSIsImF2YXRhciI6Im5hIn1dLCJpYXQiOjE3MDIxOTY5NDgsImV4cCI6MTcwMjE5NzU0OH0.h0LENqf7GqQplLq7mBZ2XBwE7wEOwUSpZJXa8nbqN9s'
+    fetch(`http://localhost:3000/coins/${edit}`, { 
+      method: 'DELETE' ,
+      headers: {
+        'Authorization': `Bearer ${jwtToken}`,
+        'Content-Type': 'application/json', // Adjust content type if needed
+      },
+    
+    })
       .then(() => console.log({ status: 'Delete successful' }));
   }
 

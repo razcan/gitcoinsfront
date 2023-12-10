@@ -7,13 +7,6 @@ import 'primeflex/primeflex.css';
 import React, { useState, useEffect, useRef } from 'react';
 import Menu from '../../components/menu';
 import { useRouter } from 'next/navigation'
-import { usePathname } from 'next/navigation'
-import { useSearchParams } from 'next/navigation'
-
-import ReactDOM from 'react-dom';
-import WorldMap from 'react-world-map';
-
-
 
 export default function Contact() {
 

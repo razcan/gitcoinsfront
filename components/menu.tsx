@@ -24,6 +24,7 @@ export default function Menu(props) {
     { label: 'Conditions', icon: 'pi pi-fw pi-list' },
     { label: 'Contact', icon: 'pi pi-fw pi-user' },
     { label: 'Admin', icon: 'pi pi-fw pi-cog' },
+    { label: 'Login', icon: 'pi pi-fw pi-cog' },
   ];
 
  
@@ -72,6 +73,10 @@ export default function Menu(props) {
           onTabChange={(e) => {
             setMenuIndex(activeMenuIndex)
             switch (e.index) {
+              case 6:
+                router.push('/login');
+
+                break;
               case 5:
                 router.push('/admin');
 
