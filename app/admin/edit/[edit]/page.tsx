@@ -218,13 +218,14 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
   }
 
   return (
-    <PrimeReactProvider>      
-      <Card className='container'>
-          <div className='content'>
-           
-
+    <PrimeReactProvider>     
+      
+       
       <Menu activatedIndex={5} />
       <Toast ref={toast} />
+
+      <Card className='container'>
+          <div className='content'>
 
         <div style={{ padding: "10px", maxHeight: "90vh" }} className="md:w-28rem">
 

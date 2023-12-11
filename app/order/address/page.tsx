@@ -20,10 +20,6 @@ import axios from 'axios';
 import '../../../css/style.css'
 import { Toast } from 'primereact/toast';
 
-// import nodemailer from 'nodemailer';
-
-//to do - pe butonul de submit trebuie trimis email, 
-//salvare comanda in bd si trimitere link catre utilizator -id uuid - 
 
 export default function Address() {
 
@@ -236,16 +232,14 @@ router.push('/');
       <Card className='container' >
       <Toast ref={toast} />
         <div className='content'>
-          Order address
           <div className="grid">
             <div className="col-2">
-              <div className="text-center p-3 border-round-sm  font-bold">
-
+              <div className="text-center p-1 border-round-sm  font-bold">
               </div>
             </div>
             <div className="col-8">
-              <div className="p-3 border-round-sm  font-bold ">
-                <div className="flex flex-wrap gap-3 mb-4">
+              <div className="p-0 border-round-sm  font-bold ">
+                <div className="flex flex-wrap gap-3 mb-5">
                   <div className="flex-auto">
                     <label htmlFor="alphabetic" className="font-bold block mb-2 ">
                       Nume
@@ -329,15 +323,17 @@ router.push('/');
 
                 </div>
                 <div className="gap-3 mb-4">
-                   <div >
-                        <Button label="PLACE ORDER" onClick={sendData2} className="w-2 right-0"/>
-                  </div>
+          
                 </div>
               </div>
             </div>
-            <div className="col-2">
-              <div className="text-center p-3 border-round-sm  font-bold  "></div>
+            <div className=" pt-5 col-2"  >
+            <div className=" border-round-sm " >
+             
+                <Button label="Continue" icon="pi pi-check" onClick={sendData2} />
+          
             </div>
+          </div>
           </div>
           
         </div>

@@ -12,12 +12,14 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import axios from 'axios';
 import { Toast } from 'primereact/toast';
+import { Dialog } from 'primereact/dialog';
 
 export default function Contact() {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [token, setToken] = useState([]);
     const toast = useRef(null);
+    const [visible, setVisible] = useState(false);
 
     const showSuccess = () => {
         toast.current.show({severity:'success', summary: 'Success', detail:'You are now connected', life: 6000});
@@ -30,16 +32,19 @@ export default function Contact() {
 const router = useRouter()
 
 const Login = async () => {
-    console.log(username,password )
-
 
   try {
     const response =await axios.post('http://localhost:3000/auth/login', {username, password});
     showSuccess();
-    setToken(response.data)
-    localStorage.setItem("token", JSON.stringify(response.data));
-    console.log(response.data);
 
+    
+    setToken(response.data)
+    
+    // Remove the item from local storage
+    localStorage.removeItem("token");
+    // Store token in local storage
+    localStorage.setItem("token", JSON.stringify(response.data));
+   
   } catch (error) {
     // Handle errors
     showError();
@@ -65,7 +70,29 @@ const Login = async () => {
     <PrimeReactProvider>
 
       <Menu activatedIndex={6} />
-      <div>
+
+      <div className="card flex justify-content-center">
+            <Button label="Show" icon="pi pi-external-link" onClick={() => setVisible(true)} />
+            <Dialog header="Header" visible={visible} onHide={() => setVisible(false)}
+                style={{ width: '50vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }}>
+               
+                <div className="flex flex-wrap justify-content-center align-items-center gap-2">
+                        <label className="w-6rem">Username</label>
+                        <InputText id="username" type="text" className="w-12rem" value={username} onChange={(e) => setUserName(e.target.value)}/>
+                    </div>
+                    <div className="flex flex-wrap justify-content-center align-items-center gap-2">
+                        <label className="w-6rem">Password</label>
+                        <InputText id="password" type="password" className="w-12rem" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    </div>
+                    <div className="flex flex-wrap  gap-2">
+                        <label className="w-6rem"></label>
+                        <Button label="Login" icon="pi pi-user" className="w-10rem mx-auto" onClick={Login}></Button>
+                    </div>
+                
+            </Dialog>
+        </div>
+
+      {/* <div>
           Login page
           <Toast ref={toast} />
   
@@ -88,7 +115,7 @@ const Login = async () => {
                     
                 </div>
             </div>
-        </div>
+        </div> */}
 
     </PrimeReactProvider>
 

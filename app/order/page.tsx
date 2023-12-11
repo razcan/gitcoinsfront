@@ -204,12 +204,12 @@ export default function Order() {
             </div>
           </div>
 
-          <div className=" pt-4 col-2"  >
+          <div className=" pt-5 col-2"  >
             <div className=" top-8  border-round-sm " >
               <div className="sticky-down" >
-                <div>Summary </div>
+                {/* <div>Summary </div>
                 <div>Sum of QTTY  {sumQttyItem}</div>
-                <div>Sum of Value {sumValueItem}</div>
+                <div>Sum of Value {sumValueItem}</div> */}
                 <Button label="Continue" icon="pi pi-check" onClick={goToAddress} />
               </div>
             </div>
