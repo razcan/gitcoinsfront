@@ -12,6 +12,7 @@ import "../css/styles_map.css";
 import { SelectedContextContinent } from './context'
 import Filters from './filters'
 import { Card } from 'primereact/card';
+import { Tag } from 'primereact/tag';
 
 //https://github.com/heatherbooker/react-world-map/blob/main/docs/index.jsx
 
@@ -65,8 +66,11 @@ export default function MapWorld() {
 <div className="col-2">
     
             <div className="h-full flex  justify-content-center">
-                     <Card>
+            
+                     <Card className="border-1 border-pink-50">
+                     
                         <SelectedContextContinent.Provider value={selected1}>
+                        
                             <Filters />
                         </SelectedContextContinent.Provider>
                     </Card>
@@ -76,7 +80,9 @@ export default function MapWorld() {
     <div className="col-8">    
        
             <div className="h-full  p-10 flex align-items-center justify-content-center">
-                    <Card>
+                    <Card className="border-1 border-pink-50">
+                    
+                    {selected1 ? <Tag severity="info" value={selected1} rounded></Tag> : null}
                         <WorldMap
                             multiple={true}
                             selected={ContinentSelectattrans} onSelect={setContinentSelectattrans} />
@@ -84,26 +90,6 @@ export default function MapWorld() {
             </div>
         
     </div>
-
-
-            {/* <div className="col-2">
-                <div className="text-center p-3 border-round-sm  font-bold">
-                    <Card>
-                    <SelectedContextContinent.Provider value={selected1}>
-                        <Filters />
-                    </SelectedContextContinent.Provider>
-                    </Card>
-                </div>
-            </div>
-            <div className="col-8">
-                <div className="text-center p-3 border-round-sm  font-bold ">
-                    <Card>
-                        <WorldMap
-                            multiple={true}
-                            selected={ContinentSelectattrans} onSelect={setContinentSelectattrans} />
-                    </Card>
-                </div>
-            </div> */}
 
         </div>
         </div>

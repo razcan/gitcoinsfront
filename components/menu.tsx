@@ -44,15 +44,22 @@ try {
   const response =await axios.post('http://localhost:3000/auth/login', {username, password});
    showSuccess();
   setToken(response.data)
+  console.log(response.data)
+  console.log('ici',response.data.expire_date_token);
   setVisible(false)
   // Remove the item from local storage
   localStorage.removeItem("token");
+  localStorage.removeItem("expire_date_token");
   // Store token in local storage
-  localStorage.setItem("token", JSON.stringify(response.data));
+  localStorage.setItem("token", JSON.stringify('access_token:'+response.data.access_token));
+  localStorage.setItem("expire_date_token", JSON.stringify(response.data.expire_date_token));
+
+  // const myStoredItem = localStorage.getItem('token');
  
 } catch (error) {
   // Handle errors
   localStorage.removeItem("token");
+  localStorage.removeItem("expire_date_token");
   showError();
   console.error('Error submitting :', error);
 }
@@ -176,13 +183,13 @@ try {
                         <label className="w-6rem"></label>
                         <Button label="Login" icon="pi pi-user" className="w-10rem mx-auto" onClick={Login}></Button>
                     </div>
-                
             </Dialog>
 
 { 
        itemCount ? 
-       <Button className="p-button-outlined mb-5 m-1 w-4rem h-4rem" icon="pi pi-shopping-cart" badge={itemCount}  outlined 
-        badgeClassName="p-badge-danger" onClick={goToOrder}/>
+       <Button className="p-button-outlined mb-5 m-1 w-4rem h-4rem"
+        icon="pi pi-shopping-cart"  badge={itemCount}  outlined 
+        badgeClassName=" text-white bg-red-400 text-lg w-2rem h-2rem pt-2 " onClick={goToOrder}/>
             //  <a href="/order"  >
             //     <i className="pi pi-shopping-cart p-overlay-badge" style={{ fontSize: '2.66rem' }}>
             //         <Badge value={itemCount} 
