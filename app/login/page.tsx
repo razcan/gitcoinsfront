@@ -14,7 +14,9 @@ import axios from 'axios';
 import { Toast } from 'primereact/toast';
 import { Dialog } from 'primereact/dialog';
 
-export default function Contact() {
+
+export default function Login() {
+
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [token, setToken] = useState([]);
@@ -33,49 +35,43 @@ const router = useRouter()
 
 const Login = async () => {
 
-  try {
-    const response =await axios.post('http://localhost:3000/auth/login', {username, password});
-    showSuccess();
-
-    
-    setToken(response.data)
-    
-    // Remove the item from local storage
-    localStorage.removeItem("token");
-    // Store token in local storage
-    localStorage.setItem("token", JSON.stringify(response.data));
-   
-  } catch (error) {
-    // Handle errors
-    showError();
-    console.error('Error submitting :', error);
-  }
-}
-
-// useEffect(() => {
-//     const getValues =  () => {
-//       setRetrievedObject(JSON.parse(localStorage.getItem('YourOrder')))
-//       setDataFetched(true)
-//     }
-
-//     getValues();
-//     summaryOrder();
+    try {
+      const response =await axios.post('http://localhost:3000/auth/login', {username, password});
       
-//   }, [dataFetched])
-
-    //http://localhost:3000/auth/login
-//{"username": "razvan", "password": "vasilica"}
-
+      showSuccess();
+      setToken(response.data)
+     
+      setVisible(false)
+      // Remove the item from local storage
+      localStorage.removeItem("token");
+      // Store token in local storage
+      localStorage.setItem("token", JSON.stringify(response.data));
+     // Read token from local storage
+     const myStoredItem = localStorage.getItem('token');
+     const rez = JSON.parse(myStoredItem);
+    
+     //data la care expira token
+    //  console.log(rez.expire_date_token)
+     router.push('/');
+      //expire_date_token
+     
+    } catch (error) {
+      // Handle errors
+      localStorage.removeItem("token");
+      showError();
+      console.error('Error submitting :', error);
+    }
+    }
+    
   return (
     <PrimeReactProvider>
 
       <Menu activatedIndex={6} />
 
       <div className="card flex justify-content-center">
-            <Button label="Show" icon="pi pi-external-link" onClick={() => setVisible(true)} />
-            <Dialog header="Header" visible={visible} onHide={() => setVisible(false)}
-                style={{ width: '50vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }}>
-               
+           
+          
+      <Toast ref={toast} />
                 <div className="flex flex-wrap justify-content-center align-items-center gap-2">
                         <label className="w-6rem">Username</label>
                         <InputText id="username" type="text" className="w-12rem" value={username} onChange={(e) => setUserName(e.target.value)}/>
@@ -88,34 +84,7 @@ const Login = async () => {
                         <label className="w-6rem"></label>
                         <Button label="Login" icon="pi pi-user" className="w-10rem mx-auto" onClick={Login}></Button>
                     </div>
-                
-            </Dialog>
         </div>
-
-      {/* <div>
-          Login page
-          <Toast ref={toast} />
-  
-</div>
-<div className="card">
-            <div className="flex flex-column md:flex-row">
-                <div className="field w-full md:w-5 flex flex-column gap-3 py-5">
-                    <div className="flex flex-wrap justify-content-center align-items-center gap-2">
-                        <label className="w-6rem">Username</label>
-                        <InputText id="username" type="text" className="w-12rem" value={username} onChange={(e) => setUserName(e.target.value)}/>
-                    </div>
-                    <div className="flex flex-wrap justify-content-center align-items-center gap-2">
-                        <label className="w-6rem">Password</label>
-                        <InputText id="password" type="password" className="w-12rem" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                    </div>
-                    <div className="flex flex-wrap  gap-2">
-                        <label className="w-6rem"></label>
-                        <Button label="Login" icon="pi pi-user" className="w-10rem mx-auto" onClick={Login}></Button>
-                    </div>
-                    
-                </div>
-            </div>
-        </div> */}
 
     </PrimeReactProvider>
 

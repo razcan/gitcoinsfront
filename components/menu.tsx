@@ -27,6 +27,7 @@ export default function Menu(props) {
 
   const [visible, setVisible] = useState(false);
   const toast = useRef(null);
+  const [expireToken, setExpireToken] = useState(false); 
 
   const showSuccess = () => {
       toast.current.show({severity:'success', summary: 'Success', detail:'You are now connected', life: 1000});
@@ -42,24 +43,28 @@ const Login = async () => {
 
 try {
   const response =await axios.post('http://localhost:3000/auth/login', {username, password});
-   showSuccess();
+  
+  showSuccess();
   setToken(response.data)
-  console.log(response.data)
-  console.log('ici',response.data.expire_date_token);
+ 
   setVisible(false)
   // Remove the item from local storage
   localStorage.removeItem("token");
-  localStorage.removeItem("expire_date_token");
   // Store token in local storage
-  localStorage.setItem("token", JSON.stringify('access_token:'+response.data.access_token));
-  localStorage.setItem("expire_date_token", JSON.stringify(response.data.expire_date_token));
+  localStorage.setItem("token", JSON.stringify(response.data));
+ // Read token from local storage
+ const myStoredItem = localStorage.getItem('token');
+ const rez = JSON.parse(myStoredItem);
 
-  // const myStoredItem = localStorage.getItem('token');
+ //data la care expira token
+//  console.log(rez.expire_date_token)
+ setExpireToken(rez.expire_date_token)
+
+  //expire_date_token
  
 } catch (error) {
   // Handle errors
   localStorage.removeItem("token");
-  localStorage.removeItem("expire_date_token");
   showError();
   console.error('Error submitting :', error);
 }
@@ -168,6 +173,7 @@ try {
 
 {/* <Button label="Show" icon="pi pi-user" onClick={() => setVisible(true)} /> */}
 <Button className="p-button-outlined mb-5 m-1 w-4rem h-4rem" icon="pi pi-user"  onClick={() => setVisible(true)}/>
+{/* {expireToken} */}
             <Dialog header="Login" visible={visible} onHide={() => setVisible(false)}
                 style={{ width: '30vw' }} breakpoints={{ '960px': '50vw', '641px': '75vw' }}>
                <Toast ref={toast} />

@@ -3,7 +3,8 @@ import { PrimeReactProvider, PrimeReactContext, PrimeIcons } from 'primereact/ap
 import { usePathname } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 import React, { useState, useEffect, useRef } from 'react';
-import Menu from '../../../../components/menu';
+import Menu  from '../../../../components/menu';
+import Login from '../../../login/page'
 import 'primereact/resources/themes/tailwind-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -20,6 +21,7 @@ import { useRouter } from 'next/navigation';
 import { Tag } from 'primereact/tag';
 import  '../../../../css/style.css' 
 import { Card } from 'primereact/card';
+import { Dialog } from 'primereact/dialog';
 
 interface PageProps {
   params: { edit: string },
@@ -33,7 +35,10 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
   const [items, setItems] = useState([]);
   const toast = useRef(null);
   const axios = require('axios');
+  const [visible, setVisible] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState([]);
+  const [username, setUserName] = useState('');
+  const [password, setPassword] = useState('');
  
   const countries = countries_all;
   const [Price, setPrice] = useState([1]);
@@ -54,24 +59,38 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
   const [picturefiles, setPicturefiles] = useState([]);
   const [Id, setId] = useState([]);
 
-
+  const showError = (message) => {
+    toast.current.show({ severity: 'error', summary: 'Saving error!', detail: message, life: 3000 });
+  }
 
   const deleteItem = async () => {
-    // const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOlt7InVzZXJJZCI6MCwiY3JlYXRlZGF0IjoiMjAyMy0xMi0xMFQwNjoyODo1Mi4wMDBaIiwidXNlcm5hbWUiOiJyYXp2YW4iLCJwYXNzd29yZCI6InZhc2lsaWNhIiwicm9sZSI6ImFkbWluIiwibmFtZSI6InJhenZhbiBtdXN0YXRhIiwiYXZhdGFyIjoibmEifV0sInVzZXJuYW1lIjpbeyJ1c2VySWQiOjAsImNyZWF0ZWRhdCI6IjIwMjMtMTItMTBUMDY6Mjg6NTIuMDAwWiIsInVzZXJuYW1lIjoicmF6dmFuIiwicGFzc3dvcmQiOiJ2YXNpbGljYSIsInJvbGUiOiJhZG1pbiIsIm5hbWUiOiJyYXp2YW4gbXVzdGF0YSIsImF2YXRhciI6Im5hIn1dLCJpYXQiOjE3MDIyMTg4MzMsImV4cCI6MTcwMjIxOTQzM30.XjR-UvBQkQzp-ovmlsJ-WTHcxgCvHC3ZRa8JoHLi-SM'
     const jwtToken = JSON.parse(localStorage.getItem('token'))
     const jwtTokenf=jwtToken.access_token;
     // console.log(jwtToken.access_token)
-    fetch(`http://localhost:3000/coins/${edit}`, { 
+   const response = await fetch(`http://localhost:3000/coins/${edit}`, { 
       method: 'DELETE' ,
       headers: {
         'Authorization': `Bearer ${jwtTokenf}`,
-        'Content-Type': 'application/json', // Adjust content type if needed
+        'Content-Type': 'application/json', 
       },
     
     })
-      .then(() => console.log({ status: 'Delete successful' }));
+
+    if (!response.ok) {
+      const res = `HTTP error! Status: ${response.status}`
+      // const x = response.status
+      //  showError(res)
+       if(response.status ==401) {
+        // setVisible(true)
+         router.push('/login')
+       }
+      //  throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    if (response.ok) {
+      console.log( 'Delete successful' );
       router.push('/admin');
   }
+}
 
   useEffect(() => {
     fetchCoinData()
@@ -350,6 +369,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
                 />
                     <div className="flex flex-column gap-2">
                 <label>Actual photos</label>
+                <Toast ref={toast} />
                 <img src={`http://localhost:3000/coins/download/${Photo1}`} alt={Photo1} style={{ width: '30%', padding: '10px' }} />
                 <img src={`http://localhost:3000/coins/download/${Photo2}`} alt={Photo2} style={{ width: '30%', padding: '10px' }} />
             </div>
