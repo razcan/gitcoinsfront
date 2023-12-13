@@ -17,7 +17,6 @@ import { Toast } from 'primereact/toast';
 import { useRouter } from 'next/navigation';
 import { Card } from 'primereact/card';
 import  '../../../css/style.css' 
-import { Calendar } from 'primereact/calendar';
 
 export default function Admin() {
   const toast = useRef(null);
@@ -38,9 +37,6 @@ export default function Admin() {
   const [picturefiles, setPicturefiles] = useState([]);
   const [byteArray, setbyteArray] = useState([]);
   const [jsonDataByte, setJsonDataByte] = useState([]);
-
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
 
   const showSuccess = () => {
     toast.current.show({severity:'success', summary: 'Result', detail:'The coin was saved succesfully', life: 3000});
@@ -116,8 +112,6 @@ formdata2.append("files", picturefiles[0]);
 formdata2.append("files", picturefiles[1]);
 formdata2.append('Photo1', "Photo1");
 formdata2.append('Photo2', "Photo2" );
-formdata2.append('StartDate', endDate);
-formdata2.append('EndDate', endDate );
 
 // Display the key/value pairs
 // for (var pair of formdata2.entries()) {
@@ -169,72 +163,18 @@ const coin_composition = [
   return (
     <PrimeReactProvider>
 
-      <Card className='container'>
-          <div className='content'>
-            <Menu activatedIndex={5} />
-            <Toast ref={toast} />
+<Card className='container'>
+    <div className='content'>
+      <Menu activatedIndex={5} />
+      <Toast ref={toast} />
 
-      <div className="grid card flex-wrap gap-3 p-fluid" style={{padding:"20px"}}>
-        <div className="col-2">
-            <div className="flex-auto gap-3 p-3">
-                <span className="p-float-label">
-                <Calendar inputId="start_date" value={startDate} showIcon onChange={(e) => setStartDate(e.value)} dateFormat="dd/mm/yy"/>
-                <label htmlFor="start_date">Start Date</label>
-                </span>
-            </div>
-            <div className="flex-auto gap-3 p-3">
-               <span className="p-float-label">
-                <Calendar inputId="end_date" value={endDate} showIcon onChange={(e) => setEndDate(e.value)} dateFormat="dd/mm/yy"/>
-                <label htmlFor="end_date">End Date</label>
-                </span>
-            </div>
-            <div className="flex-auto gap-3 p-3">
-            <span className="p-float-label">
-              <InputText id="catalog"  placeholder="Enter catalog code" value={Catalog} onChange={(e) => setCatalog(e.target.value)} />
-              <label htmlFor="catalog">Catalog</label>
-              </span>
-             </div>
-
-             <div className="flex-auto gap-3 p-3">
-              <span className="p-float-label">             
-              <InputText id="value"  placeholder="Enter value" value={Value} onChange={(e) => setValue(e.target.value)}/>
-               <label htmlFor="value">Value</label>
-              </span>
-              </div>
-
-              <div className="flex-auto gap-3 p-3">
-              <span className="p-float-label">
-              <InputText id="name"  placeholder="Enter name" value={Name} onChange={(e) => setName(e.target.value)}/>
-              <label htmlFor="name">Name</label>
-              </span>
-              </div>
-
-              <div className="flex-auto gap-3 p-3">
-              <span className="p-float-label">
-                <InputNumber useGrouping={false} placeholder="Enter year" value={Year} onValueChange={(e) => setYear(e.value)}/>
-                <label htmlFor="year">Year</label>
-              </span>
-              </div>
-
-              <div className="flex-auto gap-3 p-3">
-              <span className="p-float-label">  
-              <InputNumber useGrouping={false} placeholder="Enter initial stock" value={Stock} onValueChange={(e) => setStock(e.value)}/>
-              <label htmlFor="stock">Stock</label>
-             </span>
-             </div>
-
-        </div>
-
-
-        <div className="col-3">
-            <div className="flex-auto gap-3 p-3">
-                <div className="flex flex-column gap-3">
-                  <Dropdown value={Composition} options={coin_composition} optionLabel="name" onChange={(e) => setComposition(e.value)} 
-                    placeholder="Select composition"/>
-                </div>
-            </div>
-            <div className="flex-auto p-3">
-            <div className="flex flex-column gap-3">
+      {/* <div className="card" style={{width:"30%"}}> */}
+      <div  style={{padding:"10px", maxHeight: "90vh"}} className="md:w-28rem">
+        
+        <div className="flex flex-wrap gap-3 mb-4">
+          <div className="flex-auto">
+            <div className="flex flex-column gap-2">
+              {/* <label htmlFor="catalog">Country</label> */}
               <Dropdown value= {selectedCountry} 
               onChange={(e) => {
                       // setSelectedCountry(e.value.name);
@@ -247,19 +187,92 @@ const coin_composition = [
                       itemTemplate={countryOptionTemplate} />
             </div>
           </div>
-          <div className="flex-auto p-3">
-            <div className="flex flex-column gap-3">
+        </div>
+        <div className="flex flex-wrap gap-3 mb-4">
+          <div className="flex-auto">
+            <div className="flex flex-column gap-2">
+            <span className="p-float-label">
+              <InputText id="catalog"  placeholder="Enter catalog code" 
+              value={Catalog} onChange={(e) => setCatalog(e.target.value)} />
+              <label htmlFor="catalog">Catalog</label>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-3 mb-4">
+          <div className="flex-auto">
+            <div className="flex flex-column gap-2">
+            <span className="p-float-label">             
+              <InputText id="value"  placeholder="Enter value"
+              value={Value} onChange={(e) => setValue(e.target.value)}
+              />
+               <label htmlFor="value">Value</label>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-3 mb-4">
+          <div className="flex-auto">
+            <div className="flex flex-column gap-2">
+            <span className="p-float-label">
+              <InputText id="name"  placeholder="Enter name"
+              value={Name} onChange={(e) => setName(e.target.value)}
+              />
+              <label htmlFor="name">Name</label>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-3 mb-4">
+          <div className="flex-auto">
+            <div className="flex flex-column gap-2">
+              <span className="p-float-label">
+                <InputNumber useGrouping={false} placeholder="Enter year" value={Year} onValueChange={(e) => setYear(e.value)}/>
+                <label htmlFor="year">Year</label>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-3 mb-4">
+          <div className="flex-auto">
+            <div className="flex flex-column gap-2">
+              {/* <label htmlFor="status">Composition</label> */}
+              <Dropdown value={Composition} options={coin_composition} optionLabel="name" onChange={(e) => setComposition(e.value)} 
+                placeholder="Select composition"/>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-3 mb-4">
+          <div className="flex-auto">
+            <div className="flex flex-column gap-2">
+              {/* <label htmlFor="price">Price</label> */}
+              <InputNumber showButtons mode="currency" currency="RON" value={Price} onValueChange={(e) => setPrice(e.value)}/>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-3 mb-4">
+          <div className="flex-auto">
+            <div className="flex flex-column gap-2">
+              {/* <label htmlFor="status">Status</label> */}
               <Dropdown value={Status} options={coin_status} optionLabel="name" onChange={(e) => setStatus(e.value)} 
                 placeholder="Select status"/>
             </div>
           </div>
-          <div className="flex-auto p-3">
-            <div className="flex flex-column gap-3">
-              <InputNumber showButtons mode="currency" currency="RON" value={Price} onValueChange={(e) => setPrice(e.value)}/>
+        </div>
+
+        <div className="flex flex-wrap gap-3 mb-4">
+          <div className="flex-auto">
+            <div className="flex flex-column gap-2">
+            <span className="p-float-label">  
+              <InputNumber useGrouping={false} placeholder="Enter initial stock" value={Stock} onValueChange={(e) => setStock(e.value)}/>
+              <label htmlFor="stock">Stock</label>
+            </span>
             </div>
           </div>
-          <div className="flex-auto p-3">
-            <div className="flex flex-column gap-3">
+        </div>
+        <div className="flex flex-wrap gap-3 mb-4">
+          <div className="flex-auto">
+            <div className="flex flex-column gap-2">
               <label htmlFor="value">File Upload</label>
               <FileUpload  
               multiple accept="image/*" 
@@ -273,15 +286,10 @@ const coin_composition = [
             </div>
           </div>
         </div>
-    </div>
-
-      {/* <div  style={{padding:"5px", maxHeight: "90vh"}} className="md:w-28rem"> */}
-
-      <div className="flex-auto">
-             <Button className='m-1' label="Save" icon="pi pi-check" iconPos="right" onClick={() => handlerFormData()} />  
-             <Button className='m-1' label="Delete" icon="pi pi-delete-left" iconPos="right" severity="danger"/>            
-      </div>
-
+        <div className="card flex flex-wrap justify-content-left gap-3 mb-4">
+        <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => handlerFormData()} />  
+        <Button label="Delete" icon="pi pi-delete-left" iconPos="right" severity="danger"/>
+        </div></div>
         </div>
         </Card>
     </PrimeReactProvider>

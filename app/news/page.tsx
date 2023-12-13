@@ -20,10 +20,12 @@ export default function Order() {
   return (
     <PrimeReactProvider>
    <Menu activatedIndex={1} />
-      <div>
-          News page
-        
-      </div>
+      <div className="card flex flex-wrap gap-3 p-fluid">
+        <div className="flex-auto">
+        News page
+</div>
+</div>
+   
     </PrimeReactProvider>
   )
 }

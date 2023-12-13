@@ -15,6 +15,8 @@ import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { Toast } from 'primereact/toast';
 import axios from 'axios';
+import { Avatar } from 'primereact/avatar';
+import { AvatarGroup } from 'primereact/avatargroup'; 
 
 export default function Menu(props) {
 
@@ -161,18 +163,10 @@ try {
           }
           } />
         
-        {/* <Button  className='custom-font-button ' label ="Cart"
-             text icon="pi pi-shopping-cart"  badge={itemCount} 
-             badgeClassName="custom-badge-danger" size="large" onClick={goToOrder}/> */}
-         {/* <Button type="button" label="Cart" icon="pi pi-shopping-cart" 
-        outlined badge={itemCount}  size="large" badgeClassName="p-badge-danger" onClick={goToOrder}/> 
-
-<a href="/login"  >
-<i className="pi pi-user" style={{ fontSize: '2.5rem' }}></i>
-</a> */}
 
 {/* <Button label="Show" icon="pi pi-user" onClick={() => setVisible(true)} /> */}
-<Button className="p-button-outlined mb-5 m-1 w-4rem h-4rem" icon="pi pi-user"  onClick={() => setVisible(true)}/>
+<Avatar icon="pi pi-user" size="xlarge" onClick={() => setVisible(true)}/>
+
 {/* {expireToken} */}
             <Dialog header="Login" visible={visible} onHide={() => setVisible(false)}
                 style={{ width: '30vw' }} breakpoints={{ '960px': '50vw', '641px': '75vw' }}>
@@ -193,27 +187,17 @@ try {
 
 { 
        itemCount ? 
-       <Button className="p-button-outlined mb-5 m-1 w-4rem h-4rem"
-        icon="pi pi-shopping-cart"  badge={itemCount}  outlined 
-        badgeClassName=" text-white bg-red-400 text-lg w-2rem h-2rem pt-2 " onClick={goToOrder}/>
-            //  <a href="/order"  >
-            //     <i className="pi pi-shopping-cart p-overlay-badge" style={{ fontSize: '2.66rem' }}>
-            //         <Badge value={itemCount} 
-            //         style={{ height: '1.6rem', width: "1.6rem" }}
-            //         // size="large" 
-            //         severity="danger"></Badge>
-            //     </i>
-            //     </a>
+               <div className="flex-auto pl-2">
+               <Avatar
+                 className="p-overlay-badge"
+                 icon="pi pi-shopping-cart"
+                 size="xlarge"
+                 onClick={goToOrder}
+               >
+                 <Badge value={itemCount} size="large" />
+               </Avatar>
+             </div>
                : null }
-
-      {/* { 
-       itemCount ? 
-             <a href="/order"  >
-            <i className="pi pi-shopping-cart p-overlay-badge" style={{paddingTop:'1rem', fontSize: '3rem' }}>
-                    <Badge value={itemCount}  severity="danger"></Badge>
-            </i> 
-            </a> 
-        : null}  */}
       </div>
     </PrimeReactProvider>
   )

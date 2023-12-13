@@ -17,7 +17,7 @@ overflow: hidden;
 .card {
 background: var(--surface-card);
 padding: 1rem;
-border-radius: 10px;
+border-radius: 4px;
 margin-bottom: 1rem;
 position: sticky;
 }

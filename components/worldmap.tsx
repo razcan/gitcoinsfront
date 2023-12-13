@@ -13,6 +13,7 @@ import { SelectedContextContinent } from './context'
 import Filters from './filters'
 import { Card } from 'primereact/card';
 import { Tag } from 'primereact/tag';
+import { ScrollPanel } from 'primereact/scrollpanel';
 
 //https://github.com/heatherbooker/react-world-map/blob/main/docs/index.jsx
 
@@ -58,8 +59,8 @@ export default function MapWorld() {
 
     return (
 
-<Card className='container'>
-    <div className='content'>
+//  <Card className='container'>
+    // <div className='content'> 
 
 <div className="grid">
 
@@ -67,32 +68,32 @@ export default function MapWorld() {
     
             <div className="h-full flex  justify-content-center">
             
-                     <Card className="border-1 border-pink-50">
-                     
-                        <SelectedContextContinent.Provider value={selected1}>
-                        
+                     {/* <Card className="border-1 border-pink-50">
+                    </Card> */}
+
+                    <SelectedContextContinent.Provider value={selected1}>                                                    
+                            <ScrollPanel style={{ width: '86%', height: '600px' }}>
                             <Filters />
+                    </ScrollPanel>
                         </SelectedContextContinent.Provider>
-                    </Card>
                 </div>
 
 </div>
-    <div className="col-8">    
-       
-            <div className="h-full  p-10 flex align-items-center justify-content-center">
-                    <Card className="border-1 border-pink-50">
-                    
+    <div className="col-8">          
+            <div className="flex align-items-center justify-content-center">
+                    {/* <Card className="border-1 border-pink-50">     
+                    </Card>                */}
                     {selected1 ? <Tag severity="info" value={selected1} rounded></Tag> : null}
                         <WorldMap
                             multiple={true}
                             selected={ContinentSelectattrans} onSelect={setContinentSelectattrans} />
-                    </Card>
+                    
             </div>
         
     </div>
 
         </div>
-        </div>
-        </Card>
+        //  </div>
+        // </Card>
     );
 }

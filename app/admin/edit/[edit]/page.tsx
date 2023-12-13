@@ -246,7 +246,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
       <Card className='container'>
           <div className='content'>
 
-        <div style={{ padding: "10px", maxHeight: "90vh" }} className="md:w-28rem">
+        <div style={{ padding: "2px", maxHeight: "90vh" }} className="md:w-28rem">
 
           <div className="flex flex-wrap gap-3 mb-4">
             <div className="flex-auto">

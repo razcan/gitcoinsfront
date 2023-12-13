@@ -159,26 +159,18 @@ export default function Filters() {
   return (
 
     <PrimeReactProvider>
-      {/* <Dropdown value={selectedContinent}
-        onChange={(e) => handleInputChangeContinent(e.value)}
-        options={continents} optionLabel="name"
-        placeholder="Select a Continent" className="w-full md:w-16rem" /> */}
       <span className="p-input-icon-left ">
         <i className="pi pi-search" />
-        <InputText className="w-full md:w-16rem" placeholder="Search country"
+        <InputText className="w-full md:w-12rem sticky" placeholder="Search country"
          value={inputCountry}
           onChange={(e) => handleInputChangeCountry(e.target.value)} />
       </span>
-      <ScrollPanel key="sc" style={{ height: "auto",
-      width: 224
-    }}>
+      <ScrollPanel key="sc" style={{ height: "auto", width: 200}}>
       {/* <Button label="Clear filters" severity="danger" outlined onClick={clearFilter} /> */}
-
-
-
-        <div className="card">
+      <DataView value={filteredArray} itemTemplate={itemTemplate}  />
+        {/* <div className="card">
           <DataView value={filteredArray} itemTemplate={itemTemplate}  />
-        </div>
+        </div> */}
       </ScrollPanel>
     </PrimeReactProvider>
   )
