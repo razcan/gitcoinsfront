@@ -23,8 +23,6 @@ export default function Menu(props) {
   const [activeMenuIndex, setMenuIndex] = useState(props.activatedIndex);
   const [itemCount, setItemCount] = useState(0);
 
-  const [username, setUserName] = useState('');
-  const [password, setPassword] = useState('');
   const [token, setToken] = useState([]);
 
   const [visible, setVisible] = useState(false);
@@ -43,33 +41,35 @@ const router = useRouter()
 
 const Login = async () => {
 
-try {
-  const response =await axios.post('http://localhost:3000/auth/login', {username, password});
+  router.push('/login');
+
+// try {
+//   const response =await axios.post('http://localhost:3000/auth/login', {username, password});
   
-  showSuccess();
-  setToken(response.data)
+//   showSuccess();
+//   setToken(response.data)
  
-  setVisible(false)
-  // Remove the item from local storage
-  localStorage.removeItem("token");
-  // Store token in local storage
-  localStorage.setItem("token", JSON.stringify(response.data));
- // Read token from local storage
- const myStoredItem = localStorage.getItem('token');
- const rez = JSON.parse(myStoredItem);
+//   setVisible(false)
+//   // Remove the item from local storage
+//   localStorage.removeItem("token");
+//   // Store token in local storage
+//   localStorage.setItem("token", JSON.stringify(response.data));
+//  // Read token from local storage
+//  const myStoredItem = localStorage.getItem('token');
+//  const rez = JSON.parse(myStoredItem);
 
- //data la care expira token
-//  console.log(rez.expire_date_token)
- setExpireToken(rez.expire_date_token)
+//  //data la care expira token
+// //  console.log(rez.expire_date_token)
+//  setExpireToken(rez.expire_date_token)
 
-  //expire_date_token
+//   //expire_date_token
  
-} catch (error) {
-  // Handle errors
-  localStorage.removeItem("token");
-  showError();
-  console.error('Error submitting :', error);
-}
+// } catch (error) {
+//   // Handle errors
+//   localStorage.removeItem("token");
+//   showError();
+//   console.error('Error submitting :', error);
+// }
 }
 
   const items = [
@@ -165,25 +165,9 @@ try {
         
 
 {/* <Button label="Show" icon="pi pi-user" onClick={() => setVisible(true)} /> */}
-<Avatar icon="pi pi-user" size="xlarge" onClick={() => setVisible(true)}/>
+<Avatar icon="pi pi-user" size="xlarge" onClick={() => Login()}/>
 
 {/* {expireToken} */}
-            <Dialog header="Login" visible={visible} onHide={() => setVisible(false)}
-                style={{ width: '30vw' }} breakpoints={{ '960px': '50vw', '641px': '75vw' }}>
-               <Toast ref={toast} />
-                <div className="flex flex-wrap justify-content-center align-items-center gap-2 p-2">
-                        <label className="w-6rem">Username</label>
-                        <InputText id="username" type="text" className="w-12rem" value={username} onChange={(e) => setUserName(e.target.value)}/>
-                    </div>
-                    <div className="flex flex-wrap justify-content-center align-items-center gap-2 p-2">
-                        <label className="w-6rem">Password</label>
-                        <InputText id="password" type="password" className="w-12rem" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                    </div>
-                    <div className="flex flex-wrap  gap-2">
-                        <label className="w-6rem"></label>
-                        <Button label="Login" icon="pi pi-user" className="w-10rem mx-auto" onClick={Login}></Button>
-                    </div>
-            </Dialog>
 
 { 
        itemCount ? 
