@@ -27,6 +27,9 @@ export default function Filters() {
   const [inputCountry, setInputCountry] = useState();
   const [continentSelectattrans, setContinentSelectattrans] = useState<string>();
   
+  function capitalizeFirstLetter(str: string): string {
+    return str.slice(0, 1).toUpperCase() + str.slice(1);
+  }
 
 
   const fetchCountriesBE = () => {
@@ -43,8 +46,8 @@ export default function Filters() {
 
   const handleInputChangeCountry = (event: any) => {
     const selectedCountry = event;
-    setSelectedCountry(selectedCountry);
-    handleFiltering(selectedCountry, continentSelectat)
+    setSelectedCountry(capitalizeFirstLetter(selectedCountry));
+    handleFiltering(capitalizeFirstLetter(selectedCountry), continentSelectat)
   };
 
   const handleInputChangeContinent = (event: any) => {

@@ -18,6 +18,8 @@ import { useRouter } from 'next/navigation';
 import { Card } from 'primereact/card';
 import  '../../../css/style.css' 
 import { Calendar } from 'primereact/calendar';
+import { InputTextarea } from 'primereact/inputtextarea';
+import { ScrollPanel } from 'primereact/scrollpanel';
 
 export default function Admin() {
   const toast = useRef(null);
@@ -34,13 +36,14 @@ export default function Admin() {
   const [Status, setStatus] = useState([]);
   const [Composition, setComposition] = useState(['Silver']);
   const [Name, setName] = useState([]);
+  const [References, setReferences] = useState([]);
   const [Stock, setStock] = useState([]);
   const [picturefiles, setPicturefiles] = useState([]);
   const [byteArray, setbyteArray] = useState([]);
   const [jsonDataByte, setJsonDataByte] = useState([]);
 
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState(new Date);
+  const [endDate, setEndDate] = useState(new Date);
 
   const showSuccess = () => {
     toast.current.show({severity:'success', summary: 'Result', detail:'The coin was saved succesfully', life: 3000});
@@ -90,6 +93,11 @@ export default function Admin() {
     );
   };
 
+  const showError = () => {
+    toast.current.show({severity:'error', summary: 'Error', 
+    detail:'You must upload two pictures', life: 3000});
+}
+
 
   const onUpload =  ({ files }) => {
    setPicturefiles(files);
@@ -97,6 +105,12 @@ export default function Admin() {
 
 const handlerFormData = async () => {
 onUpload(picturefiles);
+
+if (picturefiles.length !=2){
+  console.log('eroare')
+  showError()
+}
+else {
   
 var formdata2 = new FormData();
 
@@ -110,7 +124,7 @@ formdata2.append('Year', Year);
 formdata2.append('Composition', Composition.name);
 formdata2.append('Status', Status.name);
 formdata2.append('Price', Price);
-formdata2.append('References', 0);
+formdata2.append('References', References);
 formdata2.append('Stock', Stock);
 formdata2.append("files", picturefiles[0]);
 formdata2.append("files", picturefiles[1]);
@@ -124,9 +138,9 @@ formdata2.append('EndDate', endDate );
 //     console.log(pair[0]+ ', ' + pair[1]); 
 // }
 
-// const showSuccess = () => {
-//   toast.current.show({severity:'success', summary: 'Success', detail:'Message Content', life: 3000});
-// }
+const showSuccess = () => {
+  toast.current.show({severity:'success', summary: 'Success', detail:'Message Content', life: 6000});
+}
 
 var requestOptions = {
   method: 'POST',
@@ -146,6 +160,7 @@ fetch("http://localhost:3000/coins/uploadm", requestOptions)
     )
   .catch(error => console.log('error', error));
   router.push('/admin');
+}
 }
 
 
@@ -173,19 +188,19 @@ const coin_composition = [
           <div className='content'>
             <Menu activatedIndex={5} />
             <Toast ref={toast} />
-
+            <ScrollPanel style={{ width: '100%', height: '650px' }}>
       <div className="grid card flex-wrap gap-3 p-fluid" style={{padding:"20px"}}>
-        <div className="col-2">
+        <div className="col-3">
             <div className="flex-auto gap-3 p-3">
                 <span className="p-float-label">
-                <Calendar inputId="start_date" value={startDate} showIcon onChange={(e) => setStartDate(e.value)} dateFormat="dd/mm/yy"/>
-                <label htmlFor="start_date">Start Date</label>
+                <Calendar inputId="start_date" value={startDate} showIcon showWeek onChange={(e) => setStartDate(e.value)} dateFormat="dd/mm/yy"/>
+                <label htmlFor="start_date">Start Date Period</label>
                 </span>
             </div>
             <div className="flex-auto gap-3 p-3">
                <span className="p-float-label">
-                <Calendar inputId="end_date" value={endDate} showIcon onChange={(e) => setEndDate(e.value)} dateFormat="dd/mm/yy"/>
-                <label htmlFor="end_date">End Date</label>
+                <Calendar inputId="end_date" value={endDate} showIcon showWeek onChange={(e) => setEndDate(e.value)} dateFormat="dd/mm/yy"/>
+                <label htmlFor="end_date">End Date Period</label>
                 </span>
             </div>
             <div className="flex-auto gap-3 p-3">
@@ -223,8 +238,15 @@ const coin_composition = [
              </span>
              </div>
 
-        </div>
+             <div className="flex-auto gap-3 p-3">
+                <div className="p-float-label">
+                <InputTextarea value={References} onChange={(e) => setReferences(e.target.value)} rows={5} cols={30} />
+                <label htmlFor="References">References</label>
+                </div>
+              </div>
 
+        </div>
+        <div className="col-1"></div>
 
         <div className="col-3">
             <div className="flex-auto gap-3 p-3">
@@ -272,16 +294,19 @@ const coin_composition = [
               />
             </div>
           </div>
+
+          
+
         </div>
     </div>
 
       {/* <div  style={{padding:"5px", maxHeight: "90vh"}} className="md:w-28rem"> */}
 
-      <div className="flex-auto">
+      <div className="flex-auto pl-6">
              <Button className='m-1' label="Save" icon="pi pi-check" iconPos="right" onClick={() => handlerFormData()} />  
              <Button className='m-1' label="Delete" icon="pi pi-delete-left" iconPos="right" severity="danger"/>            
       </div>
-
+    </ScrollPanel>
         </div>
         </Card>
     </PrimeReactProvider>

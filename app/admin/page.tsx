@@ -187,11 +187,9 @@ export default function Admin() {
 
       <Card className='container'>
         <div className='content'>
-
-          <div className="card">
             <Toast ref={toast} />
             <DataTable value={products} paginator rows={10} showGridlines
-             scrollable scrollHeight="540px"
+             scrollable scrollHeight="546px"
               size="large"
               selectionMode={'radiobutton'}
               filters={filters} filterDisplay="menu"
@@ -230,7 +228,7 @@ export default function Admin() {
 
             </DataTable>
           </div>
-        </div>
+   
       </Card>
     </PrimeReactProvider>
 

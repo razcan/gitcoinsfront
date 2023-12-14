@@ -5,8 +5,6 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import React, { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation'
-import ReactDOM from 'react-dom';
 import WorldMap from 'react-world-map';
 import "../css/styles_map.css";
 import { SelectedContextContinent } from './context'
@@ -18,7 +16,7 @@ import { ScrollPanel } from 'primereact/scrollpanel';
 //https://github.com/heatherbooker/react-world-map/blob/main/docs/index.jsx
 
 export default function MapWorld() {
-    const [selected1, onSelect2] = useState<string>();
+    const [selected1, onSelect2] = useState<string>('Please select a continent');
     const [ContinentSelectattrans, setContinentSelectattrans] = useState<string>();
 
 
@@ -79,11 +77,12 @@ export default function MapWorld() {
                 </div>
 
 </div>
-    <div className="col-8">          
+    <div className="col-8">      
+    {selected1 ? <Tag severity="info" value={selected1} rounded></Tag> : null}    
             <div className="flex align-items-center justify-content-center">
                     {/* <Card className="border-1 border-pink-50">     
                     </Card>                */}
-                    {selected1 ? <Tag severity="info" value={selected1} rounded></Tag> : null}
+                   
                         <WorldMap
                             multiple={true}
                             selected={ContinentSelectattrans} onSelect={setContinentSelectattrans} />
