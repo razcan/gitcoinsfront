@@ -78,7 +78,7 @@ export default function MapWorld() {
 
 </div>
     <div className="col-8">      
-    {selected1 ? <Tag severity="info" value={selected1} rounded></Tag> : null}    
+    {selected1 ? <Tag  className='text-xl' severity="info" value={selected1} rounded></Tag> : null}    
             <div className="flex align-items-center justify-content-center">
                     {/* <Card className="border-1 border-pink-50">     
                     </Card>                */}

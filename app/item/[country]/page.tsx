@@ -16,7 +16,7 @@ import { InputText } from 'primereact/inputtext';
 import Menu from '../../../components/menu';
 import { useRouter } from 'next/navigation';
 import '../../../css/style.css'
-
+import { Galleria } from 'primereact/galleria';
 
 
 export default function Item(params:any) {
@@ -27,6 +27,7 @@ export default function Item(params:any) {
     const [selected_product, setSelected_product] = useState([]);
     const [ordered_qtty, setOrdered_qtty] = useState(1);
     const [menuIndex, setMenuIndex] = useState(0);
+
 
     const setProductVisible = (product: any, bol: boolean) => {
         setSelected_product(product);
@@ -192,61 +193,68 @@ export default function Item(params:any) {
                     <div>
                             <Divider />
                             
-                            <div className="text-orange-500 w-16rem h-1rem text-sm font-bold">
+                            <div className=" w-16rem h-1rem text-xl font-bold">
                                 Name: {selected_product.Name}
                             </div>
                             <Divider />
-                            <div className="text-orange-500 w-16rem h-1rem text-sm font-bold">
+                            <div className=" w-16rem h-1rem text-xl font-bold">
                                Continent: {selected_product.Continent}
                             </div>
                             <Divider />
-                            <div className="text-orange-500 w-16rem h-1rem text-sm font-bold">
+                            <div className=" w-16rem h-1rem text-xl font-bold">
                             Country: {selected_product.Country}
                             </div>
                             <Divider />
-                            <div className="text-orange-500 w-16rem h-1rem text-sm font-bold">
+                            <div className=" w-16rem h-1rem text-xl font-bold">
                             Value: {selected_product.Value}
                             </div>
                             <Divider />
-                            <div className="text-orange-500 w-16rem h-1rem text-sm font-bold">
+                            <div className=" w-16rem h-1rem text-xl font-bold">
                             Year: {selected_product.Year}
                             </div>
                             <Divider />
-                            <div className="text-orange-500 w-16rem h-1rem text-sm font-bold">
+                            <div className=" w-16rem h-1rem text-xl font-bold">
                             Composition: {selected_product.Composition}
                             </div>
                             <Divider />
-                            <div className="text-orange-500 w-16rem h-1rem text-sm font-bold">
+                            <div className=" w-16rem h-1rem text-xl font-bold">
                             Status: {selected_product.Status}
                             </div>
                             <Divider />
-                            <div className="text-orange-500 w-16rem h-1rem text-sm font-bold">
+                            <div className=" w-16rem h-1rem text-xl font-bold">
                             References: {selected_product.References}
                             </div>
                             <Divider />
-                            <div className="text-orange-500 w-16rem h-1rem text-sm font-bold">
+                            <div className=" w-16rem h-1rem text-xl font-bold">
                             Price: {selected_product.Price}
                             </div>
                             <Divider /> 
-                            <div className="text-red-800 w-16rem h-2rem text-xl font-bold">
+                            <br></br>
+                            <div className="text-orange-500 w-16rem h-2rem text-3xl font-bold pl-3">
                             Value: {selected_product.Price * ordered_qtty}
+                            <br></br>
                             </div>
                            
                             
                            
                     </div>
-            <div className="card flex flex-wrap gap-3 p-fluid">
-                <label className="font-bold block mb-2"></label>
-                <div className="flex-auto">
-                <label htmlFor="mile" className="font-bold block mb-2"></label>
-                    <InputNumber allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} />
+            <div className="card flex flex-wrap gap-2 p-fluid">
+                <label className="font-bold block"></label>
+                <div className="flex-auto ml-auto">
+                
+                    {/* <InputNumber allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} /> */}
+                    <i className="pi pi-cart-plus block ml-0" style={{ fontSize: '2rem'}}/>
+            
+                        <InputNumber className="ml-0, pl-0" allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} />
+                        {/* <InputText placeholder="Search" /> */}
+                  
                 </div>
                 <div className="flex-auto">
-                <label className="font-bold block mb-2"></label>
+                <label className="font-bold block mb-2 pt-4"></label>
                 <Button label="Add" onClick={addToOrder} ></Button>    
                 </div>
                 <div className="flex-auto">
-                <label className="font-bold block mb-2"></label>
+                <label className="font-bold block mb-2 pt-4"></label>
                 <Button label="Check Order"  onClick={viewOrder}></Button> 
                 </div>   
             </div>

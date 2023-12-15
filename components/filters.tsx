@@ -64,26 +64,6 @@ export default function Filters() {
   }, [continentSelectat])
 
 
-  // const handleFiltering = (selectedCountry, selectedContinent) => {
-  //   if (selectedContinent && selectedCountry) {
-  //     const filteredItems = countriesBE
-  //       .filter(item => item.Country.includes(selectedCountry))
-  //       .filter(item => item.Continent.includes(selectedContinent.name))
-  //     setFilteredArray(filteredItems)
-  //     //  console.log(filteredItems)
-  //   }
-  //   else if (selectedCountry) {
-  //     const filteredItems = countriesBE.filter(item => item.Country.includes(selectedCountry));
-  //     console.log(filteredItems)
-  //     setFilteredArray(filteredItems)
-  //     //  console.log(filteredItems)
-  //   }
-  //   else if (selectedContinent) {
-  //     const filteredItems = countriesBE.filter(item => item.Continent.includes(selectedContinent.name));
-  //     // console.log(filteredItems)
-  //      setFilteredArray(filteredItems)
-  //   }
-  // }
 
 
   const handleFiltering = (selectedCountry,continentSelectat) => {

@@ -17,6 +17,7 @@ import { Panel } from 'primereact/panel';
 import '../../css/style.css'
 import axios from 'axios';
 import { Toast } from 'primereact/toast';
+import Footer from '@/components/footer';
 
 export default function Contact() {
 
@@ -62,7 +63,7 @@ export default function Contact() {
 <PrimeReactProvider>
   <div className ='min-h-screen'>
       <Menu activatedIndex={4} />
-        <Card className="max-w-full pt-4 min-h-screen">
+        <Card className="max-w-full pt-4 min-h-screen ">
         <Toast ref={toast} />
        
           <div className="grid nested-grid">
@@ -174,6 +175,8 @@ export default function Contact() {
         </Card>
       
   </div>
+  
+  <Footer />
 
 </PrimeReactProvider>
       )

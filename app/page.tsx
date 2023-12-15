@@ -12,6 +12,7 @@ import Exchange from '../components/exchange'
 import MapWorld from '../components/worldmap'
 import { Card } from 'primereact/card';
 import  '../css/style.css'
+import Footer from '@/components/footer';
 
 export default function Home() {
 
@@ -29,7 +30,7 @@ export default function Home() {
        </div>      
    </div>
  </Card>
-
+<Footer />
  </PrimeReactProvider> 
 
   )
