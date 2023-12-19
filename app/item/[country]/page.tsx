@@ -19,7 +19,7 @@ import '../../../css/style.css'
 import { Galleria } from 'primereact/galleria';
 
 
-export default function Item(params:any) {
+export default function Item(params: any) {
     const router = useRouter();
     const [products, setProducts] = useState([]);
     const [layout, setLayout] = useState('grid');
@@ -32,51 +32,51 @@ export default function Item(params:any) {
     const setProductVisible = (product: any, bol: boolean) => {
         setSelected_product(product);
         setVisible(true);
-        
+
     }
 
     const resetValue = () => {
         setVisible(false);
         setOrdered_qtty(1);
     }
-        
+
 
     const addToOrder = () => {
 
-             var existingData = localStorage.getItem("YourOrder");
+        var existingData = localStorage.getItem("YourOrder");
 
-             // Parse existing data (if any)
-             var existingArray = existingData ? JSON.parse(existingData) : [];
-         
-             // Add a new item to the array
-             var newItem = {
-                            Catalog: selected_product.Catalog,
-                            Code: selected_product.Code,
-                            Composition: selected_product.Composition,
-                            Continent: selected_product.Continent,
-                            Country: selected_product.Country,
-                            Name: selected_product.Name,
-                            Photo1: selected_product.Photo1,
-                            Photo2: selected_product.Photo2,
-                            Price: selected_product.Price,
-                            References: selected_product.References,
-                            Status: selected_product.Status,
-                            Value: selected_product.Value,
-                            Year: selected_product.Year,
-                            id: selected_product.id,
-                            Qtty: ordered_qtty,
-                            Amount: null
+        // Parse existing data (if any)
+        var existingArray = existingData ? JSON.parse(existingData) : [];
 
-                        }
+        // Add a new item to the array
+        var newItem = {
+            Catalog: selected_product.Catalog,
+            Code: selected_product.Code,
+            Composition: selected_product.Composition,
+            Continent: selected_product.Continent,
+            Country: selected_product.Country,
+            Name: selected_product.Name,
+            Photo1: selected_product.Photo1,
+            Photo2: selected_product.Photo2,
+            Price: selected_product.Price,
+            References: selected_product.References,
+            Status: selected_product.Status,
+            Value: selected_product.Value,
+            Year: selected_product.Year,
+            id: selected_product.id,
+            Qtty: ordered_qtty,
+            Amount: null
 
-             existingArray.push(newItem);
-         
-             // Convert the updated array to a string and store it back in localStorage
-             localStorage.setItem("YourOrder", JSON.stringify(existingArray));
-             setVisible(false);
-             setMenuIndex((prevKey) => prevKey + 1);
-            // router.push('/order')
-   
+        }
+
+        existingArray.push(newItem);
+
+        // Convert the updated array to a string and store it back in localStorage
+        localStorage.setItem("YourOrder", JSON.stringify(existingArray));
+        setVisible(false);
+        setMenuIndex((prevKey) => prevKey + 1);
+        // router.push('/order')
+
     }
 
 
@@ -107,8 +107,8 @@ export default function Item(params:any) {
         return (
             <div className="col-12">
                 <div className="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
-                    <img className="w-9 sm:w-16rem xl:w-8rem shadow-2 block xl:block mx-auto border-round" 
-                    src={`http://localhost:3000/coins/download/${product.Photo1}`} alt={product.Photo1} />
+                    <img className="w-9 sm:w-16rem xl:w-8rem shadow-2 block xl:block mx-auto border-round"
+                        src={`http://localhost:3000/coins/download/${product.Photo1}`} alt={product.Photo1} />
                     <div className="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
                         <div className="flex flex-column align-items-center sm:align-items-start gap-3">
                             <div className="text-2xl font-bold text-900">{product.Country}</div>
@@ -143,11 +143,11 @@ export default function Item(params:any) {
                         <Tag value={product.Catalog}></Tag>
                     </div>
                     <div className="flex flex-column align-items-center gap-1 py-2">
-                        <img className="w-6 shadow-1 border-round" 
-                        src={`http://localhost:3000/coins/download/${product.Photo1}`} 
-                        alt={product.Photo1} />
+                        <img className="w-6 shadow-1 border-round"
+                            src={`http://localhost:3000/coins/download/${product.Photo1}`}
+                            alt={product.Photo1} />
                         <div className="text-xl">{product.Value} / {product.Year}</div>
-                       
+
                     </div>
                     <div className="flex align-items-center justify-content-between">
                         <span className="text-xl font-semibold">{product.Status}</span>
@@ -176,96 +176,99 @@ export default function Item(params:any) {
     };
 
     return (
+
+<PrimeReactProvider>
+        <div key={menuIndex}>
+                        <Menu activatedIndex={0} />
+        </div>
         <div className="container">
-<div className="content">
+            <div className="content">
 
-        <div className="card">
-            <div key={menuIndex}>
-             <Menu activatedIndex={0} />
-           
-            </div>
+                <div className="card">
+             
 
-            <Dialog visible={visible} modal={false} style={{ width: '25vw' }} 
-            onHide={() => resetValue()}>
-                <p className="m-1">
-                    <img src={`http://localhost:3000/coins/download/${selected_product.Photo1}`} alt={selected_product.Photo1} style={{ width: '40%', padding: '10px' }} />
-                    <img src={`http://localhost:3000/coins/download/${selected_product.Photo2}`} alt={selected_product.Photo2} style={{ width: '40%', padding: '10px' }} />
-                    <div>
-                            <Divider />
-                            
-                            <div className=" w-16rem h-1rem text-xl font-bold">
-                                Name: {selected_product.Name}
+                    <Dialog visible={visible} modal={false} style={{ width: '25vw' }}
+                        onHide={() => resetValue()}>
+                        <p className="m-1">
+                            <img src={`http://localhost:3000/coins/download/${selected_product.Photo1}`} alt={selected_product.Photo1} style={{ width: '40%', padding: '10px' }} />
+                            <img src={`http://localhost:3000/coins/download/${selected_product.Photo2}`} alt={selected_product.Photo2} style={{ width: '40%', padding: '10px' }} />
+                            <div>
+                                <Divider />
+
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    Name: {selected_product.Name}
+                                </div>
+                                <Divider />
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    Continent: {selected_product.Continent}
+                                </div>
+                                <Divider />
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    Country: {selected_product.Country}
+                                </div>
+                                <Divider />
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    Value: {selected_product.Value}
+                                </div>
+                                <Divider />
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    Year: {selected_product.Year}
+                                </div>
+                                <Divider />
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    Composition: {selected_product.Composition}
+                                </div>
+                                <Divider />
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    Status: {selected_product.Status}
+                                </div>
+                                <Divider />
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    References: {selected_product.References}
+                                </div>
+                                <Divider />
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    Price: {selected_product.Price}
+                                </div>
+                                <Divider />
+                                <br></br>
+                                <div className="text-orange-500 w-16rem h-2rem text-3xl font-bold pl-3">
+                                    Value: {selected_product.Price * ordered_qtty}
+                                    <br></br>
+                                </div>
+
+
+
                             </div>
-                            <Divider />
-                            <div className=" w-16rem h-1rem text-xl font-bold">
-                               Continent: {selected_product.Continent}
+                            <div className="card flex flex-wrap gap-2 p-fluid">
+                                <label className="font-bold block"></label>
+                                <div className="flex-auto ml-auto">
+
+                                    {/* <InputNumber allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} /> */}
+                                    <i className="pi pi-cart-plus block ml-0" style={{ fontSize: '2rem' }} />
+
+                                    <InputNumber className="ml-0, pl-0" allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} />
+                                    {/* <InputText placeholder="Search" /> */}
+
+                                </div>
+                                <div className="flex-auto">
+                                    <label className="font-bold block mb-2 pt-4"></label>
+                                    <Button label="Add" onClick={addToOrder} ></Button>
+                                </div>
+                                <div className="flex-auto">
+                                    <label className="font-bold block mb-2 pt-4"></label>
+                                    <Button label="Check Order" onClick={viewOrder}></Button>
+                                </div>
                             </div>
-                            <Divider />
-                            <div className=" w-16rem h-1rem text-xl font-bold">
-                            Country: {selected_product.Country}
-                            </div>
-                            <Divider />
-                            <div className=" w-16rem h-1rem text-xl font-bold">
-                            Value: {selected_product.Value}
-                            </div>
-                            <Divider />
-                            <div className=" w-16rem h-1rem text-xl font-bold">
-                            Year: {selected_product.Year}
-                            </div>
-                            <Divider />
-                            <div className=" w-16rem h-1rem text-xl font-bold">
-                            Composition: {selected_product.Composition}
-                            </div>
-                            <Divider />
-                            <div className=" w-16rem h-1rem text-xl font-bold">
-                            Status: {selected_product.Status}
-                            </div>
-                            <Divider />
-                            <div className=" w-16rem h-1rem text-xl font-bold">
-                            References: {selected_product.References}
-                            </div>
-                            <Divider />
-                            <div className=" w-16rem h-1rem text-xl font-bold">
-                            Price: {selected_product.Price}
-                            </div>
-                            <Divider /> 
-                            <br></br>
-                            <div className="text-orange-500 w-16rem h-2rem text-3xl font-bold pl-3">
-                            Value: {selected_product.Price * ordered_qtty}
-                            <br></br>
-                            </div>
-                           
-                            
-                           
-                    </div>
-            <div className="card flex flex-wrap gap-2 p-fluid">
-                <label className="font-bold block"></label>
-                <div className="flex-auto ml-auto">
-                
-                    {/* <InputNumber allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} /> */}
-                    <i className="pi pi-cart-plus block ml-0" style={{ fontSize: '2rem'}}/>
-            
-                        <InputNumber className="ml-0, pl-0" allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} />
-                        {/* <InputText placeholder="Search" /> */}
-                  
+                        </p>
+                    </Dialog>
+
+                    <DataView value={products} itemTemplate={itemTemplate} layout={layout}
+                        // header={header()} --if we want buttons for list and grid
+                        paginator rows={18} />
                 </div>
-                <div className="flex-auto">
-                <label className="font-bold block mb-2 pt-4"></label>
-                <Button label="Add" onClick={addToOrder} ></Button>    
-                </div>
-                <div className="flex-auto">
-                <label className="font-bold block mb-2 pt-4"></label>
-                <Button label="Check Order"  onClick={viewOrder}></Button> 
-                </div>   
             </div>
-            </p>
-            </Dialog>
-
-            <DataView value={products} itemTemplate={itemTemplate} layout={layout}
-                // header={header()} --if we want buttons for list and grid
-                paginator rows={18} />
         </div>
-        </div>
-        </div>
+</PrimeReactProvider>
     )
 }

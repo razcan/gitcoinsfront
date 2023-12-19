@@ -54,9 +54,9 @@ const Login = async () => {
      
       
       // Remove the item from local storage
-      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
       // Store token in local storage
-      localStorage.setItem("token", JSON.stringify(response.data));
+      sessionStorage.setItem("token", JSON.stringify(response.data));
      // Read token from local storage
      const myStoredItem = localStorage.getItem('token');
      const rez = JSON.parse(myStoredItem);

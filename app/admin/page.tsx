@@ -21,6 +21,7 @@ import { Tag } from 'primereact/tag';
 import { useRouter } from 'next/navigation'
 import { Card } from 'primereact/card';
 import '../../css/style.css'
+import Footer from '@/components/footer';
 
 export default function Admin() {
 
@@ -230,6 +231,7 @@ export default function Admin() {
           </div>
    
       </Card>
+      <Footer />
     </PrimeReactProvider>
 
   )

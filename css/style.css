@@ -19,6 +19,12 @@ body.img {
   opacity: 0.5;
 }
 
+.dynamic-height-container {
+  min-height: 100vh; /* Set minimum height to 100% of the viewport height */
+  display: flex;
+  flex-direction: column;
+}
+
 .card {
 background: var(--surface-card);
 padding: 1rem;

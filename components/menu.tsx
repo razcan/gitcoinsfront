@@ -17,13 +17,14 @@ import { Toast } from 'primereact/toast';
 import axios from 'axios';
 import { Avatar } from 'primereact/avatar';
 import { AvatarGroup } from 'primereact/avatargroup'; 
+import { Chip } from 'primereact/chip';
 
 export default function Menu(props) {
 
   const [activeMenuIndex, setMenuIndex] = useState(props.activatedIndex);
   const [itemCount, setItemCount] = useState(0);
 
-  const [token, setToken] = useState([]);
+  const [username, setUserName] = useState([]);
 
   const [visible, setVisible] = useState(false);
   const toast = useRef(null);
@@ -97,12 +98,25 @@ const Login = async () => {
 
   }
 
+  const checkUserLogged = () => {
+
+    var existingUser = sessionStorage.getItem("token");
+
+    // Parse existing data (if any)
+    var user = existingUser ? JSON.parse(existingUser) : [];
+
+    const username = user.username;
+    setUserName(username)
+
+  }
+
  const goToOrder = () => {
   router.push('/order');
  }
 
   useEffect(() => {
-    checkOrderedItem()
+    checkOrderedItem(),
+    checkUserLogged()
 }, [])
 
 // const start = <Avatar alt="logo" image="./logo.png" size="xlarge" shape="circle" height="30" className="mr-2"/>
@@ -165,6 +179,11 @@ const Login = async () => {
         
 
 {/* <Button label="Show" icon="pi pi-user" onClick={() => setVisible(true)} /> */}
+{username ? 
+<div className='pt-5 pr-2 pl-2'>
+    <Chip  label={username} removable />
+</div>
+: null }
 <Avatar icon="pi pi-user" size="xlarge" onClick={() => Login()}/>
 
 {/* {expireToken} */}
