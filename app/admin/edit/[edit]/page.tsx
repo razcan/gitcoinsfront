@@ -24,6 +24,7 @@ import { Accordion, AccordionTab } from 'primereact/accordion';
 import { Calendar } from 'primereact/calendar';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column'
+import axios from 'axios';
 
 interface PageProps {
   params: { edit: string },
@@ -43,8 +44,10 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
   const [password, setPassword] = useState('');
   const [visibleStock, setVisibleStock] = useState(false);
   const [selectedOperation, setSelectedOperation] = useState(false);
-  const [operationDate, setOperationDate] = useState(false);
-  const [operations, setOperations] = useState([{}]);
+  const [operationDate, setOperationDate] = useState('');
+  const [operationRemarks, setOperationRemarks] = useState('');
+  const [operationQtty, setOperationQtty] = useState(0);
+  const [operations, setOperations] = useState([]);
   
   
   
@@ -102,8 +105,10 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
 }
 
   useEffect(() => {
-    fetchCoinData()
+    fetchCoinData(),
+    fetchStockOperations()
   }, [])
+
 
   const coin_status = [
     { name: 'UNC/AUNC', id: 1 },
@@ -172,6 +177,40 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
       </div>
     );
   };
+
+  const fetchStockOperations = async () => {
+   await  fetch(`http://localhost:3000/stocks/${edit}`)
+      .then(response => {
+        return response.json()
+      }).then( stock => {
+        setOperations(stock)
+      }
+      )
+    }
+
+  const saveOperationStock = async () => {
+
+  
+    if (operationQtty>=0) {  var typeOp = 'Load'}
+    else {var typeOp='Decrease'}
+
+      try {
+        const response =await axios.post(`http://localhost:3000/stocks`, {  
+            TransactionDate: operationDate,
+            Type : typeOp,
+            Qtty: operationQtty,
+            CoinId: Id,
+            Remarks: operationRemarks
+      });
+    
+        showSuccess();
+      } catch (error) {
+        console.error('Error submitting :', error);
+      }
+
+      
+      
+    }
 
   const fetchCoinData = async () => {
     await fetch(`http://localhost:3000/coins/${edit}`)
@@ -431,7 +470,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
                 <div className="field col">
                 <div className="flex flex-column">
                     <label htmlFor="qtty">Qtty</label>
-                    <InputText keyfilter="int" id="qtty" aria-describedby="Qtty" />
+                    <InputNumber inputId="integeronly" value={operationQtty} onValueChange={(e) => setOperationQtty(e.value)} />
                 </div>
                 </div>
 
@@ -444,23 +483,25 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
 
                 <div className="field col">
                 <div className="flex flex-column">
-                    <label htmlFor="Remarks">Remarks</label>
-                    <InputText id="Remarks" aria-describedby="Remarks" />
+                    <label htmlFor="Remarks">Remarks{operationRemarks}</label>
+                    <InputText value={operationRemarks} onChange={(e) => setOperationRemarks(e.target.value)} />
                 </div>
                </div>
 
             </div>
-                  <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => handlerFormData()} />
+                  <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => saveOperationStock()} />
             </AccordionTab>
             <AccordionTab header="Stock Transactions">
                     <div className="card">
+                      {operations ?
                         <DataTable value={operations} tableStyle={{ minWidth: '50rem' }}>
-                            <Column field="number" header="Number"></Column>
-                            <Column field="type" header="Type"></Column>
-                            <Column field="date" header="TransactionDate"></Column>
-                            <Column field="qtty" header="Qtty"></Column>
-                            <Column field="createdAt" header="CreatedAt"></Column>
+                            <Column field="id" header="Number"></Column>
+                            <Column field="Type" header="Type"></Column>
+                            <Column field="TransactionDate" header="TransactionDate"></Column>
+                            <Column field="Qtty" header="Qtty"></Column>
+                            <Column field="CreatedAt" header="CreatedAt"></Column>
                         </DataTable>
+                        : null}
                     </div>
             </AccordionTab>
         </Accordion>
