@@ -187,12 +187,16 @@ export default function Order() {
 
   return (
     <PrimeReactProvider>
-      <div className="container">
-      <div key={menuIndex}>
+      <div className="container ">
+      <div key={menuIndex} >
              <Menu activatedIndex={0} />
-             <OrderSteps step={0}/>
+            
             </div>
-         <div className="content grid">
+            <div className='pt-6'>
+                <OrderSteps step={0}/>
+            </div>
+            
+         <div className="content grid ">
 
           <div className="col-2">
             <div className="p-3 border-round-sm "></div>

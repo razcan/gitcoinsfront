@@ -21,7 +21,7 @@ export default function Home() {
 <Menu activatedIndex={0} />
 <Card className='container'>
    {/* <Exchange /> */}
-   <div className="content grid">
+   <div className="content grid pt-8">
    <div className="col-12 lg:col-2  ">
      {/* <Filters /> */}
      </div>

@@ -14,9 +14,12 @@ export default function Footer() {
 
 return (
 
-<div style={{ position: 'fixed', bottom: 0, width: '100%', background: '#f0f0f0', padding: '10px', textAlign: 'center' }}>
+<div className='footer'>
 © [{year}] coinzzz.ro . All rights reserved. For inquiries, please contact: coins@coins.ro.
 </div>
 )
 
 }
+
+
+{/* <div style={{ position: 'fixed', bottom: 0, width: '100%', background: '#f0f0f0', padding: '10px', textAlign: 'center' }}> */}

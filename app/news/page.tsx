@@ -17,12 +17,27 @@ import { Tag } from 'primereact/tag';
 import  '../../css/style.css' 
 import { ScrollPanel } from 'primereact/scrollpanel';
 import { InputNumber } from 'primereact/inputnumber';
+import { Dialog } from 'primereact/dialog';
+import { useRouter } from 'next/navigation';
 
 export default function News() {
 
+
+const router = useRouter();
 const [products, setProducts] = useState([]);
 const [days, setDays] = useState(30);
 const [layout, setLayout] = useState('grid');
+const [visible, setVisible] = useState(false);
+const [selected_product, setSelected_product] = useState([]);
+const [menuIndex, setMenuIndex] = useState(0);
+const [ordered_qtty, setOrdered_qtty] = useState(1);
+
+const setProductVisible = (product: any, bol: boolean) => {
+  setSelected_product(product);
+  setVisible(true);
+  setOrdered_qtty(1);
+
+}
 
 const fetchCoinData = () => {
   fetch(
@@ -38,7 +53,57 @@ const fetchCoinData = () => {
 
 useEffect(() => {
   fetchCoinData()
-}, [days])
+}, [days,ordered_qtty])
+
+const viewOrder = () => {
+  router.push('/order')
+}
+
+const resetValue = () => {
+  setVisible(false);
+  setOrdered_qtty(1);
+}
+
+
+
+const addToOrder = () => {
+
+  var existingData = localStorage.getItem("YourOrder");
+
+  // Parse existing data (if any)
+  var existingArray = existingData ? JSON.parse(existingData) : [];
+
+  // Add a new item to the array
+  var newItem = {
+      Catalog: selected_product.Catalog,
+      Code: selected_product.Code,
+      Composition: selected_product.Composition,
+      Continent: selected_product.Continent,
+      Country: selected_product.Country,
+      Name: selected_product.Name,
+      Photo1: selected_product.Photo1,
+      Photo2: selected_product.Photo2,
+      Price: selected_product.Price,
+      References: selected_product.References,
+      Status: selected_product.Status,
+      Value: selected_product.Value,
+      Year: selected_product.Year,
+      id: selected_product.id,
+      Qtty: ordered_qtty,
+      Amount: null
+
+  }
+
+  existingArray.push(newItem);
+
+  // Convert the updated array to a string and store it back in localStorage
+  localStorage.setItem("YourOrder", JSON.stringify(existingArray));
+  setVisible(false);
+  setMenuIndex((prevKey) => prevKey + 1);
+  // router.push('/order')
+
+}
+
 
 const gridItem = (product) => {
   return (
@@ -79,14 +144,94 @@ const itemTemplate = (product, layout) => {
   
   return (
     <PrimeReactProvider>
-                  <Menu activatedIndex={1} />
+                          <div key={menuIndex}>
+                               <Menu activatedIndex={1} />
+                          </div>
         <Card className='container'>
           <div className='content'>
   
 
-            <ScrollPanel style={{ width: '100%', height: '650px' }}>
+            <ScrollPanel style={{ width: '100%', height: '90%'}}>
    
                       <div className="card justify-content-center">
+
+                      <Dialog visible={visible} modal={false} style={{ width: '20vw' }}
+                        onHide={() => resetValue()}>
+                        <p className="m-1">
+                            <img src={`http://localhost:3000/coins/download/${selected_product.Photo1}`} alt={selected_product.Photo1} style={{ width: '60%', padding: '10px' }} />
+                            <img src={`http://localhost:3000/coins/download/${selected_product.Photo2}`} alt={selected_product.Photo2} style={{ width: '60%', padding: '10px' }} />
+                            <div>
+                                <Divider />
+
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    Name: {selected_product.Name}
+                                </div>
+                                <Divider />
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    Continent: {selected_product.Continent}
+                                </div>
+                                <Divider />
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    Country: {selected_product.Country}
+                                </div>
+                                <Divider />
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    Value: {selected_product.Value}
+                                </div>
+                                <Divider />
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    Year: {selected_product.Year}
+                                </div>
+                                <Divider />
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    Composition: {selected_product.Composition}
+                                </div>
+                                <Divider />
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    Status: {selected_product.Status}
+                                </div>
+                                <Divider />
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    References: {selected_product.References}
+                                </div>
+                                <Divider />
+                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                    Price: {selected_product.Price}
+                                </div>
+                                <Divider />
+                                <br></br>
+                                <div className="text-orange-500 w-16rem h-2rem text-3xl font-bold pl-3">
+                                    Value: {selected_product.Price * ordered_qtty}
+                                    <br></br>
+                                </div>
+
+
+
+                            </div>
+                            <div className="card flex flex-wrap gap-2 p-fluid">
+                                <label className="font-bold block"></label>
+                                <div className="flex-auto ml-auto">
+
+                                    {/* <InputNumber allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} /> */}
+                                    <i className="pi pi-cart-plus block ml-0" style={{ fontSize: '2rem' }} />
+
+                                    <InputNumber className="ml-0, pl-0" allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} />
+                                    {/* <InputText placeholder="Search" /> */}
+
+                                </div>
+                                <div className="flex-auto">
+                                    <label className="font-bold block mb-2 pt-4"></label>
+                                    <Button label="Add" onClick={addToOrder} ></Button>
+                                </div>
+                                <div className="flex-auto">
+                                    <label className="font-bold block mb-2 pt-4"></label>
+                                    <Button label="Check Order" onClick={viewOrder}></Button>
+                                </div>
+                            </div>
+                        </p>
+                    </Dialog>
+
+
                       <div className="grid">
                           <div className="flex pt-0 col-1">
               
@@ -101,16 +246,17 @@ const itemTemplate = (product, layout) => {
                           <div className="col-11">
                              <DataView value={products} itemTemplate={itemTemplate} layout={layout}
                               // header={header()} --if we want buttons for list and grid
-                              paginator rows={18} />
+                              paginator rows={24} />
                           </div>
                       </div>
                   </div>
-
+                  <Footer />
             </ScrollPanel>
             </div>
+            
         </Card>
-      
-<Footer />
+        
+
     </PrimeReactProvider>
   )
 }

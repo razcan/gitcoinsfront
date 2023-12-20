@@ -228,10 +228,14 @@ router.push('/');
   return (
     <PrimeReactProvider>
       <Menu activatedIndex={0} />
-      <OrderSteps step={1}/>
+
+
       <Card className='container' >
+      <div className='pt-2'>
+                <OrderSteps step={1}/>
+            </div>
       <Toast ref={toast} />
-        <div className='content'>
+        <div className='content pt-6'>
           <div className="grid">
             <div className="col-2">
               <div className="text-center p-1 border-round-sm  font-bold">

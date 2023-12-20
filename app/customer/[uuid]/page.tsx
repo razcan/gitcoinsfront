@@ -91,11 +91,11 @@ export default function ClientOrder() {
     <PrimeReactProvider>
 <div className="container">
       <div className="overflow-scroll surface-overlay">
-        <Menu activatedIndex={1} />
+        <Menu activatedIndex={0} />
         <div>
 
           {order.length > 0 ?
-            <Card title="Comanda" className="sticky  border-primary-500 border-1 border-round">
+            <Card title="Comanda" className="sticky pt-4 border-primary-500 border-1 border-round">
               <div className="formgrid grid " >
                 <div className="field col">
                   <label htmlFor="OrderDate">OrderDate</label>

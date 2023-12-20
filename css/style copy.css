@@ -1,0 +1,83 @@
+html {
+    font-size: 12px;
+}
+
+body {
+font-family: var(--font-family);
+font-weight: normal;
+background: var(--surface-ground);
+/* background-image: url("../public/coins.jpeg"); */
+color: var(--text-color);
+padding: 1rem;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+height: 100%;
+overflow: hidden;
+
+margin: 0;
+padding: 0;
+}
+
+body.img {
+  opacity: 0.5;
+}
+
+div.p-paginator-bottom {
+  margin-bottom: 45rem;
+    /* position: fixed; */
+    /* bottom: 20; */
+}
+
+.dynamic-height-container {
+  min-height: 100vh; /* Set minimum height to 100% of the viewport height */
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+background: var(--surface-card);
+padding: 1rem;
+border-radius: 4px;
+margin-bottom: 1rem;
+position: sticky;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #ffffff; /* Adjust the background color as needed */
+  }
+
+  .sticky-down {
+    position: fixed;
+    top: 6;
+    background-color: #ffffff;
+    padding: 6px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Ensure the container takes the full height of the viewport */
+  }
+
+  .content {
+    flex: 1; /* This makes the content take the remaining space */
+    overflow: auto; /* Allow content to scroll if needed */
+  }
+
+  .custom-font-button {
+    /* font-family: 'YourCustomFont', sans-serif; Replace 'YourCustomFont' with the desired font name */
+    font-size: 22px; /* Adjust the font size as needed */
+    /* Add more font-related styles if necessary */
+  }
+
+  .custom-badge-danger {
+    display: flex;
+    flex-direction: column;
+    font-size: 24px; 
+    overflow: 44px; 
+    background-color: #ff0000;
+  }

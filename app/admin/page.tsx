@@ -190,7 +190,8 @@ export default function Admin() {
         <div className='content'>
             <Toast ref={toast} />
             <DataTable value={products} paginator rows={10} showGridlines
-             scrollable scrollHeight="546px"
+             scrollable 
+            //  scrollHeight="546px"
               size="large"
               selectionMode={'radiobutton'}
               filters={filters} filterDisplay="menu"
@@ -228,6 +229,7 @@ export default function Admin() {
               ></Column>
 
             </DataTable>
+         
           </div>
    
       </Card>

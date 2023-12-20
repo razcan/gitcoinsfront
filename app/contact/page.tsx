@@ -61,9 +61,10 @@ export default function Contact() {
 
   return (
 <PrimeReactProvider>
+<Menu activatedIndex={4} />
   <div className ='min-h-screen'>
-      <Menu activatedIndex={4} />
-        <Card className="max-w-full pt-4 min-h-screen ">
+      
+        <Card className="max-w-full pt-8 min-h-screen ">
         <Toast ref={toast} />
        
           <div className="grid nested-grid">

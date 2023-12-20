@@ -131,8 +131,8 @@ const Login = async () => {
   return (
     <PrimeReactProvider >
 
-      <div className="sticky min-w-full border-round bg-white font-bold flex align-items-start "
-      // className="sticky"
+      <div className="header min-w-full border-round bg-white font-bold flex align-items-start "
+      // className="sticky" up - change sticky with header from css
       >
             {/* <div className="card">
             <Menubar model={items} start={start} end={end} />
@@ -180,21 +180,23 @@ const Login = async () => {
 
 {/* <Button label="Show" icon="pi pi-user" onClick={() => setVisible(true)} /> */}
 {username ? 
-<div className='pt-5 pr-2 pl-2'>
+<div className='pt-4 pr-2 pl-2'>
     <Chip  label={username} removable />
 </div>
 : null }
-<Avatar icon="pi pi-user" size="xlarge" onClick={() => Login()}/>
+<div className="flex-auto pl-2 pr-2 pt-2">
+<Avatar  icon="pi pi-user" size="large" onClick={() => Login()}/>
+</div>
 
 {/* {expireToken} */}
 
 { 
        itemCount ? 
-               <div className="flex-auto pl-2">
+               <div className="flex-auto pl-1 pr-2 pt-2">
                <Avatar
                  className="p-overlay-badge"
                  icon="pi pi-shopping-cart"
-                 size="xlarge"
+                 size="large"
                  onClick={goToOrder}
                >
                  <Badge value={itemCount} size="large" />
