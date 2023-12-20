@@ -26,9 +26,12 @@ export default function Address() {
   const toast = useRef(null);
 
   const showSuccess = () => {
-      toast.current.show({severity:'success', summary: 'Order saved succesfully', life: 4000});
+      toast.current.show({severity:'success', summary: 'Order saved succesfully', life: 3000});
   }
 
+  const showError = (message) => {
+    toast.current.show({severity:'warn', summary: message, life: 3000});
+}
 
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -65,6 +68,7 @@ export default function Address() {
   const [dataFetched, setDataFetched] = useState(false);
   const [orderDetails, setOrderDetails] = useState([]);
   const [orderHeader, setOrderHeader] = useState([]);
+  const [message, setMessage] = useState([]);
 
   interface DetailsOrder {
     orderId: any;
@@ -124,33 +128,36 @@ export default function Address() {
   const sendData2 = async () => {
 
     if (!name) {
-      console.log('nu ai bagat numele')
+      showError('Please enter name')
       setClasaName( "w-full p-invalid")
      //
     }
 
     if (!email) {
-      console.log('nu ai bagat email')
+
+      showError('Please enter email')
       setClasaEmail( "w-full p-invalid")
      //
     }
     if (!phonenumber) {
-      console.log('nu ai bagat tel')
+   
+      showError('Please enter phone')
       setClasaPhone( "w-full p-invalid")
      //
     }
     if (!selectedCounty) {
-      console.log('nu ai bagat judet')
+
+      showError('Please enter county')
       setNumeDropD("w-full md:w-44rem p-invalid");
      //
     }
     if (selectedOras == 'Selectati un oras') {
-      console.log('nu ai bagat oras')
+      showError('Please enter city')
       setNumeDropCity("w-full md:w-44rem p-invalid");
      //
     }
     if (!address) {
-      console.log('nu ai bagat adresa')
+      showError('Please enter address')
       setClasaAddress( "w-full p-invalid")
      //
     }
@@ -234,7 +241,7 @@ router.push('/');
       <div className='pt-2'>
                 <OrderSteps step={1}/>
             </div>
-      <Toast ref={toast} />
+      <Toast className='pt-8' ref={toast} />
         <div className='content pt-6'>
           <div className="grid">
             <div className="col-2">

@@ -107,7 +107,8 @@ const addToOrder = () => {
 
 const gridItem = (product) => {
   return (
-      <div className="col-2 sm:col-2 lg:col-2 xl:col-2 pl-4">
+    //   <div className="col-2 sm:col-2 lg:col-2 xl:col-2 pl-4">
+    <div className="col-12 sm:col-6 lg:col-3 xl:col-2 p-2">
           <div className="p-2 border-1 surface-border surface-card border-round">
               <div className="flex flex-wrap align-items-center justify-content-between gap-1">
                   <div className="flex align-items-center gap-2">
@@ -233,12 +234,12 @@ const itemTemplate = (product, layout) => {
 
 
                       <div className="grid">
-                          <div className="flex pt-0 col-1">
+                          <div className="flex pt-0 col-1 ">
               
-                           <div className="col-12">
+                           <div className="col-12 ">
                                  
-                                  <Tag value="Added in the last days"></Tag>
-                                  <InputText value={days} onChange={(e) => setDays(e.target.value)} className="w-full" />
+                                  <Tag value="Added in the last days:"></Tag>
+                                  <InputText value={days} onChange={(e) => setDays(e.target.value)} className="w-full " />
                                   <Slider value={days} max={60} onChange={(e) => setDays(e.value)} className="w-full" />
                               </div>
 

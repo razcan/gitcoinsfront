@@ -4,7 +4,6 @@ import { usePathname } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 import React, { useState, useEffect, useRef } from 'react';
 import Menu  from '../../../../components/menu';
-import Login from '../../../login/page'
 import 'primereact/resources/themes/tailwind-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -18,10 +17,13 @@ import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { useRouter } from 'next/navigation';
-import { Tag } from 'primereact/tag';
 import  '../../../../css/style.css' 
 import { Card } from 'primereact/card';
 import { Dialog } from 'primereact/dialog';
+import { Accordion, AccordionTab } from 'primereact/accordion';
+import { Calendar } from 'primereact/calendar';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column'
 
 interface PageProps {
   params: { edit: string },
@@ -39,6 +41,13 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
   const [selectedCountry, setSelectedCountry] = useState([]);
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [visibleStock, setVisibleStock] = useState(false);
+  const [selectedOperation, setSelectedOperation] = useState(false);
+  const [operationDate, setOperationDate] = useState(false);
+  const [operations, setOperations] = useState([{}]);
+  
+  
+  
  
   const countries = countries_all;
   const [Price, setPrice] = useState([1]);
@@ -102,6 +111,8 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
     { name: 'VG/G', id: 3 }
   ];
 
+  
+
   const getStatus = (status) => {
     return coin_status.find((obj) => obj.name === status)
   };
@@ -112,6 +123,12 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
     { name: 'Silver', id: 47 },
     { name: 'Gold', id: 79 }
   ]
+
+  const stock_operation = [
+    { name: 'Load(+)', id: 1 },
+    { name: 'Deacrease(-)', id: 2 },
+  ]
+
 
   const getCompositionJson = (status: string) => {
     return coin_composition.find((obj) => obj.name === status);
@@ -184,6 +201,11 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
           
           ))
       })
+  }
+
+  const stockOperations = () => {
+    console.log('stock')
+    setVisibleStock(true);
   }
 
   const handlerFormData = async () => {
@@ -350,7 +372,11 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
                   <InputNumber useGrouping={false} placeholder="Enter initial stock" 
                   value={Stock} onValueChange={(e) => setStock(e.value)} />
                   <label htmlFor="stock">Stock</label>
+                  <div className=' pt-2 pl-2'>
+                  <Button  label="Stock Operations" icon="pi pi-check" iconPos="right" onClick={() => stockOperations()} />
+                  </div>
                 </span>
+
               </div>
             </div>
           </div>
@@ -387,6 +413,60 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
 
         </div>
         </div>
+
+        <Dialog header="Header" visible={visibleStock} style={{ width: '80vw' }} onHide={() => setVisibleStock(false)}>
+        <Accordion activeIndex={0}>
+            <AccordionTab header="Stock Operations">
+
+            <div className="formgrid grid">
+
+              {/* <div className="field col">
+                <div className="flex flex-column">
+                    <label htmlFor="Operation">Operation</label>
+                    <Dropdown value={selectedOperation} onChange={(e) => setSelectedOperation(e.value)} options={stock_operation} optionLabel="name" 
+                    placeholder="Select a Operation" className="w-full md:w-22rem" />
+                </div>
+               </div> */}
+
+                <div className="field col">
+                <div className="flex flex-column">
+                    <label htmlFor="qtty">Qtty</label>
+                    <InputText keyfilter="int" id="qtty" aria-describedby="Qtty" />
+                </div>
+                </div>
+
+                <div className="field col">
+                <div className="flex flex-column">
+                    <label htmlFor="Date">Date</label>
+                    <Calendar value={operationDate} onChange={(e) => setOperationDate(e.value)} />
+                </div>
+               </div>
+
+                <div className="field col">
+                <div className="flex flex-column">
+                    <label htmlFor="Remarks">Remarks</label>
+                    <InputText id="Remarks" aria-describedby="Remarks" />
+                </div>
+               </div>
+
+            </div>
+                  <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => handlerFormData()} />
+            </AccordionTab>
+            <AccordionTab header="Stock Transactions">
+                    <div className="card">
+                        <DataTable value={operations} tableStyle={{ minWidth: '50rem' }}>
+                            <Column field="number" header="Number"></Column>
+                            <Column field="type" header="Type"></Column>
+                            <Column field="date" header="TransactionDate"></Column>
+                            <Column field="qtty" header="Qtty"></Column>
+                            <Column field="createdAt" header="CreatedAt"></Column>
+                        </DataTable>
+                    </div>
+            </AccordionTab>
+        </Accordion>
+         
+        </Dialog>
+
         </Card>
 
       {/* ))} */}

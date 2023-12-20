@@ -133,7 +133,7 @@ export default function Item(params: any) {
 
     const gridItem = (product) => {
         return (
-            <div className="col-4 sm:col-4 lg:col-2 xl:col-2 p-4">
+            <div className="col-12 sm:col-6 lg:col-3 xl:col-2 p-2">
                 <div className="p-2 border-1 surface-border surface-card border-round">
                     <div className="flex flex-wrap align-items-center justify-content-between gap-1">
                         <div className="flex align-items-center gap-2">
@@ -182,7 +182,7 @@ export default function Item(params: any) {
                         <Menu activatedIndex={0} />
         </div>
         <div className="container">
-            <div className="content">
+            <div className="content pt-6">
 
                 <div className="card">
              

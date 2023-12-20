@@ -26,16 +26,24 @@ body {
   
 }
 
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  /* background-color: #ffffff; Adjust the background color as needed */
+}
+
 .header {
-  background-color: #3498db; /* Adjust the color as needed */
-  color: #fff;
+  /* background-color: #3498db; Adjust the color as needed */
+  /*color: #fff;*/
   padding: 10px;
   text-align: center;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
-  background-color: #ffffff; 
+ /* background-color: #ffffff; */
 }
 
 .footer {
