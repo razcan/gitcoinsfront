@@ -16,9 +16,24 @@ import '../../../css/style.css'
 
 export default function ClientOrder() {
   const [order, setOrder] = useState([]);
-  const [date, setOrderDate] = useState([]);
+  const [date, setOrderDate] = useState('1900-01-01');
+  const [dateform, setDateform] = useState('1900-01-01');
   const searchParams = useSearchParams()
   const uuid2 = searchParams.get("uuid");
+
+  const dateTransform = (date) => {
+    const test = new Date(date)
+    
+    const yyyy = test.getFullYear();
+    let mm = test.getMonth() + 1; // Months start at 0!
+    let dd = test.getDate();
+    
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+    
+    const formattedToday = dd + '/' + mm + '/' + yyyy;
+    setDateform(formattedToday)
+  }
 
   const fetchClientOrder = () => {
     fetch(`http://localhost:3000/orders/client/${uuid2}`)
@@ -26,12 +41,21 @@ export default function ClientOrder() {
         return response.json()
       })
       .then(order => {
-        setOrder(order)
+        setOrder(order),
+        setOrderDate(order[0].OrderDate),
+        dateTransform(order[0].OrderDate)
+
       })
   }
 
+
+
+
+
+
   useEffect(() => {
-    fetchClientOrder()
+    fetchClientOrder(),
+    dateTransform(date)
   }, [])
 
   const itemTemplate = (data) => {
@@ -95,31 +119,33 @@ export default function ClientOrder() {
         <div>
 
           {order.length > 0 ?
-            <Card title="Comanda" className="sticky pt-4 border-primary-500 border-1 border-round">
-              <div className="formgrid grid " >
+          <div className='pl-2 pr-2 pt-6'>
+            <Card title="Comanda" className="sticky pt-4 pr-2 pl-2 border-primary-500 border-1 border-round">
+              <div className="formgrid grid" >
                 <div className="field col">
-                  <label htmlFor="OrderDate">OrderDate</label>
-                  <InputText id="OrderDate" value={order[0].OrderDate} disabled />
+                  <label htmlFor="OrderDate" className='pr-2'>OrderDate</label>
+                  <InputText id="OrderDate" value={dateform} disabled />
                 </div>
                 <div className="field col">
-                  <label htmlFor="Customer">Customer</label>
+                  <label htmlFor="Customer" className='pr-2'>Customer</label>
                   <InputText id="Customer" value={order[0].Customer} disabled />
                 </div>
                 <div className="field col">
-                  <label htmlFor="TotalAmount">TotalAmount</label>
+                  <label htmlFor="TotalAmount" className='pr-2'>TotalAmount</label>
                   <InputText id="TotalAmount" value={order[0].TotalAmount} disabled />
                 </div>
                 <div className="field col">
-                  <label htmlFor="OrderStatus">OrderStatus</label>
+                  <label htmlFor="OrderStatus" className='pr-2'>OrderStatus</label>
                   <InputText id="OrderStatus" value={order[0].OrderStatus} disabled />
                 </div>
                 <div className="field col">
-                  <label htmlFor="ShippingAddress">ShippingAddress</label>
-                  <InputText id="ShippingAddress" value={order[0].ShippingAddress} disabled />
+                  <label htmlFor="ShippingAddress" className='pr-2'>ShippingAddress</label>
+                  <InputText id="ShippingAddress" className='pl-1 w-20rem' value={order[0].ShippingAddress} disabled />
                 </div>
               </div>
 
             </Card>
+            </div>
             : null}
 
           <OrderedItems />
