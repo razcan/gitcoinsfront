@@ -188,7 +188,7 @@ const coin_composition = [
           <div className='content'>
             <Menu activatedIndex={5} />
             <Toast ref={toast} />
-            <ScrollPanel style={{ width: '100%', height: '650px' }}>
+            <ScrollPanel style={{ width: '100%' }}>
       <div className="grid card flex-wrap gap-3 p-fluid" style={{padding:"20px"}}>
         <div className="col-3">
             <div className="flex-auto gap-3 p-3">
