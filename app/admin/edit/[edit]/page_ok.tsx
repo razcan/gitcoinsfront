@@ -17,7 +17,14 @@ import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { useRouter } from 'next/navigation';
-import { Tag } from 'primereact/tag';
+import '../../../../css/style.css'
+import { Card } from 'primereact/card';
+import { Dialog } from 'primereact/dialog';
+import { Accordion, AccordionTab } from 'primereact/accordion';
+import { Calendar } from 'primereact/calendar';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column'
+import axios from 'axios';
 
 interface PageProps {
   params: { edit: string },
@@ -31,15 +38,27 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
   const [items, setItems] = useState([]);
   const toast = useRef(null);
   const axios = require('axios');
+  const [visible, setVisible] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState([]);
- 
+  const [username, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const [visibleStock, setVisibleStock] = useState(false);
+  const [selectedOperation, setSelectedOperation] = useState(false);
+  const [operationDate, setOperationDate] = useState('');
+  const [operationRemarks, setOperationRemarks] = useState('');
+  const [operationQtty, setOperationQtty] = useState(0);
+  const [operations, setOperations] = useState([]);
+
+
+
+
   const countries = countries_all;
   const [Price, setPrice] = useState([1]);
 
   const [Code, setCode] = useState([]);
   const [Continent, setContinent] = useState([]);
   const [Country, setCountry] = useState([]);
-  
+
   const [Year, setYear] = useState([]);
   const [Catalog, setCatalog] = useState([]);
   const [Value, setValue] = useState([]);
@@ -52,22 +71,52 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
   const [picturefiles, setPicturefiles] = useState([]);
   const [Id, setId] = useState([]);
 
-
+  const showError = (message) => {
+    toast.current.show({ severity: 'error', summary: 'Saving error!', detail: message, life: 3000 });
+  }
 
   const deleteItem = async () => {
-    fetch(`http://localhost:3000/coins/${edit}`, { method: 'DELETE' })
-      .then(() => console.log({ status: 'Delete successful' }));
+    const jwtToken = JSON.parse(localStorage.getItem('token'))
+    const jwtTokenf = jwtToken.access_token;
+    // console.log(jwtToken.access_token)
+    const response = await fetch(`http://localhost:3000/coins/${edit}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${jwtTokenf}`,
+        'Content-Type': 'application/json',
+      },
+
+    })
+
+    if (!response.ok) {
+      const res = `HTTP error! Status: ${response.status}`
+      // const x = response.status
+      //  showError(res)
+      if (response.status == 401) {
+        // setVisible(true)
+        router.push('/login')
+      }
+      //  throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    if (response.ok) {
+      console.log('Delete successful');
+      router.push('/admin');
+    }
   }
 
   useEffect(() => {
-    fetchCoinData()
+    fetchCoinData(),
+      fetchStockOperations()
   }, [])
+
 
   const coin_status = [
     { name: 'UNC/AUNC', id: 1 },
     { name: 'VF/F', id: 2 },
     { name: 'VG/G', id: 3 }
   ];
+
+
 
   const getStatus = (status) => {
     return coin_status.find((obj) => obj.name === status)
@@ -79,6 +128,12 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
     { name: 'Silver', id: 47 },
     { name: 'Gold', id: 79 }
   ]
+
+  const stock_operation = [
+    { name: 'Load(+)', id: 1 },
+    { name: 'Deacrease(-)', id: 2 },
+  ]
+
 
   const getCompositionJson = (status: string) => {
     return coin_composition.find((obj) => obj.name === status);
@@ -123,6 +178,40 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
     );
   };
 
+  const fetchStockOperations = async () => {
+    await fetch(`http://localhost:3000/stocks/${edit}`)
+      .then(response => {
+        return response.json()
+      }).then(stock => {
+        setOperations(stock)
+      }
+      )
+  }
+
+  const saveOperationStock = async () => {
+
+
+    if (operationQtty >= 0) { var typeOp = 'Load' }
+    else { var typeOp = 'Decrease' }
+
+    try {
+      const response = await axios.post(`http://localhost:3000/stocks`, {
+        TransactionDate: operationDate,
+        Type: typeOp,
+        Qtty: operationQtty,
+        CoinId: Id,
+        Remarks: operationRemarks
+      });
+
+      showSuccess();
+    } catch (error) {
+      console.error('Error submitting :', error);
+    }
+
+
+
+  }
+
   const fetchCoinData = async () => {
     await fetch(`http://localhost:3000/coins/${edit}`)
       .then(response => {
@@ -131,10 +220,10 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
       })
       .then(coins => {
         setProducts(coins);
-        coins.map(product=> (      
-          setId(product.id),             
+        coins.map(product => (
+          setId(product.id),
           setPrice(product.Price),
-         
+
           setContinent(product.Continent),
           setCountry(product.Country),
           setCode(product.Code),
@@ -148,9 +237,14 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
           setStock(product.Stock),
           setPhoto1(product.Photo1),
           setPhoto2(product.Photo2)
-          
-          ))
+
+        ))
       })
+  }
+
+  const stockOperations = () => {
+    console.log('stock')
+    setVisibleStock(true);
   }
 
   const handlerFormData = async () => {
@@ -172,12 +266,11 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
     formdata2.append('Price', Price);
     formdata2.append('References', 0);
     formdata2.append('Stock', Stock);
-    if (picturefiles.length == 2)
-    {
+    if (picturefiles.length == 2) {
       formdata2.append("files", picturefiles[0]);
       formdata2.append("files", picturefiles[1]);
     }
-   
+
     formdata2.append('Photo1', Photo1);
     formdata2.append('Photo2', Photo2);
 
@@ -200,156 +293,223 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
       }
       )
       .catch(error => console.log('error', error));
-      router.push('/admin');
+    router.push('/admin');
   }
 
   return (
-    <PrimeReactProvider>                 
+    <PrimeReactProvider>
 
-      <Menu activatedIndex={4} />
+
+      <Menu activatedIndex={5} />
       <Toast ref={toast} />
 
-        <div style={{ padding: "10px", maxHeight: "100vh" }} className="md:w-28rem">
+      <Card className='container'>
+        <div className='content'>
 
-          <div className="flex flex-wrap gap-3 mb-4">
-            <div className="flex-auto">
-              <div className="flex flex-column gap-2">
-                {/* <label htmlFor="catalog">Country</label> */}
-               
-                <Dropdown 
-                 value={getCountry(Country)}
-                  onChange={(e) => {
-                    setContinent(e.value.continent),
-                    setCountry(e.value.name),
-                    setCode(e.value.code)
-                  }}
-                  options={countries} optionLabel="name" placeholder="Select a Country"
-                  filter valueTemplate={selectedCountryTemplate}
-                  itemTemplate={countryOptionTemplate} />
+          <div style={{ padding: "2px", maxHeight: "90vh" }} className="md:w-28rem">
+
+            <div className="flex flex-wrap gap-3 mb-4">
+              <div className="flex-auto">
+                <div className="flex flex-column gap-2">
+                  {/* <label htmlFor="catalog">Country</label> */}
+
+                  <Dropdown
+                    value={getCountry(Country)}
+                    onChange={(e) => {
+                      setContinent(e.value.continent),
+                        setCountry(e.value.name),
+                        setCode(e.value.code)
+                    }}
+                    options={countries} optionLabel="name" placeholder="Select a Country"
+                    filter valueTemplate={selectedCountryTemplate}
+                    itemTemplate={countryOptionTemplate} />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex flex-wrap gap-3 mb-4">
-            <div className="flex-auto">
-              <div className="flex flex-column gap-2">
-                <span className="p-float-label">
-                  <InputText id="catalog" placeholder="Enter catalog code"
-                    value={Catalog} onChange={(e) => setCatalog(e.target.value)} />
-                  <label htmlFor="catalog">Catalog</label>
-                </span>
+            <div className="flex flex-wrap gap-3 mb-4">
+              <div className="flex-auto">
+                <div className="flex flex-column gap-2">
+                  <span className="p-float-label">
+                    <InputText id="catalog" placeholder="Enter catalog code"
+                      value={Catalog} onChange={(e) => setCatalog(e.target.value)} />
+                    <label htmlFor="catalog">Catalog</label>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex flex-wrap gap-3 mb-4">
-            <div className="flex-auto">
-              <div className="flex flex-column gap-2">
-                <span className="p-float-label">
-                  <InputText id="value" placeholder="Enter value"
-                    value={Value} onChange={(e) => setValue(e.target.value)}
+            <div className="flex flex-wrap gap-3 mb-4">
+              <div className="flex-auto">
+                <div className="flex flex-column gap-2">
+                  <span className="p-float-label">
+                    <InputText id="value" placeholder="Enter value"
+                      value={Value} onChange={(e) => setValue(e.target.value)}
+                    />
+                    <label htmlFor="value">Value</label>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-3 mb-4">
+              <div className="flex-auto">
+                <div className="flex flex-column gap-2">
+                  <span className="p-float-label">
+                    <InputText id="name" placeholder="Enter name"
+                      value={Name} onChange={(e) => setName(e.target.value)}
+                    />
+                    <label htmlFor="name">Name</label>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-3 mb-4">
+              <div className="flex-auto">
+                <div className="flex flex-column gap-2">
+                  <span className="p-float-label">
+                    <InputNumber useGrouping={false} placeholder="Enter year"
+                      value={Year} onValueChange={(e) => setYear(e.value)} />
+                    <label htmlFor="year">Year</label>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-3 mb-4">
+              <div className="flex-auto">
+                <div className="flex flex-column gap-2">
+                  <Dropdown
+                    value={getCompositionJson(Composition)}
+                    options={coin_composition}
+                    optionLabel="name" onChange={(e) => setComposition(e.value)}
+                    placeholder="Select composition" />
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-3 mb-4">
+              <div className="flex-auto">
+                <div className="flex flex-column gap-2">
+                  {/* <label htmlFor="price">Price</label> */}
+                  <InputNumber showButtons mode="currency" currency="RON"
+                    value={Price} onValueChange={(e) => setPrice(e.value)} />
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-3 mb-4">
+              <div className="flex-auto">
+                <div className="flex flex-column gap-2">
+                  {/* <label htmlFor="status">Status</label> */}
+                  <Dropdown value={getStatus(Status)} options={coin_status}
+                    optionLabel="name" onChange={(e) => setStatus(e.value)}
+                    placeholder="Select status" />
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-3 mb-4">
+              <div className="flex-auto">
+                <div className="flex flex-column gap-2">
+                  <span className="p-float-label">
+                    <InputNumber useGrouping={false} placeholder="Enter initial stock"
+                      value={Stock} onValueChange={(e) => setStock(e.value)} />
+                    <label htmlFor="stock">Stock</label>
+                    <div className=' pt-2 pl-2'>
+                      <Button label="Stock Operations" icon="pi pi-check" iconPos="right" onClick={() => stockOperations()} />
+                    </div>
+                  </span>
+
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-3 mb-4">
+              <div className="flex-auto">
+                <div className="flex flex-column gap-2">
+                  <label htmlFor="value">File Upload</label>
+                  <FileUpload
+                    multiple accept="image/*"
+                    // mode="basic"
+                    maxFileSize={1000000}
+                    customUpload={true}
+                    //uploadHandler={setPicturefiles(files)}
+                    uploadHandler={onUpload} auto
+                    chooseLabel="Change photos"
                   />
-                  <label htmlFor="value">Value</label>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-3 mb-4">
-            <div className="flex-auto">
-              <div className="flex flex-column gap-2">
-                <span className="p-float-label">
-                  <InputText id="name" placeholder="Enter name"
-                    value={Name} onChange={(e) => setName(e.target.value)}
-                  />
-                  <label htmlFor="name">Name</label>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-3 mb-4">
-            <div className="flex-auto">
-              <div className="flex flex-column gap-2">
-                <span className="p-float-label">
-                  <InputNumber useGrouping={false} placeholder="Enter year" 
-                  value={Year} onValueChange={(e) => setYear(e.value)} />
-                  <label htmlFor="year">Year</label>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-3 mb-4">
-            <div className="flex-auto">
-              <div className="flex flex-column gap-2">
-                <Dropdown
-                  value={getCompositionJson(Composition)}
-                  options={coin_composition}
-                  optionLabel="name" onChange={(e) => setComposition(e.value)}
-                  placeholder="Select composition" />
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-3 mb-4">
-            <div className="flex-auto">
-              <div className="flex flex-column gap-2">
-                {/* <label htmlFor="price">Price</label> */}
-                <InputNumber showButtons mode="currency" currency="RON" 
-                value={Price} onValueChange={(e) => setPrice(e.value)} />
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-3 mb-4">
-            <div className="flex-auto">
-              <div className="flex flex-column gap-2">
-                {/* <label htmlFor="status">Status</label> */}
-                <Dropdown value={getStatus(Status)} options={coin_status}
-                  optionLabel="name" onChange={(e) => setStatus(e.value)}
-                  placeholder="Select status" />
-              </div>
-            </div>
-          </div>
+                  <div className="flex flex-column gap-1">
+                    <label>Actual photos</label>
+                    <Toast ref={toast} />
+                    <span>
+                      <img src={`http://localhost:3000/coins/download/${Photo1}`} alt={Photo1} style={{ width: '30%', paddingLeft: '6px' }} />
+                      <img src={`http://localhost:3000/coins/download/${Photo2}`} alt={Photo2} style={{ width: '30%', paddingLeft: '6px' }} />
+                    </span>
+                  </div>
+                </div>
 
-          <div className="flex flex-wrap gap-3 mb-4">
-            <div className="flex-auto">
-              <div className="flex flex-column gap-2">
-                <span className="p-float-label">
-                  <InputNumber useGrouping={false} placeholder="Enter initial stock" 
-                  value={Stock} onValueChange={(e) => setStock(e.value)} />
-                  <label htmlFor="stock">Stock</label>
-                </span>
+
               </div>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-3 mb-4">
-            <div className="flex-auto">
-              <div className="flex flex-column gap-2">
-                <label htmlFor="value">File Upload</label>
-                <FileUpload
-                  multiple accept="image/*"
-                  // mode="basic"
-                  maxFileSize={1000000}
-                  customUpload={true}
-                  //uploadHandler={setPicturefiles(files)}
-                  uploadHandler={onUpload} auto
-                  chooseLabel="Change photos"
-                />
-                    <div className="flex flex-column gap-2">
-                <label>Actual photos</label>
-                <img src={`http://localhost:3000/coins/download/${Photo1}`} alt={Photo1} style={{ width: '80%', padding: '10px' }} />
-                <img src={`http://localhost:3000/coins/download/${Photo2}`} alt={Photo2} style={{ width: '80%', padding: '10px' }} />
-            </div>
-              </div>
-          
 
             </div>
-       
-          </div>
-          <div className="card flex flex-wrap justify-content-left gap-3 mb-4">
-            <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => handlerFormData()} />
-            <Button label="Delete" icon="pi pi-delete-left"
-              iconPos="right" severity="danger" onClick={() => deleteItem()} />
-          </div>
+            <div className="card flex flex-wrap gap-2 mb-1" style={{ paddingLeft: "0" }}>
+              <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => handlerFormData()} />
+              <Button label="Delete" icon="pi pi-delete-left"
+                iconPos="right" severity="danger" onClick={() => deleteItem()} />
+            </div>
 
+          </div>
         </div>
 
-      {/* ))} */}
+        <Dialog header="Header" visible={visibleStock} style={{ width: '80vw' }} onHide={() => setVisibleStock(false)}>
+          <Accordion activeIndex={0}>
+            <AccordionTab header="Stock Operations">
+
+              <div className="formgrid grid">
+
+                {/* <div className="field col">
+                <div className="flex flex-column">
+                    <label htmlFor="Operation">Operation</label>
+                    <Dropdown value={selectedOperation} onChange={(e) => setSelectedOperation(e.value)} options={stock_operation} optionLabel="name" 
+                    placeholder="Select a Operation" className="w-full md:w-22rem" />
+                </div>
+               </div> */}
+
+                <div className="field col">
+                  <div className="flex flex-column">
+                    <label htmlFor="qtty">Qtty</label>
+                    <InputNumber inputId="integeronly" value={operationQtty} onValueChange={(e) => setOperationQtty(e.value)} />
+                  </div>
+                </div>
+
+                <div className="field col">
+                  <div className="flex flex-column">
+                    <label htmlFor="Date">Date</label>
+                    <Calendar value={operationDate} onChange={(e) => setOperationDate(e.value)} />
+                  </div>
+                </div>
+
+                <div className="field col">
+                  <div className="flex flex-column">
+                    <label htmlFor="Remarks">Remarks{operationRemarks}</label>
+                    <InputText value={operationRemarks} onChange={(e) => setOperationRemarks(e.target.value)} />
+                  </div>
+                </div>
+
+              </div>
+              <Button label="Save" icon="pi pi-check" iconPos="right" onClick={() => saveOperationStock()} />
+            </AccordionTab>
+            <AccordionTab header="Stock Transactions">
+              <div className="card">
+                {operations ?
+                  <DataTable value={operations} scrollHeight='50rem' tableStyle={{ minWidth: '50rem' }}>
+                    <Column field="id" header="Number"></Column>
+                    <Column field="Type" header="Type"></Column>
+                    <Column field="TransactionDate" header="TransactionDate"></Column>
+                    <Column field="Qtty" header="Qtty"></Column>
+                    <Column field="CreatedAt" header="CreatedAt"></Column>
+                  </DataTable>
+                  : null}
+              </div>
+            </AccordionTab>
+          </Accordion>
+
+        </Dialog>
+
+      </Card>
 
     </PrimeReactProvider>
 
