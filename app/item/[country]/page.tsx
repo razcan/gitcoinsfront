@@ -25,7 +25,7 @@ export default function Item(params: any) {
     const [layout, setLayout] = useState('grid');
     const [visible, setVisible] = useState(false);
     const [selected_product, setSelected_product] = useState([]);
-    const [ordered_qtty, setOrdered_qtty] = useState(1);
+    const [ordered_qtty, setOrdered_qtty] = useState();
     const [menuIndex, setMenuIndex] = useState(0);
 
 
@@ -247,7 +247,11 @@ export default function Item(params: any) {
                                     {/* <InputNumber allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} /> */}
                                     <i className="pi pi-cart-plus block ml-0" style={{ fontSize: '2rem' }} />
 
-                                    <InputNumber className="ml-0, pl-0" allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} />
+                                    <InputNumber className="ml-0, pl-0" 
+                                    // allowEmpty={false}  
+                                    min={1}
+                                    max={1000} 
+                                    value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} />
                                     {/* <InputText placeholder="Search" /> */}
 
                                 </div>

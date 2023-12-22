@@ -69,7 +69,7 @@ export default function Contact() {
        
           <div className="grid nested-grid">
 
-          <div className="col-2 p-3"></div>
+          <div className="col-2"></div>
             <div className="col-4 p-3">
               <div className="grid">
                   <Card title="Get in touch" style={{height: "600px"}} className=' w-full'>
@@ -95,7 +95,8 @@ export default function Contact() {
                   </Card>
               </div>
             </div>
-            <div className="col-4 pl-8">
+            <div className='w-1rem'></div>
+            <div className="col-4 p-2">
               <Card title="Contact Me"  style={{height: "600px"}}>
                 <div className="col-12">
                   <div className="text-center border-round-sm font-bold">
@@ -158,6 +159,8 @@ export default function Contact() {
               
               </Card>
             </div>
+            <div className="col-2 p-3"></div>
+          
             <div className="col-12 p-3 border-blue-500">
 
             </div>
