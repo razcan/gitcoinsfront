@@ -238,8 +238,8 @@ const itemTemplate = (product, layout) => {
               
                            <div className="col-12 ">
                                  
-                                  <Tag value="Added in the last days:"></Tag>
-                                  <InputText value={days} onChange={(e) => setDays(e.target.value)} className="w-full " />
+                                  <Tag value="Last added:"></Tag>
+                                  <InputText disabled value={'Days: '+days} onChange={(e) => setDays(e.target.value)} className="w-full " />
                                   <Slider value={days} max={60} onChange={(e) => setDays(e.value)} className="w-full" />
                               </div>
 

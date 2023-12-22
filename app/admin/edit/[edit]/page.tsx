@@ -99,7 +99,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
       //  throw new Error(`HTTP error! Status: ${response.status}`);
     }
     if (response.ok) {
-      console.log('Delete successful');
+      // console.log('Delete successful');
       router.push('/admin');
     }
   }
@@ -202,13 +202,13 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
         CoinId: Id,
         Remarks: operationRemarks
       });
-
+      fetchCoinData()
       showSuccess();
     } catch (error) {
       console.error('Error submitting :', error);
     }
-
-    router.push('/admin');
+    setVisibleStock(false);
+     //router.push('/admin');
 
   }
 
@@ -454,7 +454,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
           </div>
         </div>
 
-        <Dialog header="Header" visible={visibleStock} style={{ width: '80vw' }} onHide={() => setVisibleStock(false)}>
+        <Dialog header="Header" visible={visibleStock} style={{ width: '60vw' }} onHide={() => setVisibleStock(false)}>
           <Accordion activeIndex={1}>
             <AccordionTab header="Stock Operations">
 

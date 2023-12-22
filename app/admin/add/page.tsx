@@ -189,7 +189,8 @@ const coin_composition = [
             <Menu activatedIndex={5} />
             <Toast ref={toast} />
             <ScrollPanel style={{ width: '100%' }}>
-      <div className="grid card flex-wrap gap-3 p-fluid" style={{padding:"20px"}}>
+      <div className="grid card flex-wrap gap-3 p-fluid pl-0" style={{padding:"20px"}}>
+      <div className="col-3"></div>
         <div className="col-3">
             <div className="flex-auto gap-3 p-3">
                 <span className="p-float-label">
@@ -244,9 +245,15 @@ const coin_composition = [
                 <label htmlFor="References">References</label>
                 </div>
               </div>
+              <div className="gap-3 pt-3 pl-2">
+              <div style={{width: '140px'}}>
+                <Button className='m-1' label="Save" icon="pi pi-check" iconPos="right" onClick={() => handlerFormData()} />  
+                <Button className='m-1' label="Delete" icon="pi pi-delete-left" iconPos="right" severity="danger"/>  
+             </div>          
+      </div>
 
         </div>
-        <div className="col-1"></div>
+        {/* <div className="col-1"></div> */}
 
         <div className="col-3">
             <div className="flex-auto gap-3 p-3">
@@ -298,14 +305,12 @@ const coin_composition = [
           
 
         </div>
+        <div className="col-3"></div>
     </div>
 
       {/* <div  style={{padding:"5px", maxHeight: "90vh"}} className="md:w-28rem"> */}
 
-      <div className="flex-auto pl-6">
-             <Button className='m-1' label="Save" icon="pi pi-check" iconPos="right" onClick={() => handlerFormData()} />  
-             <Button className='m-1' label="Delete" icon="pi pi-delete-left" iconPos="right" severity="danger"/>            
-      </div>
+
     </ScrollPanel>
         </div>
         </Card>

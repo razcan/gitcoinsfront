@@ -73,7 +73,7 @@ export default function Item(params: any) {
 
         // Convert the updated array to a string and store it back in localStorage
         localStorage.setItem("YourOrder", JSON.stringify(existingArray));
-        setVisible(false);
+        // setVisible(false);
         setMenuIndex((prevKey) => prevKey + 1);
         // router.push('/order')
 
