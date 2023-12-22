@@ -83,8 +83,12 @@ const Login = async () => {
     { label: 'News', icon: 'pi pi-fw pi-info-circle' ,
     command: () => {
       router.push('/news');} },
-    { label: 'Lots', icon: 'pi pi-fw pi-bitcoin' },
-    { label: 'Conditions', icon: 'pi pi-fw pi-list' },
+    { label: 'Lots', icon: 'pi pi-fw pi-bitcoin' ,
+    command: () => {
+      router.push('/lots');}},
+    { label: 'Conditions', icon: 'pi pi-fw pi-list',
+    command: () => {
+      router.push('/conditions');} },
     { label: 'Contact', icon: 'pi pi-fw pi-user' ,
     command: () => {
       router.push('/contact');} 
