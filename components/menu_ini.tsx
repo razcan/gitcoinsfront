@@ -169,7 +169,7 @@ const Login = async () => {
       // className="sticky" up - change sticky with header from css
       >
   
-        <div className="card text-2xl w-12">
+        <div className="text-2xl w-12">
             <Menubar model={items}  end={end} />
         </div>
 {/* 
