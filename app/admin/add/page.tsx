@@ -5,7 +5,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import React, { useState, useEffect, useRef } from 'react';
-import Menu from '../../../components/menu';
+import Menu from '../../../components/menu_ini';
 import { FileUpload } from 'primereact/fileupload';
 import { Dropdown } from 'primereact/dropdown';
 import "/node_modules/flag-icons/css/flag-icons.min.css";
@@ -185,7 +185,7 @@ const coin_composition = [
     <PrimeReactProvider>
 
       <Card className='container'>
-          <div className='content'>
+          <div className='content pt-6'>
             <Menu activatedIndex={5} />
             <Toast ref={toast} />
             <ScrollPanel style={{ width: '100%' }}>

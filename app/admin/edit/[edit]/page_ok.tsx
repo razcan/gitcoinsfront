@@ -3,7 +3,7 @@ import { PrimeReactProvider, PrimeReactContext, PrimeIcons } from 'primereact/ap
 import { usePathname } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 import React, { useState, useEffect, useRef } from 'react';
-import Menu from '../../../../components/menu';
+import Menu from '../../../../components/menu_ini';
 import 'primereact/resources/themes/tailwind-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';

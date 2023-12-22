@@ -5,7 +5,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import React, { useState, useEffect, useRef } from 'react';
-import Menu from '../../components/menu';
+import Menu from '../../components/menu_ini';
 import { useRouter } from 'next/navigation'
 import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
 import { DataTable } from 'primereact/datatable';
@@ -192,7 +192,7 @@ export default function Order() {
              <Menu activatedIndex={0} />
             
             </div>
-            <div className='pt-6'>
+            <div className='pt-8'>
                 <OrderSteps step={0}/>
             </div>
             

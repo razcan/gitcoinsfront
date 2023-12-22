@@ -5,7 +5,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import React, { useState, useEffect,useRef } from 'react';
-import Menu from '../../../components/menu';
+import Menu from '../../../components/menu_ini';
 import OrderSteps from '../../../components/steps';
 import { CascadeSelect } from 'primereact/cascadeselect';
 import { Judete } from '../../../public/address/judete'
@@ -238,11 +238,11 @@ router.push('/');
 
 
       <Card className='container' >
-      <div className='pt-2'>
+      <div className='pt-4'>
                 <OrderSteps step={1}/>
             </div>
       <Toast className='pt-8' ref={toast} />
-        <div className='content pt-6'>
+        <div className='content pt-4'>
           <div className="grid">
             <div className="col-2">
               <div className="text-center p-1 border-round-sm  font-bold">

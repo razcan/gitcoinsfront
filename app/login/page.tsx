@@ -5,7 +5,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import React, { useState, useEffect, useRef } from 'react';
-import Menu from '../../components/menu';
+import Menu from '../../components/menu_ini';
 import { useRouter } from 'next/navigation'
 import { Divider } from 'primereact/divider';
 import { InputText } from 'primereact/inputtext';

@@ -13,7 +13,7 @@ import { Tag } from 'primereact/tag';
 import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
 import { Divider } from 'primereact/divider';
 import { InputText } from 'primereact/inputtext';
-import Menu from '../../../components/menu';
+import Menu from '../../../components/menu_ini';
 import { useRouter } from 'next/navigation';
 import '../../../css/style.css'
 import { Galleria } from 'primereact/galleria';

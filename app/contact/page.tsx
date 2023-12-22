@@ -5,7 +5,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import React, { useState, useEffect, useRef } from 'react';
-import Menu from '../../components/menu';
+import Menu from '../../components/menu_ini';
 import { useRouter } from 'next/navigation'
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
@@ -62,9 +62,11 @@ export default function Contact() {
   return (
 <PrimeReactProvider>
 <Menu activatedIndex={4} />
-  <div className ='min-h-screen'>
-      
-        <Card className="max-w-full pt-8 min-h-screen ">
+
+  <Card className='container'>
+          <div className='content pt-6'>
+
+        <Card className="max-w-full min-h-screen ">
         <Toast ref={toast} />
        
           <div className="grid nested-grid">
@@ -179,6 +181,7 @@ export default function Contact() {
         </Card>
       
   </div>
+  </Card>
   
   <Footer />
 

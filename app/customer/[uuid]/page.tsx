@@ -5,7 +5,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import React, { useState, useEffect } from 'react';
-import Menu from '../../../components/menu';
+import Menu from '../../../components/menu_ini';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import { DataScroller } from 'primereact/datascroller';

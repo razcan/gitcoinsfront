@@ -5,7 +5,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import React, { useState, useEffect } from 'react';
-import  Menu  from '../../components/menu';
+import  Menu  from '../../components/menu_ini';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import Footer from '@/components/footer';
@@ -149,7 +149,7 @@ const itemTemplate = (product, layout) => {
                                <Menu activatedIndex={1} />
                           </div>
         <Card className='container'>
-          <div className='content'>
+          <div className='content pt-6'>
   
 
             <ScrollPanel style={{ width: '100%', height: '90%'}}>
