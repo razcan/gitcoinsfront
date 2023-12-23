@@ -75,10 +75,16 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
     toast.current.show({ severity: 'error', summary: 'Saving error!', detail: message, life: 3000 });
   }
 
+  const showErrorLogin = () => {
+    toast.current.show({ severity: 'error', summary: 'You are not logged in!', detail:  'You are not logged in!', life: 3000 });
+  }
+
   const deleteItem = async () => {
-    const jwtToken = JSON.parse(localStorage.getItem('token'))
-    const jwtTokenf = jwtToken.access_token;
-    // console.log(jwtToken.access_token)
+    const jwtToken = JSON.parse(sessionStorage.getItem('token'))
+    
+    console.log('xx',jwtToken)
+    if(jwtToken){
+      const jwtTokenf = jwtToken.access_token;
     const response = await fetch(`http://localhost:3000/coins/${edit}`, {
       method: 'DELETE',
       headers: {
@@ -102,6 +108,11 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
       // console.log('Delete successful');
       router.push('/admin');
     }
+  }
+  else {
+    showErrorLogin()
+    router.push('/login')
+  }
   }
 
   useEffect(() => {
