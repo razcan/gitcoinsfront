@@ -41,7 +41,7 @@ export default function MapWorld() {
                 onSelect2('Africa')
                 break;
             default:
-                console.log("No continent selected!");
+                // console.log("No continent selected!");
                 break;
         }
     };
@@ -66,9 +66,7 @@ export default function MapWorld() {
     
             <div className="h-full flex  justify-content-center">
             
-                     {/* <Card className="border-1 border-pink-50">
-                    </Card> */}
-
+                  
                     <SelectedContextContinent.Provider value={selected1}>                                                    
                             <ScrollPanel style={{ width: '86%', height: '600px' }}>
                             <Filters />
@@ -80,8 +78,7 @@ export default function MapWorld() {
     <div className="col-8">      
     {selected1 ? <Tag  className='text-xl' severity="info" value={selected1} rounded></Tag> : null}    
             <div className="flex align-items-center justify-content-center">
-                    {/* <Card className="border-1 border-pink-50">     
-                    </Card>                */}
+                
                    
                         <WorldMap
                             multiple={true}
@@ -92,7 +89,6 @@ export default function MapWorld() {
     </div>
 
         </div>
-        //  </div>
-        // </Card>
+
     );
 }
