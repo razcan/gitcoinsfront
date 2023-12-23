@@ -81,10 +81,10 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
 
   const deleteItem = async () => {
     const jwtToken = JSON.parse(sessionStorage.getItem('token'))
-    
-    console.log('xx',jwtToken)
+   
+  
     if(jwtToken){
-      const jwtTokenf = jwtToken.access_token;
+    const jwtTokenf = jwtToken.access_token;
     const response = await fetch(`http://localhost:3000/coins/${edit}`, {
       method: 'DELETE',
       headers: {
@@ -111,7 +111,13 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
   }
   else {
     showErrorLogin()
-    router.push('/login')
+    setTimeout(() => {
+      setVisible(false)
+      router.push('/login')
+ 
+    }, "1000");
+
+    
   }
   }
 
