@@ -42,6 +42,31 @@ export default function Menu(props) {
 
 const router = useRouter()
 
+const checkLogin = () => {
+  const response = sessionStorage.getItem("token");
+  if (response){
+    const res = JSON.parse(response)
+    const actualDate = new Date();
+    actualDate.setMinutes(actualDate.getMinutes() - 10);
+
+    const dateToken = new Date(res.expire_date_token)
+    const dateActual = new Date(actualDate)
+
+    console.log('token:',dateToken,'actual:',dateActual)
+
+  if (dateToken > dateActual ) {
+    console.log('a expirat')
+  } else {
+    console.log('nu a a expirat')
+  }
+
+    // console.log(actualDate)
+    //to be : cand data actuala -10 min este mai mare decat data din token, sa nu mai fie afisat numele din meniu
+    //ora este cu 2 ore in umra
+    // console.log('user???',res.expire_date_token)
+  }
+}
+
 const Login = async () => {
 
   router.push('/login');
@@ -143,9 +168,27 @@ const Login = async () => {
     var user = existingUser ? JSON.parse(existingUser) : [];
 
     const username = user.username;
-    setUserName(username)
 
-  }
+    const response = sessionStorage.getItem("token");
+    if (response){
+      const res = JSON.parse(response)
+      const actualDate = new Date();
+      actualDate.setMinutes(actualDate.getMinutes() + 0);
+  
+      const dateToken = new Date(res.expire_date_token)
+      const dateActual = new Date(actualDate)
+  
+      console.log('token:',dateToken,'actual:',dateActual)
+  
+    if ( dateToken >dateActual     ) {
+      // console.log('it's expired')
+      setUserName(username)
+     
+    } else {
+      // console.log('it isn't expired')
+      setUserName()
+}
+    }}
 
  const goToOrder = () => {
   router.push('/order');
@@ -154,6 +197,7 @@ const Login = async () => {
   useEffect(() => {
     checkOrderedItem(),
     checkUserLogged()
+    // checkLogin()
 }, [])
 
 // const start = <Avatar alt="logo" image="./logo.png" size="xlarge" shape="circle" height="30" className="mr-2"/>

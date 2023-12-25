@@ -58,7 +58,7 @@ const Login = async () => {
       // Store token in local storage
       sessionStorage.setItem("token", JSON.stringify(response.data));
      // Read token from local storage
-     const myStoredItem = localStorage.getItem('token');
+     const myStoredItem = sessionStorage.getItem('token');
      const rez = JSON.parse(myStoredItem);
     
      showSuccess();
