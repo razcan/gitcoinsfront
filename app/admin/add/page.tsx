@@ -42,8 +42,8 @@ export default function Admin() {
   const [byteArray, setbyteArray] = useState([]);
   const [jsonDataByte, setJsonDataByte] = useState([]);
 
-  const [startDate, setStartDate] = useState(new Date);
-  const [endDate, setEndDate] = useState(new Date);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
 
   const showSuccess = () => {
     toast.current.show({severity:'success', summary: 'Result', detail:'The coin was saved succesfully', life: 3000});
@@ -130,8 +130,8 @@ formdata2.append("files", picturefiles[0]);
 formdata2.append("files", picturefiles[1]);
 formdata2.append('Photo1', "Photo1");
 formdata2.append('Photo2', "Photo2" );
-formdata2.append('StartDate', endDate);
-formdata2.append('EndDate', endDate );
+formdata2.append('StartDate', startDate?.getFullYear());
+formdata2.append('EndDate', endDate?.getFullYear() );
 
 // Display the key/value pairs
 // for (var pair of formdata2.entries()) {
@@ -197,6 +197,7 @@ const coin_composition = [
                 {/* <Calendar inputId="start_date" value={startDate} showIcon showWeek onChange={(e) => setStartDate(e.value)} dateFormat="dd/mm/yy"/> */}
                 <Calendar value={startDate} onChange={(e) => setStartDate(e.value)} view="year" dateFormat="yy" />
                 <label htmlFor="start_date">Start Date Year</label>
+                
                 </span>
             </div>
             <div className="flex-auto gap-3 p-3">
