@@ -178,7 +178,6 @@ const Login = async () => {
       const dateToken = new Date(res.expire_date_token)
       const dateActual = new Date(actualDate)
   
-      console.log('token:',dateToken,'actual:',dateActual)
   
     if ( dateToken >dateActual     ) {
       // console.log('it's expired')
