@@ -115,7 +115,9 @@ const Login = async () => {
                  size="large"
                  onClick={() => router.push('/order')}
                >
-                 <Badge value={itemCount} size="large" />
+                 <Badge value={itemCount} 
+                //  size="large" 
+                 />
                </Avatar> : null}
        
   </span>

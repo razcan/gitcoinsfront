@@ -404,8 +404,9 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
               <div className="flex-auto">
                 <div className="flex flex-column gap-2">
                   {/* <label htmlFor="price">Price</label> */}
-                  <InputNumber showButtons mode="currency" currency="RON"
-                    value={Price} onValueChange={(e) => setPrice(e.value)} />
+                  {/* <InputNumber showButtons mode="currency" currency="RON"
+                    value={Price} onValueChange={(e) => setPrice(e.value)} /> */}
+                    <InputNumber value={Price} onValueChange={(e) => setPrice(e.value)} minFractionDigits={2} maxFractionDigits={5} />
                 </div>
               </div>
             </div>

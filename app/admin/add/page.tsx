@@ -28,7 +28,7 @@ export default function Admin() {
   const [selectedCountry, setSelectedCountry] = useState([]);
   const [Code, setCode] = useState([]);
   const countries = countries_all;
-  const [Price, setPrice] = useState([1]);
+  const [Price, setPrice] = useState();
   const [Continent, setContinent] = useState([]);
   const [Year, setYear] = useState([]);
   const [Catalog, setCatalog] = useState([]);
@@ -194,14 +194,16 @@ const coin_composition = [
         <div className="col-3">
             <div className="flex-auto gap-3 p-3">
                 <span className="p-float-label">
-                <Calendar inputId="start_date" value={startDate} showIcon showWeek onChange={(e) => setStartDate(e.value)} dateFormat="dd/mm/yy"/>
-                <label htmlFor="start_date">Start Date Period</label>
+                {/* <Calendar inputId="start_date" value={startDate} showIcon showWeek onChange={(e) => setStartDate(e.value)} dateFormat="dd/mm/yy"/> */}
+                <Calendar value={startDate} onChange={(e) => setStartDate(e.value)} view="year" dateFormat="yy" />
+                <label htmlFor="start_date">Start Date Year</label>
                 </span>
             </div>
             <div className="flex-auto gap-3 p-3">
                <span className="p-float-label">
-                <Calendar inputId="end_date" value={endDate} showIcon showWeek onChange={(e) => setEndDate(e.value)} dateFormat="dd/mm/yy"/>
-                <label htmlFor="end_date">End Date Period</label>
+                {/* <Calendar inputId="end_date" value={endDate} showIcon showWeek onChange={(e) => setEndDate(e.value)} dateFormat="dd/mm/yy"/> */}
+                <Calendar value={endDate} onChange={(e) => setEndDate(e.value)} view="year" dateFormat="yy" />
+                <label htmlFor="end_date">End Date Year</label>
                 </span>
             </div>
             <div className="flex-auto gap-3 p-3">
@@ -282,11 +284,16 @@ const coin_composition = [
                 placeholder="Select status"/>
             </div>
           </div>
-          <div className="flex-auto p-3">
-            <div className="flex flex-column gap-3">
-              <InputNumber showButtons mode="currency" currency="RON" value={Price} onValueChange={(e) => setPrice(e.value)}/>
-            </div>
-          </div>
+
+
+            <div className="flex-auto gap-3 p-3">
+              <span className="p-float-label">  
+              <InputNumber inputId="price" value={Price} onValueChange={(e) => setPrice(e.value)} minFractionDigits={2} maxFractionDigits={2} />
+              <label htmlFor="price">Price</label>
+             </span>
+             </div>
+
+
           <div className="flex-auto p-3">
             <div className="flex flex-column gap-3">
               <label htmlFor="value">File Upload</label>
