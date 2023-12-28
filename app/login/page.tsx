@@ -17,28 +17,28 @@ import { Dialog } from 'primereact/dialog';
 
 export default function Login() {
 
-    const [username, setUserName] = useState('');
-    const [password, setPassword] = useState('');
-    const [token, setToken] = useState([]);
-    const toast = useRef(null);
-    const [visible, setVisible] = useState(true);
+    const [username, setUserName] = useState<any>();
+    const [password, setPassword] = useState<any>();
+    const [token, setToken] = useState<any>();
+    const toast = useState<any>(null);
+    const [visible, setVisible] = useState<any>(true);;
 
     const showSuccess = () => {
-      toast.current.show(
-        {severity:'success', summary: 'Success', detail:'You are now connected', life: 1000}
-      );
+      // toast.current.show(
+      //   {severity:'success', summary: 'Success', detail:'You are now connected', life: 1000}
+      // );
       
       setTimeout(() => {
         setVisible(false)
         router.push('/');
         // console.log("Delayed for 1 second.");
-      }, "1000");
+      }, 1000);
   }
 
     const showError = () => {
-        toast.current.show(
-          {severity:'error', summary: 'Error', detail:'Invalid Username or Password!', life: 1000}
-          );
+        // toast.current.show(
+        //   {severity:'error', summary: 'Error', detail:'Invalid Username or Password!', life: 1000}
+        //   );
 
     }
 
@@ -58,7 +58,7 @@ const Login = async () => {
       // Store token in local storage
       sessionStorage.setItem("token", JSON.stringify(response.data));
      // Read token from local storage
-     const myStoredItem = sessionStorage.getItem('token');
+     const myStoredItem: any = sessionStorage.getItem('token');
      const rez = JSON.parse(myStoredItem);
     
      showSuccess();
@@ -82,14 +82,14 @@ const Login = async () => {
       <Menu activatedIndex={1} />
       <div className="card flex justify-content-center">
       <Dialog header="Login" visible={visible} style={{ width: '30vw' }} onHide={() => setVisible(false)}>
-      <Toast ref={toast} />      
+      {/* <Toast ref={toast} />       */}
                 <div className="flex flex-wrap justify-content-center align-items-center gap-2 p-2">
                         <label className="w-6rem">Username</label>
-                        <InputText id="username" type="text" className="w-12rem" value={username} onChange={(e) => setUserName(e.target.value)}/>
+                        <InputText id="username" type="text" className="w-12rem" value={username} onChange={(e:any) => setUserName(e.target.value)}/>
                     </div>
                     <div className="flex flex-wrap justify-content-center align-items-center gap-2 p-2">
                         <label className="w-6rem">Password</label>
-                        <InputText id="password" type="password" className="w-12rem" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        <InputText id="password" type="password" className="w-12rem" value={password} onChange={(e:any) => setPassword(e.target.value)}/>
                     </div>
                     <div className="flex flex-wrap p-4 pl-3">
                         <label className="w-6rem"></label>

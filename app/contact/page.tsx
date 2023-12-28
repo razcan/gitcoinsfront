@@ -30,7 +30,7 @@ export default function Contact() {
   const toast = useRef(null);
 
   const showSuccess = () => {
-    toast.current.show({severity:'success', summary: 'Contact message', detail:'Your message has been sent!', life: 3000});
+    // toast.current.show({severity:'success', summary: 'Contact message', detail:'Your message has been sent!', life: 3000});
 }
 
 

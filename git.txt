@@ -7,3 +7,4 @@ git push -u origin main
 
 
 https://monede.stfp.net/Colectie/Monede/Europa/
+npx tsc --noEmitOnError

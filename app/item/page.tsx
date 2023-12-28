@@ -19,11 +19,11 @@ export default function Item() {
 
 
     const prefix_api = 'http://localhost:3000/coins/download/';
-    const [products, setProducts] = useState([]);
-    const [layout, setLayout] = useState('grid');
-    const [visible, setVisible] = useState(false);
-    const [selected_product, setSelected_product] = useState([]);
-    const [ordered_qtty, setOrdered_qtty] = useState(1);
+    const [products, setProducts] = useState<any>();
+    const [layout, setLayout] = useState<any>('grid');
+    const [visible, setVisible] = useState<any>(false);
+    const [selected_product, setSelected_product] = useState<any>([]);
+    const [ordered_qtty, setOrdered_qtty] = useState<any>(1);
 
 
     const setProductVisible = (product: any, bol: boolean) => {
@@ -41,22 +41,7 @@ export default function Item() {
     const addToOrder = () => {
 
         // Save data to local storage
-                const OrderedCoin: {
-                    Catalog: any;
-                    Code:  any;
-                    Composition: any;
-                    Continent: any;
-                    Country: any;
-                    Name: any;
-                    Photo1: any;
-                    Photo2: any;
-                    Price:  any;
-                    References:  any;
-                    Status: any;
-                    Value: any;
-                    Year: any;
-                    id: any
-                }[]= {
+                const OrderedCoin: any = {
                     Catalog: selected_product.Catalog,
                     Code: selected_product.Code,
                     Composition: selected_product.Composition,
@@ -112,7 +97,7 @@ export default function Item() {
 
 
 
-    const listItem = (product) => {
+    const listItem = (product:any) => {
         return (
             <div className="col-12">
                 <div className="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
@@ -139,7 +124,7 @@ export default function Item() {
         );
     };
 
-    const gridItem = (product) => {
+    const gridItem = (product:any) => {
         return (
             <div className="col-6 sm:col-6 lg:col-6 xl:col-2 p-2">
                 <div className="p-4 border-1 surface-border surface-card border-round">
@@ -164,7 +149,7 @@ export default function Item() {
         );
     };
 
-    const itemTemplate = (product, layout) => {
+    const itemTemplate = (product: any, layout: any) => {
         if (!product) {
             return;
         }
@@ -176,7 +161,7 @@ export default function Item() {
     const header = () => {
         return (
             <div className="flex justify-content-end">
-                <DataViewLayoutOptions layout={layout} onChange={(e) => setLayout(e.value)} />
+                <DataViewLayoutOptions layout={layout} onChange={(e:any) => setLayout(e.value)} />
             </div>
         );
     };
@@ -240,7 +225,7 @@ export default function Item() {
                 <label className="font-bold block mb-2"></label>
                 <div className="flex-auto">
                 <label htmlFor="mile" className="font-bold block mb-2"></label>
-                    <InputNumber value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} />
+                    <InputNumber value={ordered_qtty} onValueChange={(e:any) => setOrdered_qtty(e.value)} />
                 </div>
                 <div className="flex-auto">
                 <label className="font-bold block mb-2"></label>

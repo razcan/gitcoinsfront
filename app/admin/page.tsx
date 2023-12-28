@@ -44,7 +44,7 @@ export default function Admin() {
   });
   const [globalFilterValue, setGlobalFilterValue] = useState('');
 
-  const onGlobalFilterChange = (e) => {
+  const onGlobalFilterChange = (e:any) => {
     const value = e.target.value;
     let _filters = { ...filters };
 
@@ -54,9 +54,9 @@ export default function Admin() {
     setGlobalFilterValue(value);
   };
 
-  const clearFilter = () => {
-    setFilters();
-  };
+  // const clearFilter = () => {
+  //   setFilters();
+  // };
 
   const addNewItem = () => {
     router.push('/admin/add');
@@ -66,7 +66,7 @@ export default function Admin() {
     return (
 
       <div className="flex justify-content-between">
-        <Button type="button" icon="pi pi-filter-slash" label="Clear" outlined onClick={clearFilter} />
+        {/* <Button type="button" icon="pi pi-filter-slash" label="Clear" outlined onClick={clearFilter} /> */}
         <Button type="button" icon="pi pi-plus-circle" label="Add new Item" outlined onClick={addNewItem} />
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
@@ -77,7 +77,7 @@ export default function Admin() {
     );
   };
 
-  const itemTemplate = (item) => {
+  const itemTemplate = (item:any) => {
     return (
       <div className="flex align-items-center gap-4">
         <div className={`fi fi-${item.Code}`} style={{ width: "40px" }}>
@@ -92,7 +92,7 @@ export default function Admin() {
     );
   };
 
-  const imageTemplate = (products) => {
+  const imageTemplate = (products:any) => {
     return <img className="w-9 sm:w-16rem xl:w-6rem shadow-2 block xl:block mx-auto border-round"
       src={`http://localhost:3000/coins/download/${products.Photo1}`} alt={products.Photo1} />
   };
@@ -117,12 +117,12 @@ export default function Admin() {
 
   const header = renderHeader();
 
-  const stockBodyTemplate = (product) => {
+  const stockBodyTemplate = (product:any) => {
     return <Tag value={`Stock: ${product.Stock}`} severity={getSeverity(product)}></Tag>;
     // return <Tag value={product.Stock} severity={getSeverity(product)}></Tag>;
   };
 
-  const getSeverity = (product) => {
+  const getSeverity = (product:any) => {
     if (product.Stock > 0 && product.Stock <= 5) {
       return 'warning';
     }
@@ -134,7 +134,7 @@ export default function Admin() {
     }
   };
 
-  const getStatus = (product) => {
+  const getStatus = (product:any) => {
     switch (product) {
       case 'VG/G':
         return 'danger';
@@ -151,29 +151,27 @@ export default function Admin() {
   const [statuses] = useState(['UNC/AUNC', 'VF/F', 'VG/G']);
 
 
-  const statusBodyTemplate = (product) => {
+  const statusBodyTemplate = (product:any) => {
     return <Tag value={`Status: ${product.Status}`} severity={getStatus(product.Status)}></Tag>;
   };
 
 
 
-  const onRowSelect = (event) => {
+  const onRowSelect = (event:any) => {
     // console.log(slug)
     router.push(`/admin/edit/${event.data.id}`)
     // toast.current.show({ severity: 'info', summary: 'Coin Selected', 
     // detail: `Name: ${event.data.Name}`, life: 3000 });
-
-
     // console.log(event.data.id)
   };
 
 
 
 
-  const statusRowFilterTemplate = (options) => {
+  const statusRowFilterTemplate = (options:any) => {
     return (
       <Dropdown value={options.value} options={statuses}
-        onChange={(e) => options.filterApplyCallback(e.value)}
+        onChange={(e:any) => options.filterApplyCallback(e.value)}
         placeholder="Select One"
         className="p-column-filter" showClear style={{ minWidth: '12rem' }} />
     );

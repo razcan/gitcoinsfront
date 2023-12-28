@@ -15,18 +15,19 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import '../../../css/style.css'
 
 export default function ClientOrder() {
-  const [order, setOrder] = useState([]);
+  const [order, setOrder] = useState<any>();
+  
   const [date, setOrderDate] = useState('1900-01-01');
   const [dateform, setDateform] = useState('1900-01-01');
   const searchParams = useSearchParams()
   const uuid2 = searchParams.get("uuid");
 
-  const dateTransform = (date) => {
+  const dateTransform = (date: string) => {
     const test = new Date(date)
     
     const yyyy = test.getFullYear();
-    let mm = test.getMonth() + 1; // Months start at 0!
-    let dd = test.getDate();
+    let mm : any = test.getMonth() + 1; // Months start at 0!
+    let dd : any = test.getDate();
     
     if (dd < 10) dd = '0' + dd;
     if (mm < 10) mm = '0' + mm;
@@ -49,16 +50,12 @@ export default function ClientOrder() {
   }
 
 
-
-
-
-
   useEffect(() => {
     fetchClientOrder(),
     dateTransform(date)
   }, [])
 
-  const itemTemplate = (data) => {
+  const itemTemplate = (data:any) => {
     return (
       <Card >
         <div className="grid ">

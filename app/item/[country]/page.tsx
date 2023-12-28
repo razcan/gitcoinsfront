@@ -21,12 +21,12 @@ import { Galleria } from 'primereact/galleria';
 
 export default function Item(params: any) {
     const router = useRouter();
-    const [products, setProducts] = useState([]);
-    const [layout, setLayout] = useState('grid');
+    const [products, setProducts] = useState<any>();
+    const [layout, setLayout] = useState<any>('grid');
     const [visible, setVisible] = useState(false);
-    const [selected_product, setSelected_product] = useState([]);
-    const [ordered_qtty, setOrdered_qtty] = useState();
-    const [menuIndex, setMenuIndex] = useState(0);
+    const [selected_product, setSelected_product] = useState<any>();
+    const [ordered_qtty, setOrdered_qtty] = useState<any>();
+    const [menuIndex, setMenuIndex] = useState<any>(0);
 
 
     const setProductVisible = (product: any, bol: boolean) => {
@@ -74,7 +74,7 @@ export default function Item(params: any) {
         // Convert the updated array to a string and store it back in localStorage
         localStorage.setItem("YourOrder", JSON.stringify(existingArray));
         // setVisible(false);
-        setMenuIndex((prevKey) => prevKey + 1);
+        setMenuIndex((prevKey: any) => prevKey + 1);
         // router.push('/order')
 
     }
@@ -103,7 +103,7 @@ export default function Item(params: any) {
 
 
 
-    const listItem = (product) => {
+    const listItem = (product:any) => {
         return (
             <div className="col-12">
                 <div className="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
@@ -131,7 +131,7 @@ export default function Item(params: any) {
         );
     };
 
-    const gridItem = (product) => {
+    const gridItem = (product:any) => {
         return (
             <div className="col-12 sm:col-6 lg:col-3 xl:col-2 p-2">
                 <div className="p-2 border-1 surface-border surface-card border-round">
@@ -158,7 +158,7 @@ export default function Item(params: any) {
         );
     };
 
-    const itemTemplate = (product, layout) => {
+    const itemTemplate = (product:any, layout: any) => {
         if (!product) {
             return;
         }
@@ -170,7 +170,7 @@ export default function Item(params: any) {
     const header = () => {
         return (
             <div className="flex justify-content-end">
-                <DataViewLayoutOptions layout={layout} onChange={(e) => setLayout(e.value)} />
+                <DataViewLayoutOptions layout={layout} onChange={(e:any) => setLayout(e.value)} />
             </div>
         );
     };

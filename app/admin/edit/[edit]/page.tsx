@@ -34,53 +34,48 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
   // const pathname = usePathname()
   // const searchParams = useSearchParams()
   const router = useRouter();
-  const [products, setProducts] = useState([]);
-  const [items, setItems] = useState([]);
+  const [products, setProducts] =  useState<any>();
+  const [items, setItems] =  useState<any>();
   const toast = useRef(null);
   const axios = require('axios');
   const [visible, setVisible] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState([]);
-  const [username, setUserName] = useState('');
-  const [password, setPassword] = useState('');
+  const [selectedCountry, setSelectedCountry] =  useState<any>();
+  const [username, setUserName] = useState<any>();
+  const [password, setPassword] = useState<any>();
   const [visibleStock, setVisibleStock] = useState(false);
   const [selectedOperation, setSelectedOperation] = useState(false);
-  const [operationDate, setOperationDate] = useState('');
-  const [operationRemarks, setOperationRemarks] = useState('');
-  const [operationQtty, setOperationQtty] = useState(0);
-  const [operations, setOperations] = useState([]);
-
-
-
-
+  const [operationDate, setOperationDate] = useState<any>();
+  const [operationRemarks, setOperationRemarks] = useState<any>();
+  const [operationQtty, setOperationQtty] =  useState<any>();
+  const [operations, setOperations] =  useState<any>();
   const countries = countries_all;
-  const [Price, setPrice] = useState([1]);
+  const [Price, setPrice] =  useState<any>();
+  const [Code, setCode] =  useState<any>();
+  const [Continent, setContinent] =  useState<any>();
+  const [Country, setCountry] =  useState<any>();
+  const [Year, setYear] =  useState<any>();
+  const [Catalog, setCatalog] =  useState<any>();
+  const [Value, setValue] =  useState<any>();
+  const [Status, setStatus] =  useState<any>();
+  const [Composition, setComposition] = useState<any>();
+  const [Name, setName] =  useState<any>();
+  const [Stock, setStock] =  useState<any>();
+  const [Photo1, setPhoto1] =  useState<any>();
+  const [Photo2, setPhoto2] =  useState<any>();
+  const [picturefiles, setPicturefiles] =  useState<any>();
+  const [Id, setId] =  useState<any>();
 
-  const [Code, setCode] = useState([]);
-  const [Continent, setContinent] = useState([]);
-  const [Country, setCountry] = useState([]);
-
-  const [Year, setYear] = useState([]);
-  const [Catalog, setCatalog] = useState([]);
-  const [Value, setValue] = useState([]);
-  const [Status, setStatus] = useState([]);
-  const [Composition, setComposition] = useState(['Silver']);
-  const [Name, setName] = useState([]);
-  const [Stock, setStock] = useState([]);
-  const [Photo1, setPhoto1] = useState([]);
-  const [Photo2, setPhoto2] = useState([]);
-  const [picturefiles, setPicturefiles] = useState([]);
-  const [Id, setId] = useState([]);
-
-  const showError = (message) => {
-    toast.current.show({ severity: 'error', summary: 'Saving error!', detail: message, life: 3000 });
+  const showError = (message:any) => {
+    // toast.current.show({ severity: 'error', summary: 'Saving error!', detail: message, life: 3000 });
   }
 
   const showErrorLogin = () => {
-    toast.current.show({ severity: 'error', summary: 'You are not logged in!', detail:  'You are not logged in!', life: 3000 });
+    // toast.current.show({ severity: 'error', summary: 'You are not logged in!', detail:  'You are not logged in!', life: 3000 });
   }
 
   const deleteItem = async () => {
-    const jwtToken = JSON.parse(sessionStorage.getItem('token'))
+    const session: any = sessionStorage.getItem('token');
+    const jwtToken = JSON.parse(session);
    
   
     if(jwtToken){
@@ -115,7 +110,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
       setVisible(false)
       router.push('/login')
  
-    }, "1000");
+    }, 1000);
 
     
   }
@@ -135,7 +130,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
 
 
 
-  const getStatus = (status) => {
+  const getStatus = (status:any) => {
     return coin_status.find((obj) => obj.name === status)
   };
 
@@ -157,18 +152,18 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
   };
 
   const getCountry = (countryToFind: string) => {
-    return countries.find((obj) => obj.name === countryToFind);
+    return countries.find((obj: { name: string; }) => obj.name === countryToFind);
   };
 
-  const onUpload = ({ files }) => {
+  const onUpload = ({ files }: any) => {
     setPicturefiles(files);
   }
 
   const showSuccess = () => {
-    toast.current.show({ severity: 'success', summary: 'Result', detail: 'The coin was updated succesfully', life: 3000 });
+    // toast.current.show({ severity: 'success', summary: 'Result', detail: 'The coin was updated succesfully', life: 3000 });
   }
 
-  const selectedCountryTemplate = (option, props) => {
+  const selectedCountryTemplate = (option: any, props: any) => {
     if (option) {
       return (
         <div className="flex align-items-center">
@@ -182,7 +177,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
     }
   }
 
-  const countryOptionTemplate = (option) => {
+  const countryOptionTemplate = (option:any) => {
     return (
       <div className="flex align-items-center">
 
@@ -237,7 +232,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
       })
       .then(coins => {
         setProducts(coins);
-        coins.map(product => (
+        coins.map((product: { id: any; Price: any; Continent: any; Country: any; Code: any; Year: any; Catalog: any; Value: any; Status: any; Composition: React.SetStateAction<string[]>; Name: any; Stock: any; Photo1: any; Photo2: any; }) => (
           setId(product.id),
           setPrice(product.Price),
 
@@ -281,7 +276,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
     formdata2.append('Composition', Composition);
     formdata2.append('Status', Status);
     formdata2.append('Price', Price);
-    formdata2.append('References', 0);
+    formdata2.append('References', '');
     formdata2.append('Stock', Stock);
     if (picturefiles.length == 2) {
       formdata2.append("files", picturefiles[0]);
@@ -294,7 +289,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
     //to be implemented
     //console.log('marime:', picturefiles.length)
 
-    var requestOptions = {
+    var requestOptions: any = {
       method: 'PATCH',
       body: formdata2,
       redirect: 'follow'
@@ -332,7 +327,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
 
                   <Dropdown
                     value={getCountry(Country)}
-                    onChange={(e) => {
+                    onChange={(e: { value: { continent: any; name: any; code: any; }; }) => {
                       setContinent(e.value.continent),
                         setCountry(e.value.name),
                         setCode(e.value.code)
@@ -348,7 +343,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
                 <div className="flex flex-column gap-2">
                   <span className="p-float-label">
                     <InputText id="catalog" placeholder="Enter catalog code"
-                      value={Catalog} onChange={(e) => setCatalog(e.target.value)} />
+                      value={Catalog} onChange={(e: { target: { value: any; }; }) => setCatalog(e.target.value)} />
                     <label htmlFor="catalog">Catalog</label>
                   </span>
                 </div>
@@ -359,7 +354,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
                 <div className="flex flex-column gap-2">
                   <span className="p-float-label">
                     <InputText id="value" placeholder="Enter value"
-                      value={Value} onChange={(e) => setValue(e.target.value)}
+                      value={Value} onChange={(e: { target: { value: any; }; }) => setValue(e.target.value)}
                     />
                     <label htmlFor="value">Value</label>
                   </span>
@@ -371,7 +366,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
                 <div className="flex flex-column gap-2">
                   <span className="p-float-label">
                     <InputText id="name" placeholder="Enter name"
-                      value={Name} onChange={(e) => setName(e.target.value)}
+                      value={Name} onChange={(e: { target: { value: any; }; }) => setName(e.target.value)}
                     />
                     <label htmlFor="name">Name</label>
                   </span>
@@ -383,7 +378,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
                 <div className="flex flex-column gap-2">
                   <span className="p-float-label">
                     <InputNumber useGrouping={false} placeholder="Enter year"
-                      value={Year} onValueChange={(e) => setYear(e.value)} />
+                      value={Year} onValueChange={(e: { value: any; }) => setYear(e.value)} />
                     <label htmlFor="year">Year</label>
                   </span>
                 </div>
@@ -395,7 +390,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
                   <Dropdown
                     value={getCompositionJson(Composition)}
                     options={coin_composition}
-                    optionLabel="name" onChange={(e) => setComposition(e.value)}
+                    optionLabel="name" onChange={(e:any) => setComposition(e.value)}
                     placeholder="Select composition" />
                 </div>
               </div>
@@ -406,7 +401,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
                   {/* <label htmlFor="price">Price</label> */}
                   {/* <InputNumber showButtons mode="currency" currency="RON"
                     value={Price} onValueChange={(e) => setPrice(e.value)} /> */}
-                    <InputNumber value={Price} onValueChange={(e) => setPrice(e.value)} minFractionDigits={2} maxFractionDigits={5} />
+                    <InputNumber value={Price} onValueChange={(e: { value: any; }) => setPrice(e.value)} minFractionDigits={2} maxFractionDigits={5} />
                 </div>
               </div>
             </div>
@@ -415,7 +410,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
                 <div className="flex flex-column gap-2">
                   {/* <label htmlFor="status">Status</label> */}
                   <Dropdown value={getStatus(Status)} options={coin_status}
-                    optionLabel="name" onChange={(e) => setStatus(e.value)}
+                    optionLabel="name" onChange={(e: { value: any; }) => setStatus(e.value)}
                     placeholder="Select status" />
                 </div>
               </div>
@@ -426,7 +421,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
                 <div className="flex flex-column gap-2">
                   <span className="p-float-label">
                     <InputNumber useGrouping={false} placeholder="Enter initial stock"
-                      value={Stock} onValueChange={(e) => setStock(e.value)} />
+                      value={Stock} onValueChange={(e: { value: any; }) => setStock(e.value)} />
                     <label htmlFor="stock">Stock</label>
                     <div className=' pt-2 pl-2'>
                       <Button label="Stock Operations" icon="pi pi-check" iconPos="right" onClick={() => stockOperations()} />
@@ -489,21 +484,21 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
                 <div className="field col">
                   <div className="flex flex-column">
                     <label htmlFor="qtty">Qtty</label>
-                    <InputNumber inputId="integeronly" value={operationQtty} onValueChange={(e) => setOperationQtty(e.value)} />
+                    <InputNumber inputId="integeronly" value={operationQtty} onValueChange={(e: { value: any; }) => setOperationQtty(e.value)} />
                   </div>
                 </div>
 
                 <div className="field col">
                   <div className="flex flex-column">
                     <label htmlFor="Date">Date</label>
-                    <Calendar value={operationDate} onChange={(e) => setOperationDate(e.value)} />
+                    <Calendar value={operationDate} onChange={(e: { value: any; }) => setOperationDate(e.value)} />
                   </div>
                 </div>
 
                 <div className="field col">
                   <div className="flex flex-column">
                     <label htmlFor="Remarks">Remarks{operationRemarks}</label>
-                    <InputText value={operationRemarks} onChange={(e) => setOperationRemarks(e.target.value)} />
+                    <InputText value={operationRemarks} onChange={(e: { target: { value: any; }; }) => setOperationRemarks(e.target.value)} />
                   </div>
                 </div>
 

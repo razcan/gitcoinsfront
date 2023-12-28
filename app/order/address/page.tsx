@@ -26,11 +26,11 @@ export default function Address() {
   const toast = useRef(null);
 
   const showSuccess = () => {
-      toast.current.show({severity:'success', summary: 'Order saved succesfully', life: 3000});
+      // toast.current.show({severity:'success', summary: 'Order saved succesfully', life: 3000});
   }
 
   const showError = (message) => {
-    toast.current.show({severity:'warn', summary: message, life: 3000});
+    // toast.current.show({severity:'warn', summary: message, life: 3000});
 }
 
   const pathname = usePathname()

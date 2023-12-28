@@ -23,34 +23,35 @@ import { ScrollPanel } from 'primereact/scrollpanel';
 
 export default function Admin() {
   const toast = useRef(null);
+  const [arr, setArr] = useState<any[]>([])
   const router = useRouter();
   const axios = require('axios');
-  const [selectedCountry, setSelectedCountry] = useState([]);
-  const [Code, setCode] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState<any>();
+  const [Code, setCode] = useState<any>();
   const countries = countries_all;
-  const [Price, setPrice] = useState();
-  const [Continent, setContinent] = useState([]);
-  const [Year, setYear] = useState([]);
-  const [Catalog, setCatalog] = useState([]);
-  const [Value, setValue] = useState([]);
-  const [Status, setStatus] = useState([]);
-  const [Composition, setComposition] = useState(['Silver']);
-  const [Name, setName] = useState([]);
-  const [References, setReferences] = useState([]);
-  const [Stock, setStock] = useState([]);
-  const [picturefiles, setPicturefiles] = useState([]);
-  const [byteArray, setbyteArray] = useState([]);
-  const [jsonDataByte, setJsonDataByte] = useState([]);
+  const [Price, setPrice] = useState<any>();
+  const [Continent, setContinent] =  useState<any>();
+  const [Year, setYear] = useState<any>();
+  const [Catalog, setCatalog] = useState<any>();
+  const [Value, setValue] = useState<any>();
+  const [Status, setStatus] = useState<any>();
+  const [Composition, setComposition] =useState<any>();;
+  const [Name, setName] = useState<any>();
+  const [References, setReferences] = useState<any>();
+  const [Stock, setStock] = useState<any>();
+  const [picturefiles, setPicturefiles] = useState<any>();
+  const [byteArray, setbyteArray] = useState<any>();
+  const [jsonDataByte, setJsonDataByte] = useState<any>();
 
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
+  const [startDate, setStartDate] = useState<any>();
+  const [endDate, setEndDate] = useState<any>();
 
   const showSuccess = () => {
-    toast.current.show({severity:'success', summary: 'Result', detail:'The coin was saved succesfully', life: 3000});
+    // toast.current.show({severity:'success', summary: 'Result', detail:'The coin was saved succesfully', life: 3000});
 }
   
 
-  const selectedCountryTemplate = (option, props) => {
+  const selectedCountryTemplate = (option: any, props: any) => {
     if (option) {
       return (
         <div className="flex align-items-center">
@@ -66,7 +67,7 @@ export default function Admin() {
     return <span>{props.placeholder}</span>;
   };
 
-  const countryOptionTemplate = (option) => {
+  const countryOptionTemplate = (option: { code: any; name: React.ReactNode; }) => {
     return (
       <div className="flex align-items-center">
 
@@ -94,12 +95,12 @@ export default function Admin() {
   };
 
   const showError = () => {
-    toast.current.show({severity:'error', summary: 'Error', 
-    detail:'You must upload two pictures', life: 3000});
+    // toast.current.show({severity:'error', summary: 'Error', 
+    // detail:'You must upload two pictures', life: 3000});
 }
 
 
-  const onUpload =  ({ files }) => {
+  const onUpload =  ({ files }: any) => {
    setPicturefiles(files);
   }
 
@@ -107,7 +108,7 @@ const handlerFormData = async () => {
 onUpload(picturefiles);
 
 if (picturefiles.length !=2){
-  console.log('eroare')
+  // console.log('eroare')
   showError()
 }
 else {
@@ -139,14 +140,14 @@ formdata2.append('EndDate', endDate?.getFullYear() );
 // }
 
 const showSuccess = () => {
-  toast.current.show({severity:'success', summary: 'Success', detail:'Message Content', life: 6000});
+  // toast.current.show({severity:'success', summary: 'Success', detail:'Message Content', life: 6000});
 }
 
-var requestOptions = {
+var requestOptions: any = {
   method: 'POST',
   body: formdata2,
   redirect: 'follow'
-};
+} ;
 
 fetch("http://localhost:3000/coins/uploadm", requestOptions)
   .then(response => response.text())
@@ -190,61 +191,61 @@ const coin_composition = [
             <Toast ref={toast} />
             <ScrollPanel style={{ width: '100%' }}>
       <div className="grid card flex-wrap gap-3 p-fluid pl-0" style={{padding:"20px"}}>
-      <div className="col-3"></div>
-        <div className="col-3">
-            <div className="flex-auto gap-3 p-3">
+      <div className="col-3 xs:col-2 xl:col-3"></div>
+        <div className="col-3 ">
+            <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
                 <span className="p-float-label">
                 {/* <Calendar inputId="start_date" value={startDate} showIcon showWeek onChange={(e) => setStartDate(e.value)} dateFormat="dd/mm/yy"/> */}
-                <Calendar value={startDate} onChange={(e) => setStartDate(e.value)} view="year" dateFormat="yy" />
+                <Calendar value={startDate} onChange={(e: any) => setStartDate(e.value)} view="year" dateFormat="yy" />
                 <label htmlFor="start_date">Start Date Year</label>
                 
                 </span>
             </div>
-            <div className="flex-auto gap-3 p-3">
+            <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
                <span className="p-float-label">
                 {/* <Calendar inputId="end_date" value={endDate} showIcon showWeek onChange={(e) => setEndDate(e.value)} dateFormat="dd/mm/yy"/> */}
-                <Calendar value={endDate} onChange={(e) => setEndDate(e.value)} view="year" dateFormat="yy" />
+                <Calendar value={endDate} onChange={(e: any) => setEndDate(e.value)} view="year" dateFormat="yy" />
                 <label htmlFor="end_date">End Date Year</label>
                 </span>
             </div>
-            <div className="flex-auto gap-3 p-3">
+            <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
             <span className="p-float-label">
-              <InputText id="catalog"  placeholder="Enter catalog code" value={Catalog} onChange={(e) => setCatalog(e.target.value)} />
+              <InputText id="catalog"  placeholder="Enter catalog code" value={Catalog} onChange={(e:any) => setCatalog(e.target.value)} />
               <label htmlFor="catalog">Catalog</label>
               </span>
              </div>
 
-             <div className="flex-auto gap-3 p-3">
+             <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
               <span className="p-float-label">             
-              <InputText id="value"  placeholder="Enter value" value={Value} onChange={(e) => setValue(e.target.value)}/>
+              <InputText id="value"  placeholder="Enter value" value={Value} onChange={(e:any) => setValue(e.target.value)}/>
                <label htmlFor="value">Value</label>
               </span>
               </div>
 
-              <div className="flex-auto gap-3 p-3">
+              <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
               <span className="p-float-label">
-              <InputText id="name"  placeholder="Enter name" value={Name} onChange={(e) => setName(e.target.value)}/>
+              <InputText id="name"  placeholder="Enter name" value={Name} onChange={(e:any) => setName(e.target.value)}/>
               <label htmlFor="name">Name</label>
               </span>
               </div>
 
-              <div className="flex-auto gap-3 p-3">
+              <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
               <span className="p-float-label">
-                <InputNumber useGrouping={false} placeholder="Enter year" value={Year} onValueChange={(e) => setYear(e.value)}/>
+                <InputNumber useGrouping={false} placeholder="Enter year" value={Year} onValueChange={(e:any) => setYear(e.value)}/>
                 <label htmlFor="year">Year</label>
               </span>
               </div>
 
-              <div className="flex-auto gap-3 p-3">
+              <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
               <span className="p-float-label">  
-              <InputNumber useGrouping={false} placeholder="Enter initial stock" value={Stock} onValueChange={(e) => setStock(e.value)}/>
+              <InputNumber useGrouping={false} placeholder="Enter initial stock" value={Stock} onValueChange={(e:any) => setStock(e.value)}/>
               <label htmlFor="stock">Stock</label>
              </span>
              </div>
 
-             <div className="flex-auto gap-3 p-3">
+             <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
                 <div className="p-float-label">
-                <InputTextarea value={References} onChange={(e) => setReferences(e.target.value)} rows={5} cols={30} />
+                <InputTextarea value={References} onChange={(e:any) => setReferences(e.target.value)} rows={5} cols={30} />
                 <label htmlFor="References">References</label>
                 </div>
               </div>
@@ -258,17 +259,17 @@ const coin_composition = [
         </div>
         {/* <div className="col-1"></div> */}
 
-        <div className="col-3">
-            <div className="flex-auto gap-3 p-3">
+        <div className="col-4 xl:col-3">
+            <div className="flex-auto gap-3 xs:gap-1 p-3">
                 <div className="flex flex-column gap-3">
-                  <Dropdown value={Composition} options={coin_composition} optionLabel="name" onChange={(e) => setComposition(e.value)} 
+                  <Dropdown value={Composition} options={coin_composition} optionLabel="name" onChange={(e:any) => setComposition(e.value)} 
                     placeholder="Select composition"/>
                 </div>
             </div>
             <div className="flex-auto p-3">
             <div className="flex flex-column gap-3">
               <Dropdown value= {selectedCountry} 
-              onChange={(e) => {
+              onChange={(e:any) => {
                       // setSelectedCountry(e.value.name);
                       setSelectedCountry(e.value);
                       setContinent(e.value.continent);
@@ -281,15 +282,15 @@ const coin_composition = [
           </div>
           <div className="flex-auto p-3">
             <div className="flex flex-column gap-3">
-              <Dropdown value={Status} options={coin_status} optionLabel="name" onChange={(e) => setStatus(e.value)} 
+              <Dropdown value={Status} options={coin_status} optionLabel="name" onChange={(e:any) => setStatus(e.value)} 
                 placeholder="Select status"/>
             </div>
           </div>
 
 
-            <div className="flex-auto gap-3 p-3">
+            <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
               <span className="p-float-label">  
-              <InputNumber inputId="price" value={Price} onValueChange={(e) => setPrice(e.value)} minFractionDigits={2} maxFractionDigits={2} />
+              <InputNumber inputId="price" value={Price} onValueChange={(e:any) => setPrice(e.value)} minFractionDigits={2} maxFractionDigits={2} />
               <label htmlFor="price">Price</label>
              </span>
              </div>
@@ -313,11 +314,8 @@ const coin_composition = [
           
 
         </div>
-        <div className="col-3"></div>
+        <div className="col-3 xs:col-1"></div>
     </div>
-
-      {/* <div  style={{padding:"5px", maxHeight: "90vh"}} className="md:w-28rem"> */}
-
 
     </ScrollPanel>
         </div>

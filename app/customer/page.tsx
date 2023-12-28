@@ -10,11 +10,12 @@ import { Button } from 'primereact/button';
 import { DataScroller } from 'primereact/datascroller';
 import { InputText } from 'primereact/inputtext';
 import { Divider } from 'primereact/divider';
+import Menu from '../../components/menu_ini'
 
 
 export default function ClientOrder() {
-  const [order, setOrder] = useState([]);
-  const [date, setOrderDate] = useState([]);
+  const [order, setOrder] = useState<any>();
+  const [date, setOrderDate] = useState<any>();
   const uuid = "89a0dd01-c7c6-49e8-a11a-e14ecfff33d7"
   
 
@@ -25,11 +26,6 @@ export default function ClientOrder() {
         })
         .then(order => {
           setOrder(order)
-          // console.log('data',order[0].OrderDate)
-          // const data3 = new Date;
-          // const data4 = order[0].OrderDate.getFullYear()
-            // setProducts(coins)
-          //  console.log(order.length)
         })
 }
 
@@ -37,7 +33,7 @@ useEffect(() => {
   fetchClientOrder()
 }, [])
 
-const itemTemplate = (data) => {
+const itemTemplate = (data:any) => {
   return (
     <Card >
       <div className=" grid">
