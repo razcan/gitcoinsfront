@@ -175,12 +175,16 @@ fetch("http://localhost:3000/coins/uploadm", requestOptions)
 ];
 
 const coin_composition = [
-  { name: 'Others', id: 1},
-  { name: 'Copper', id: 29 },
-  { name: 'Silver', id: 47 },
-  { name: 'Gold', id: 79 }
+  { name: 'Nichel', id: 1 },
+  { name: 'Nichel placat', id: 2 },
+  { name: 'Cupru', id: 3 },
+  { name: 'Cupru placat', id: 4 },
+  { name: 'Alama', id: 5 },
+  { name: 'Zinc', id: 6 },
+  { name: 'Fier', id: 7 },
+  { name: 'Argint', id: 8 },
+  { name: 'Aur', id: 9 }
 ]
-
 
   return (
     <PrimeReactProvider>

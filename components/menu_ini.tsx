@@ -19,14 +19,15 @@ import { Avatar } from 'primereact/avatar';
 import { AvatarGroup } from 'primereact/avatargroup'; 
 import { Chip } from 'primereact/chip';
 import { Image } from 'primereact/image';
+import config from '../config.json'
 
 
-export default function Menu(props) {
-
+export default function Menu(props: { activatedIndex: any; }) {
+  const IP: string = config.IP;
   const [activeMenuIndex, setMenuIndex] = useState(props.activatedIndex);
   const [itemCount, setItemCount] = useState(0);
 
-  const [username, setUserName] = useState([]);
+  const [username, setUserName] = useState(null);
 
   const [visible, setVisible] = useState(false);
   const toast = useRef(null);
@@ -56,6 +57,7 @@ const checkLogin = () => {
 
   if (dateToken > dateActual ) {
     console.log('a expirat')
+    setUserName(null);
   } else {
     console.log('nu a a expirat')
   }
@@ -122,18 +124,18 @@ const Login = async () => {
     command: () => {
       router.push('/admin');} 
     },
-    // { label: 'Login', icon: 'pi pi-user', 
-    // command: () => { Login() }
-    // },
-
   ];
 
-  // const end = <InputText placeholder="Search" type="text" className="w-full" />;
   const end =
   <span>
 
-{username ? <Chip className="mr-2" label={`${username}`} removable /> : null}
-<Avatar  icon="pi pi-user" size="large" onClick={() => Login()}/>
+{/* {username ? <Chip className="mr-2" label={`${username}`} removable /> : null} */}
+{/* {username ?<Avatar className="mr-2" label={`${username}`} size="large" /> : null} */}
+{/* {username ?<div className="mr-2">{username} </div> : null} */}
+
+{username ? <Chip className="mr-2" label={`${username}`} removable /> : 
+<Avatar  icon="pi pi-user"  size="large" onClick={() => Login()}/>}
+
 { itemCount ? <Avatar
                  className="p-overlay-badge ml-2"
                  icon="pi pi-shopping-cart"
@@ -185,7 +187,7 @@ const Login = async () => {
      
     } else {
       // console.log('it isn't expired')
-      setUserName()
+      setUserName(null)
 }
     }}
 

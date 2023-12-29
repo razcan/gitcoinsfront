@@ -1,6 +1,5 @@
-import {Judet} from "./judet.interface";
 
-export const Judete: Judet[] = [
+export const Judete: any= [
     {
         "auto": "AB",
         "nume": "Alba",

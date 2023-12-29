@@ -91,7 +91,7 @@ const OrderedItems = () => {
    <Menu activatedIndex={1} />
       <div>
 
-{order.length>0 ?
+{order ?
 <Card title="Comanda">
 
 <div className="flex flex-column gap-2" style={{width: "30%"}}>

@@ -17,10 +17,12 @@ import Footer from '@/components/footer';
 export default function Home() {
 
   return (
-<PrimeReactProvider style={{height: "90%"}}>
+<PrimeReactProvider 
+// style={{height: "90%"}}
+>
 <Menu activatedIndex={0} />
 <Card className='container'>
-   {/* <Exchange /> */}
+    {/* <Exchange />  */}
    <div className="content grid pt-6">
    <div className="col-12 lg:col-2  ">
      {/* <Filters /> */}
@@ -35,5 +37,3 @@ export default function Home() {
 
   )
 }
-
-

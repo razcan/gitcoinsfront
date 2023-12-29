@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Steps } from 'primereact/steps';
 import { useRouter } from 'next/navigation';
 
-export default function OrderSteps(params) {
+export default function OrderSteps(params:any) {
     const [activeIndex, setActiveIndex] = useState(params.step);
     const toast = useRef(null);
 
@@ -22,7 +22,7 @@ export default function OrderSteps(params) {
 
     return (
         <div className="card">
-            <Steps model={items} activeIndex={activeIndex} onSelect={(e) => {setActiveIndex(e.index); 
+            <Steps model={items} activeIndex={activeIndex} onSelect={(e:any) => {setActiveIndex(e.index); 
             
             // switch (e.index) {
             //     case 0:

@@ -23,10 +23,10 @@ export default function Contact() {
 
   const router = useRouter()
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [message, setMessage] = useState('');
+  const [name, setName] = useState<any>();
+  const [email, setEmail] = useState<any>();
+  const [phone, setPhone] = useState<any>();
+  const [message, setMessage] = useState<any>();
   const toast = useRef(null);
 
   const showSuccess = () => {
@@ -118,7 +118,7 @@ export default function Contact() {
                       <span className="p-float-label p-input-icon-left min-w-full">
                       <i className="pi pi-phone" />
                         <InputText className='min-w-full'
-                          id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                          id="phone" value={phone} onChange={(e:any) => setPhone(e.target.value)} />
                         <label htmlFor="phone">Phone</label>
                       </span>
                     </div>
@@ -130,7 +130,7 @@ export default function Contact() {
                       <span className="p-float-label p-input-icon-left min-w-full">
                       <i className="pi pi-envelope" />
                         <InputText className='min-w-full'
-                          id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                          id="email" value={email} onChange={(e:any) => setEmail(e.target.value)} />
                         <label htmlFor="email">Email</label>
                       </span>
                     </div>
@@ -142,7 +142,7 @@ export default function Contact() {
                       <span className="p-float-label">
                         <InputTextarea className='min-w-full'
                           autoResize
-                          id="message" value={message} onChange={(e) => setMessage(e.target.value)}
+                          id="message" value={message} onChange={(e:any) => setMessage(e.target.value)}
                           pt={{
                             root: {
                               rows: 15,

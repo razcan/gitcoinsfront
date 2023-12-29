@@ -12,15 +12,13 @@ import { Rating } from 'primereact/rating';
 import { Tag } from 'primereact/tag';
 import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
 import { Divider } from 'primereact/divider';
-import { InputText } from 'primereact/inputtext';
-        
 
 export default function Item() {
 
 
     const prefix_api = 'http://localhost:3000/coins/download/';
     const [products, setProducts] = useState<any>();
-    const [layout, setLayout] = useState('grid');
+    const [layout, setLayout] = useState<any>('grid'); 
     const [visible, setVisible] =useState<any>(false);
     const [selected_product, setSelected_product] = useState<any>();
     const [ordered_qtty, setOrdered_qtty] = useState<any>(1);;

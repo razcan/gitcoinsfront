@@ -28,19 +28,20 @@ export default function Order() {
   const searchParams = useSearchParams()
 
 
-  const [retrievedObject, setRetrievedObject] = useState([]);
-  const [itemToBeRemoved, setItemToBeRemoved] = useState([]);
-  const [menuIndex, setMenuIndex] = useState(0);
+  const [retrievedObject, setRetrievedObject] = useState<any>();
+  const [itemToBeRemoved, setItemToBeRemoved] = useState<any>();
+  const [menuIndex, setMenuIndex] = useState<any>(0);
 
-  const [sumQttyItem, setSumQttyItem] = useState(0);
-  const [sumValueItem, setValueItem] = useState(0);
+  const [sumQttyItem, setSumQttyItem] = useState<any>(0);
+  const [sumValueItem, setValueItem] = useState<any>(0);
 
-  const [dataFetched, setDataFetched] = useState(false);
+  const [dataFetched, setDataFetched] = useState<any>(false);
 
 
   useEffect(() => {
     const getValues =  () => {
-      setRetrievedObject(JSON.parse(localStorage.getItem('YourOrder')))
+      const localstorage:any = localStorage.getItem('YourOrder')
+      setRetrievedObject(JSON.parse(localstorage))
       setDataFetched(true)
     }
 
@@ -53,12 +54,12 @@ export default function Order() {
     if (dataFetched) {
       const initialValue = 0;
       const sumQttyWithInitial =  retrievedObject.reduce(
-        (accumulator, currentValue) => accumulator + currentValue.Qtty,
+        (accumulator: any, currentValue: any) => accumulator + currentValue.Qtty,
         initialValue,
       )
   
       const sumValueWithInitial =  retrievedObject.reduce(
-        (accumulator, currentValue) => accumulator + (currentValue.Qtty * currentValue.Price),
+        (accumulator: any, currentValue:any) => accumulator + (currentValue.Qtty * currentValue.Price),
         initialValue,
       )
   
@@ -68,7 +69,7 @@ export default function Order() {
     }
   };
   
-  const setNewQtty = (e, data) => {
+  const setNewQtty = (e:any, data:any) => {
 
     const elementToUpdate = data;
     elementToUpdate.Qtty = e;
@@ -81,7 +82,9 @@ export default function Order() {
       retrievedObject[indexToUpdate] = elementToUpdate;
       // Convert the updated array to a string and store it back in localStorage
       localStorage.setItem("YourOrder", JSON.stringify(retrievedObject));
-      setRetrievedObject(JSON.parse(localStorage.getItem('YourOrder')))
+      const loco: any = localStorage.getItem('YourOrder');
+      const localstorage: any = JSON.parse(loco)
+      setRetrievedObject(localstorage)
       summaryOrder()
     }
 
@@ -94,14 +97,14 @@ export default function Order() {
     // Convert the updated array to a string and store it back in localStorage
     localStorage.setItem("YourOrder", JSON.stringify(retrievedObject));
     summaryOrder()
-    setMenuIndex((prevKey) => prevKey + 1);
+    setMenuIndex((prevKey: any) => prevKey + 1);
   }
 
 
   const router = useRouter()
 
 
-  const itemTemplate = (data) => {
+  const itemTemplate = (data: any) => {
     return (
       <Card >
         <div className=" grid">
@@ -126,7 +129,7 @@ export default function Order() {
                   <div className="flex flex-column gap-2">
                     <span className="flex align-items-center gap-2 text-indigo-600 text-2xl ">
                       Qtty: <InputNumber inputId="minmax-buttons" value={data.Qtty}
-                        onValueChange={(e) => setNewQtty(e.value, data)} mode="decimal"
+                        onValueChange={(e:any) => setNewQtty(e.value, data)} mode="decimal"
                         min={0} max={1000} />
 
                     </span>

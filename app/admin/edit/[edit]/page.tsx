@@ -116,10 +116,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
   }
   }
 
-  useEffect(() => {
-    fetchCoinData(),
-      fetchStockOperations()
-  }, [])
+
 
 
   const coin_status = [
@@ -135,10 +132,15 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
   };
 
   const coin_composition = [
-    { name: 'Others', id: 1 },
-    { name: 'Copper', id: 29 },
-    { name: 'Silver', id: 47 },
-    { name: 'Gold', id: 79 }
+    { name: 'Nichel', id: 1 },
+    { name: 'Nichel placat', id: 2 },
+    { name: 'Cupru', id: 3 },
+    { name: 'Cupru placat', id: 4 },
+    { name: 'Alama', id: 5 },
+    { name: 'Zinc', id: 6 },
+    { name: 'Fier', id: 7 },
+    { name: 'Argint', id: 8 },
+    { name: 'Aur', id: 9 }
   ]
 
   const stock_operation = [
@@ -250,9 +252,17 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
           setPhoto1(product.Photo1),
           setPhoto2(product.Photo2)
 
+          
+
         ))
       })
   }
+  
+  useEffect(() => {
+    fetchCoinData(),
+      fetchStockOperations()
+     
+  }, [])
 
   const stockOperations = () => {
     console.log('stock')
@@ -317,6 +327,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
 
       <Card className='container'>
         <div className='content'>
+          {Photo1? 
 
           <div style={{ padding: "2px", maxHeight: "90vh" }} className="md:w-28rem">
 
@@ -465,6 +476,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
             </div>
 
           </div>
+:null}
         </div>
 
         <Dialog header="Header" visible={visibleStock} style={{ width: '60vw' }} onHide={() => setVisibleStock(false)}>

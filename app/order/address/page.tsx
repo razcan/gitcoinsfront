@@ -29,7 +29,7 @@ export default function Address() {
       // toast.current.show({severity:'success', summary: 'Order saved succesfully', life: 3000});
   }
 
-  const showError = (message) => {
+  const showError = (message:any) => {
     // toast.current.show({severity:'warn', summary: message, life: 3000});
 }
 
@@ -44,11 +44,11 @@ export default function Address() {
   // const { sumQttyItem, sumValueItem } = router.query;
   // console.log('xxy',sumQttyItem, sumValueItem)
 
-  const [selectedCounty, setCounty] = useState(null);
-  const [selectedOras, setOras] = useState('Selectati un oras');
-  const [countyIsSelected, setcountyIsSelected] = useState(true);
-  const [listajudete, setListajudete] = useState(null);
-  const [listaorase, setListaorase] = useState(null);
+  const [selectedCounty, setCounty] = useState<any>(null);
+  const [selectedOras, setOras] = useState<any>('Selectati un oras');  
+  const [countyIsSelected, setcountyIsSelected] = useState<any>(true);
+  const [listajudete, setListajudete] =  useState<any>(null);
+  const [listaorase, setListaorase] =  useState<any>(null);
   const [clasaName, setClasaName] = useState("w-full");
   const [clasaEmail, setClasaEmail] = useState("w-full");
   const [clasaAddress, setClasaAddress] = useState("w-full");
@@ -59,29 +59,30 @@ export default function Address() {
 
   const judete = Judete;
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
-  const [phonenumber, setPhonenumber] = useState('');
-  const [remarks, setRemarks] = useState('');
-  const [retrievedObject, setRetrievedObject] = useState([]);
+  const [name, setName] = useState<any>();
+  const [email, setEmail] =useState<any>();
+  const [address, setAddress] = useState<any>();
+  const [phonenumber, setPhonenumber] = useState<any>();
+  const [remarks, setRemarks] = useState<any>();
+  const [retrievedObject, setRetrievedObject] = useState<any>();
   const [dataFetched, setDataFetched] = useState(false);
-  const [orderDetails, setOrderDetails] = useState([]);
-  const [orderHeader, setOrderHeader] = useState([]);
-  const [message, setMessage] = useState([]);
+  const [orderDetails, setOrderDetails] = useState<any>();
+  const [orderHeader, setOrderHeader] =useState<any>();
+  const [message, setMessage] = useState<any>();
 
-  interface DetailsOrder {
-    orderId: any;
-    CoinId: any;
-    Quantity: any;
-    UnitPrice: any;
-    Discount: any;
-    Total: any;
-  }
+  // interface DetailsOrder {
+  //   orderId: any;
+  //   CoinId: any;
+  //   Quantity: any;
+  //   UnitPrice: any;
+  //   Discount: any;
+  //   Total: any;
+  // }
 
   useEffect(() => {
     const getValues = () => {
-      setRetrievedObject(JSON.parse(localStorage.getItem('YourOrder')))
+      const session: any = localStorage.getItem('YourOrder')
+      setRetrievedObject(JSON.parse(session))
       setDataFetched(true)
     }
     getValues(),
@@ -90,8 +91,8 @@ export default function Address() {
 
   const detailsOrder = () => {
     if (dataFetched) {
-      const details: DetailsOrder = []
-      retrievedObject.map(item => {
+      const details: any = []
+      retrievedObject.map((item: { id: any; Qtty: any; Price: any; Amount: any; }) => {
         details.push({orderId: 0, CoinId: `${item.id}`, Quantity: `${item.Qtty}`, UnitPrice: `${item.Price}`, Discount: 0, Total: `${item.Amount}`})
       })
       setOrderDetails(details)
@@ -116,8 +117,8 @@ export default function Address() {
 
 
   const getJudete = () => {
-    const judeteAll = [];
-    judete.map(localitate => {
+    const judeteAll:any = [];
+    judete.map((localitate: { nume: any; }) => {
       judeteAll.push({ judet: `${localitate.nume}` })
 
     })
@@ -197,7 +198,7 @@ router.push('/');
   }
 
 
-  const setSelectedCounty = (value) => {
+  const setSelectedCounty = (value:any) => {
     setCounty(value)
     setcountyIsSelected(false)
     filterbycounty()
@@ -211,7 +212,7 @@ router.push('/');
     };
     const myArray: MyObject[] = []
 
-    judete.map(localitate => {
+    judete.map((localitate: { localitati: string | any[]; nume: any; }) => {
       for (let i = 0; i < localitate.localitati.length; i++) {
         // console.log(`"judet": "${localitate.nume}" , "localitate": "${localitate.localitati[i].nume}",`)
         myArray.push({ judet: `${localitate.nume}`, localitate: `${localitate.localitati[i].nume}` })
@@ -255,14 +256,14 @@ router.push('/');
                     <label htmlFor="alphabetic" className="font-bold block mb-2 ">
                       Nume
                     </label>
-                    <InputText   value={name} onChange={(e) => {setName(e.target.value);  setClasaName( "w-full") }}
+                    <InputText   value={name} onChange={(e:any) => {setName(e.target.value);  setClasaName( "w-full") }}
                       id="alphabetic" className={clasaName} />
                   </div>
                   <div className="flex-auto">
                     <label htmlFor="email" className="font-bold block mb-2">
                       Email
                     </label>
-                    <InputText value={email} onChange={(e) => {setEmail(e.target.value); setClasaEmail( "w-full") }}
+                    <InputText value={email} onChange={(e:any) => {setEmail(e.target.value); setClasaEmail( "w-full") }}
                       id="email" keyfilter="email" className={clasaEmail} />
                   </div>
                 </div>
@@ -273,7 +274,7 @@ router.push('/');
                     </label>
                     <Dropdown
                       value={selectedCounty}
-                      onChange={(e) => {
+                      onChange={(e:any) => {
 
                         setSelectedCounty(e.value)
                         setNumeDropD("w-full md:w-44rem")
@@ -293,7 +294,7 @@ router.push('/');
                     </label>
                     <Dropdown
                       value={selectedOras}
-                      onChange={(e) => {setOras(e.value); setNumeDropCity("w-full md:w-44rem") }}
+                      onChange={(e:any) => {setOras(e.value); setNumeDropCity("w-full md:w-44rem") }}
                       options={listaorase}
                       optionLabel="localitate"
                       editable
@@ -308,14 +309,14 @@ router.push('/');
                     <label htmlFor="alphabetic" className="font-bold block mb-2">
                       Adresa
                     </label>
-                    <InputText value={address} onChange={(e) => {setAddress(e.target.value); setClasaAddress( "w-full")}}
+                    <InputText value={address} onChange={(e:any) => {setAddress(e.target.value); setClasaAddress( "w-full")}}
                       id="alphabetic" className={clasaAddress} />
                   </div>
                   <div className="flex-auto">
                     <label htmlFor="number" className="font-bold block mb-2">
                       Numar telefon
                     </label>
-                    <InputText value={phonenumber} onChange={(e) => {setPhonenumber(e.target.value); setClasaPhone("w-full")}}
+                    <InputText value={phonenumber} onChange={(e:any) => {setPhonenumber(e.target.value); setClasaPhone("w-full")}}
                       id="number" keyfilter="num" className={clasaPhone} />
 
                   </div>
@@ -328,7 +329,7 @@ router.push('/');
                       Alte observatii
                     </label>
                     <InputTextarea
-                      value={remarks} onChange={(e) => setRemarks(e.target.value)}
+                      value={remarks} onChange={(e:any) => setRemarks(e.target.value)}
                       className="w-full" rows={5} cols={30} />
                   </div>
 
@@ -352,11 +353,3 @@ router.push('/');
     </PrimeReactProvider>
   )
 }
-
-{/* <div className="card flex justify-content-center">
-            <CascadeSelect value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={judete} 
-                optionLabel="nume" optionGroupLabel="nume" optionGroupChildren={['localitati']}
-                className="w-full md:w-14rem" 
-                //breakpoint="767px" 
-                placeholder="Select a City" style={{ minWidth: '14rem' }}  />
-        </div> */}

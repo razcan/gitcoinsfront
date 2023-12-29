@@ -24,13 +24,13 @@ export default function News() {
 
 
 const router = useRouter();
-const [products, setProducts] = useState([]);
-const [days, setDays] = useState(30);
-const [layout, setLayout] = useState('grid');
-const [visible, setVisible] = useState(false);
-const [selected_product, setSelected_product] = useState([]);
-const [menuIndex, setMenuIndex] = useState(0);
-const [ordered_qtty, setOrdered_qtty] = useState(1);
+const [products, setProducts] = useState<any>();
+const [days, setDays] = useState<any>(30);
+const [layout, setLayout] =useState<any>('grid');
+const [visible, setVisible] =useState<any>(false);
+const [selected_product, setSelected_product] = useState<any>([]);
+const [menuIndex, setMenuIndex] = useState<any>(0);
+const [ordered_qtty, setOrdered_qtty] = useState<any>(1);
 
 const setProductVisible = (product: any, bol: boolean) => {
   setSelected_product(product);
@@ -99,13 +99,13 @@ const addToOrder = () => {
   // Convert the updated array to a string and store it back in localStorage
   localStorage.setItem("YourOrder", JSON.stringify(existingArray));
   setVisible(false);
-  setMenuIndex((prevKey) => prevKey + 1);
+  setMenuIndex((prevKey:any) => prevKey + 1);
   // router.push('/order')
 
 }
 
 
-const gridItem = (product) => {
+const gridItem = (product:any) => {
   return (
     //   <div className="col-2 sm:col-2 lg:col-2 xl:col-2 pl-4">
     <div className="col-12 sm:col-6 lg:col-3 xl:col-2 p-2">
@@ -134,13 +134,14 @@ const gridItem = (product) => {
 };
 
 
-const itemTemplate = (product, layout) => {
+const itemTemplate = (product:any, layout:any) => {
   if (!product) {
       return;
   }
 
-  if (layout === 'list') return listItem(product);
-  else if (layout === 'grid') return gridItem(product);
+//   if (layout === 'list') return listItem(product);
+//   else 
+  if (layout === 'grid') return gridItem(product);
 };
   
   return (
@@ -216,7 +217,7 @@ const itemTemplate = (product, layout) => {
                                     {/* <InputNumber allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} /> */}
                                     <i className="pi pi-cart-plus block ml-0" style={{ fontSize: '2rem' }} />
 
-                                    <InputNumber className="ml-0, pl-0" allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} />
+                                    <InputNumber className="ml-0, pl-0" allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e:any) => setOrdered_qtty(e.value)} />
                                     {/* <InputText placeholder="Search" /> */}
 
                                 </div>
@@ -234,14 +235,14 @@ const itemTemplate = (product, layout) => {
 
 
                       <div className="grid">
-                          <div className="flex pt-0 col-1 ">
+                          <div className="flex pt-0 col-2 xs:col-6  ">
               
                            <div className="col-12 pt-3">
                                  
                                   <Tag  value="Last added:"></Tag>
                                   
-                                  <InputText disabled value={'Days: '+days} onChange={(e) => setDays(e.target.value)} className="w-full" />
-                                  <Slider value={days} max={60} onChange={(e) => setDays(e.value)} className="w-full" />
+                                  <InputText disabled value={'Days: '+days} onChange={(e:any) => setDays(e.target.value)} className="w-full" />
+                                  <Slider value={days} max={60} onChange={(e:any) => setDays(e.value)} className="w-full" />
                               </div>
 
                           </div>
