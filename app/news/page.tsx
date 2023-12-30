@@ -115,7 +115,7 @@ const gridItem = (product:any) => {
                       <i className="pi pi-tag"></i>
                       <span className="text-xl">{product.Country}</span>
                   </div>
-                  <Tag value={product.Catalog}></Tag>
+                  <Tag value={'KM:'+ product.Catalog}></Tag>
               </div>
               <div className="flex flex-column align-items-center gap-1 py-2">
                   <img className="w-6 shadow-1 border-round"

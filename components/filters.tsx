@@ -130,7 +130,7 @@ export default function Filters() {
   };
 
 
-  const itemTemplate = (country: { Nr: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | React.PromiseLikeOfReactNode | null | undefined; Code: any; Country: string | undefined; }) => {
+  const itemTemplate = (country: { Nr: any; Code: any; Country: any; }) => {
     return (
       <div className="col-12">
         {/* <div className="flex flex-column xl:flex-row xl:align-items-start p-2 gap-2"> */}

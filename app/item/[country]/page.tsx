@@ -24,7 +24,7 @@ export default function Item(params: any) {
     const [products, setProducts] = useState<any>();
     const [layout, setLayout] = useState<any>('grid');
     const [visible, setVisible] = useState(false);
-    const [selected_product, setSelected_product] = useState<any>();
+    const [selected_product, setSelected_product] = useState<any>([]);
     const [ordered_qtty, setOrdered_qtty] = useState<any>();
     const [menuIndex, setMenuIndex] = useState<any>(0);
 
@@ -81,6 +81,12 @@ export default function Item(params: any) {
 
 
 
+
+
+    useEffect(() => {
+        fetchCoinData()
+    }, [])
+
     const fetchCoinData = () => {
         fetch(`http://localhost:3000/coins/getcoinsbycountry/${params.params.country}`)
             .then(response => {
@@ -89,13 +95,9 @@ export default function Item(params: any) {
             .then(coins => {
                 setProducts(coins)
                 // setProducts(coins)
-                // console.log(coins)
+              console.log(coins)
             })
     }
-
-    useEffect(() => {
-        fetchCoinData()
-    }, [])
 
     const viewOrder = () => {
         router.push('/order')
@@ -140,7 +142,7 @@ export default function Item(params: any) {
                             <i className="pi pi-tag"></i>
                             <span className="text-xl">{product.Country}</span>
                         </div>
-                        <Tag value={product.Catalog}></Tag>
+                        <Tag value={'KM:'+product.Catalog}></Tag>
                     </div>
                     <div className="flex flex-column align-items-center gap-1 py-2">
                         <img className="w-6 shadow-1 border-round"

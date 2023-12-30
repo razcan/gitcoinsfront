@@ -22,7 +22,7 @@ export default function Login() {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [token, setToken] = useState([]);
-    const toast = useRef(null);
+    const toast = useRef<any>(null);
     const [visible, setVisible] = useState(true);
 
     const showSuccess = () => {
@@ -60,7 +60,7 @@ const Login = async () => {
       // Store token in local storage
       sessionStorage.setItem("token", JSON.stringify(response.data));
      // Read token from local storage
-     const myStoredItem = sessionStorage.getItem('token');
+     const myStoredItem:any = sessionStorage.getItem('token');
      const rez = JSON.parse(myStoredItem);
     
      showSuccess();

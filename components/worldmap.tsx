@@ -6,13 +6,18 @@ import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import React, { useState, useEffect, useRef } from 'react';
 
-import WorldMap from 'react-world-map';
+
 import "../css/styles_map.css";
 import { SelectedContextContinent } from './context'
 import Filters from './filters'
 import { Card } from 'primereact/card';
 import { Tag } from 'primereact/tag';
 import { ScrollPanel } from 'primereact/scrollpanel';
+// import WorldMap from 'react-world-map';
+
+const WorldMap = require('react-world-map');
+
+// const { yourModule } = require('your-module');
 
 //https://github.com/heatherbooker/react-world-map/blob/main/docs/index.jsx
 

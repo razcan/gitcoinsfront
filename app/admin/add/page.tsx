@@ -143,7 +143,7 @@ formdata2.append('Country', selectedCountry.name);
 formdata2.append('Code', selectedCountry.code);
 formdata2.append('Catalog', Catalog);
 formdata2.append('Value', Value);
-formdata2.append('Name', Name);
+formdata2.append('Name', Name.NAME);
 formdata2.append('Year', Year);
 formdata2.append('Composition', Composition.name);
 formdata2.append('Status', Status.name);

@@ -14,12 +14,15 @@ import { Button } from 'primereact/button';
 import { Divider } from 'primereact/divider';
 import { Tag } from 'primereact/tag';
 import { Panel } from 'primereact/panel';
-import '../../css/style.css'
+import '../../css/style.css';
+// import '../../css/cssmap-continents/cssmap-continents/cssmap-continents.css';
 import axios from 'axios';
 import { Toast } from 'primereact/toast';
 import Footer from '@/components/footer';
 import { Editor } from "primereact/editor";
-import { WorldMap } from 'world-svg';
+// import { WorldMap } from 'world-svg';
+// import WorldMap from 'react-native-world-map-svg'
+
 //https://github.com/kushadige/world-svg/blob/4319063e23bb471b1e919fa264a34abe9e2eac58/README.md
 //https://www.iban.com/country-codes
 export default function Contact() {
@@ -70,92 +73,20 @@ export default function Contact() {
 <Menu activatedIndex={4} />
 
   <Card className='container'>
-          <div className='content pt-6'>
 
-        <Card className="max-w-full min-h-screen ">
-        <Toast ref={toast} />
-       
-          <div className="grid">
-          <WorldMap onCountryClick={handleCountryClick} landColor="#3b82f6"/>
-
-            <div className="xl:col-2 xs:col-1"></div>
-
-            <div className="xl:col-4 xs:col-4 p-3">
-              <div className="grid">
-                  <Card title="Get in touch" style={{height: "600px"}} className=' w-full'>
-                    <div className="flex align-items-center border-bottom-1 surface-border surface-overlay w-full">
-                        <p className="w-4 text-xl text-left font-bold text-blue-500 mr-3">Phone</p>
-                        <p className="text-xl w-10">0744 444 888</p>
-                    </div>
-                    <div className="flex align-items-center border-bottom-1 surface-border surface-overlay w-full">
-                        <p className="w-4 text-xl text-left font-bold text-blue-500 mr-3">Email</p>
-                        <p className="text-xl w-10">coins@coins.ro</p>
-                    </div>
-                    <div className="flex align-items-center border-bottom-1 surface-border surface-overlay w-full">
-                        <p className="w-4 text-xl text-left font-bold text-blue-500 mr-3">Address</p>
-                        <p className="text-xl w-10">Brasov, Str. Zizinului, Nr. 23</p>
-                    </div>
-                    <div className='pt-4' >
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2789.016130395534!2d25.61965800082508!3d45.65049782017623!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sro!2sro!4v1702577334133!5m2!1sro!2sro" 
-                        style={{border:0, width: '100%'}}  
-                        className=' h-26rem'
-                        loading="lazy">
-                        </iframe>
-                    </div>
-                  </Card>
-              </div>
-            </div>
-            {/* <div className='xl: w-1rem'></div> */}
-            <div className="xl:col-4 xs:col-4 p-3">
-              <div className="grid">
-                  <Card title="Get in touch" style={{height: "600px"}} className=' w-full'>
-                    <div className="flex align-items-center  surface-border surface-overlay w-full">
-                        <span className="p-float-label p-input-icon-left w-full">
-                            <i className="pi pi-user" />
-                            <InputText className='w-full'
-                              id="name" value={name} onChange={(e:any) => setName(e.target.value)} />
-                            <label htmlFor="name" >Name</label>
-                          </span>
-                    </div>
-                    <div className="flex align-items-center  surface-border surface-overlay w-full pt-4">
-                    <span className="p-float-label p-input-icon-left min-w-full">
-                      <i className="pi pi-phone" />
-                        <InputText className='min-w-full'
-                          id="phone" value={phone} onChange={(e:any) => setPhone(e.target.value)} />
-                        <label htmlFor="phone">Phone</label>
-                      </span>
-                    </div>
-                    <div className="flex align-items-center surface-border surface-overlay w-full pt-4">
-                    <span className="p-float-label p-input-icon-left min-w-full">
-                      <i className="pi pi-envelope" />
-                        <InputText className='min-w-full'
-                          id="email" value={email} onChange={(e:any) => setEmail(e.target.value)} />
-                        <label htmlFor="email">Email</label>
-                      </span>
-                    </div>
-                    <div className="flex align-items-center  surface-border surface-overlay w-full pt-4" style={{width: '100%'}}>
-                       <span className="p-float-label">
-                       <Editor value={message} onTextChange={(e:any) => setMessage(e.htmlValue)} style={{ height: '260px' }} />
-                        <label htmlFor="message">Message</label>
-                      </span>
-                    </div>
-                    <div className='pt-3'>
-                      <Button label="Submit" icon="pi pi-check" onClick={sendData}/>         
-                    </div>
-
-                  </Card>
-              </div>
-            </div>
-            
-            <div className="xl:col-2 xs:col-3 p-3">
-
-            </div> 
-
-          </div>
-          
-        </Card>
-      
-  </div>
+  <ul>
+    <li><strong>ACHIZITIONEZ/ SCHIMB</strong> monede, in functie de stocurile de moment.</li>
+    <li>&nbsp;<strong>NU LIVREZ</strong> colete sub valoarea de 100 RON.</li>
+    <li>&nbsp;<strong>FOTOGRAFIILE</strong> monedelor sunt cu titlu de exemplu (cu exceptia celor peste 20 de lei/buc, unde veti regasi fotografia monedei comandate).</li>
+    <li>Dupa plasarea comenzii/ realizarea platii, puteti solicita fotografii (avers-revers) cu lotul de monede achizitionat.</li>
+    <li>&nbsp;<strong>PRETUL</strong> monedelor nu este negociabil.</li>
+    <li>&nbsp;Se aplica un discount de 5% pentru comenzile cu valoare mai mare de 200 RON si de 10% pentru comenzile cu valoare mai mare de 500 RON.</li>
+</ul>
+<p><strong>LIVRAREA</strong>:&nbsp;</p>
+<p><strong>TRANSPORTUL</strong> se va realiza prin FAN CURIER sau POSTA ROMANA si va fi suportat de catre cumparator.</p>
+<p><strong>PLATA</strong> se va realiza ramburs sau in avans, in contul RONCRT000000.. (coletul urmand a fi expediat ulterior confirmarii platii).</p>
+<p>- Se poate face PREDARE PERSONALA doar in mun. Brasov.</p>
+<p>- Coletele vor fi expediate in zilele de luni si marti ale fiecarei saptamani.</p>
   </Card>
   
   <Footer />
