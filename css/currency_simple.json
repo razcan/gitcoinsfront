@@ -1,0 +1,650 @@
+[
+    {
+        "CODE": "AED",
+        "NAME": "DIRHAM EAU"
+    },
+    {
+        "CODE": "AFA",
+        "NAME": "AFGANI AFGANISTAN"
+    },
+    {
+        "CODE": "ALL",
+        "NAME": "LEKA ALBANEZ"
+    },
+    {
+        "CODE": "AMD",
+        "NAME": "DRAM ARMENESC"
+    },
+    {
+        "CODE": "ANG",
+        "NAME": "GULDEN ANTILELE OLANDEZE"
+    },
+    {
+        "CODE": "AON",
+        "NAME": "KWANZA (NOU) ANGOLA"
+    },
+    {
+        "CODE": "ARS",
+        "NAME": "PESO ARGENTINIAN"
+    },
+    {
+        "CODE": "AUD",
+        "NAME": "DOLAR AUSTRALIAN"
+    },
+    {
+        "CODE": "AWG",
+        "NAME": "FLORIN ARUBAN"
+    },
+    {
+        "CODE": "AZN",
+        "NAME": "MANAT AZERBAIDJAN"
+    },
+    {
+        "CODE": "BAM",
+        "NAME": "MARCA CONVERTIBILA BOSNIACA"
+    },
+    {
+        "CODE": "BBD",
+        "NAME": "DOLAR BARBADOS"
+    },
+    {
+        "CODE": "BDT",
+        "NAME": "TAKA BANGLADESH"
+    },
+    {
+        "CODE": "BGN",
+        "NAME": "LEVA BULGAREASCA"
+    },
+    {
+        "CODE": "BHD",
+        "NAME": "DINAR BAHRAIN"
+    },
+    {
+        "CODE": "BIF",
+        "NAME": "FRANC BURUNDI"
+    },
+    {
+        "CODE": "BMD",
+        "NAME": "DOLAR BERMUDE"
+    },
+    {
+        "CODE": "BND",
+        "NAME": "DOLAR BRUNEI"
+    },
+    {
+        "CODE": "BOB",
+        "NAME": "BOLIVIAN BOLIVIAN"
+    },
+    {
+        "CODE": "BRL",
+        "NAME": "REAL BRAZILIAN"
+    },
+    {
+        "CODE": "BSD",
+        "NAME": "DOLAR BAHAMAS"
+    },
+    {
+        "CODE": "BTN",
+        "NAME": "NGULTRUM BHUTAN"
+    },
+    {
+        "CODE": "BWP",
+        "NAME": "PULL BOTSWANA"
+    },
+    {
+        "CODE": "BYR",
+        "NAME": "RUBLA BIELORUSA"
+    },
+    {
+        "CODE": "BZD",
+        "NAME": "DOLAR BELIZE"
+    },
+    {
+        "CODE": "CAD",
+        "NAME": "DOLAR CANADIAN"
+    },
+    {
+        "CODE": "CDF",
+        "NAME": "FRANC CONGOLEZ"
+    },
+    {
+        "CODE": "CHF",
+        "NAME": "FRANC ELVETIAN"
+    },
+    {
+        "CODE": "CLP",
+        "NAME": "PESO CHILIAN"
+    },
+    {
+        "CODE": "CNY",
+        "NAME": "YUAN RENMINBI CHINEZESC"
+    },
+    {
+        "CODE": "COP",
+        "NAME": "PESO COLUMBIAN"
+    },
+    {
+        "CODE": "CRC",
+        "NAME": "COL N COSTA RICA"
+    },
+    {
+        "CODE": "CUP",
+        "NAME": "PESO CUBANEZ"
+    },
+    {
+        "CODE": "CVE",
+        "NAME": "ESCUDO CAPUL VERDE"
+    },
+    {
+        "CODE": "CZK",
+        "NAME": "COROANA CEHA"
+    },
+    {
+        "CODE": "DJF",
+        "NAME": "FRANC DJIBOUTI"
+    },
+    {
+        "CODE": "DKK",
+        "NAME": "COROANA DANEZA"
+    },
+    {
+        "CODE": "DOP",
+        "NAME": "PESO REPUBLICA DOMINICANA"
+    },
+    {
+        "CODE": "DZD",
+        "NAME": "DINAR ALGERIAN"
+    },
+    {
+        "CODE": "ECS",
+        "NAME": "SUCRE ECUADOR"
+    },
+    {
+        "CODE": "EEK",
+        "NAME": "CORONA ESTONIANĂ"
+    },
+    {
+        "CODE": "EGP",
+        "NAME": "LIRA EGIPTEANĂ"
+    },
+    {
+        "CODE": "ERN",
+        "NAME": "NAKFA ERITREA"
+    },
+    {
+        "CODE": "ETB",
+        "NAME": "BIRR ETIOPIA"
+    },
+    {
+        "CODE": "EUR",
+        "NAME": "EURO"
+    },
+    {
+        "CODE": "FJD",
+        "NAME": "DOLAR FIJI"
+    },
+    {
+        "CODE": "FKP",
+        "NAME": "LIRA FALKLAND"
+    },
+    {
+        "CODE": "GBP",
+        "NAME": "LIRA STERLINA"
+    },
+    {
+        "CODE": "GEL",
+        "NAME": "LARI GEORGIA"
+    },
+    {
+        "CODE": "GHC",
+        "NAME": "CEDI GHANA"
+    },
+    {
+        "CODE": "GIP",
+        "NAME": "LIRA GIBRALTAR"
+    },
+    {
+        "CODE": "GMD",
+        "NAME": "DALASI GAMBIA"
+    },
+    {
+        "CODE": "GTQ",
+        "NAME": "QUETZAL GUATEMALA"
+    },
+    {
+        "CODE": "GYD",
+        "NAME": "DOLAR GUYANA"
+    },
+    {
+        "CODE": "HKD",
+        "NAME": "DOLAR HONG KONG"
+    },
+    {
+        "CODE": "HNL",
+        "NAME": "LEMPIRA HONDURAS"
+    },
+    {
+        "CODE": "HRK",
+        "NAME": "KUNA CROATĂ"
+    },
+    {
+        "CODE": "HTG",
+        "NAME": "GOURDE HAITI"
+    },
+    {
+        "CODE": "HUF",
+        "NAME": "FORINT MAGHIAR"
+    },
+    {
+        "CODE": "IDR",
+        "NAME": "RUPIA INDONEZIANĂ"
+    },
+    {
+        "CODE": "ILS",
+        "NAME": "SECHEL ISRAELIAN"
+    },
+    {
+        "CODE": "INR",
+        "NAME": "RUPIA INDIANĂ"
+    },
+    {
+        "CODE": "IQD",
+        "NAME": "DINAR IRAK"
+    },
+    {
+        "CODE": "IRR",
+        "NAME": "RIAL IRANIAN"
+    },
+    {
+        "CODE": "ISK",
+        "NAME": "COROANA ISLANDEZĂ"
+    },
+    {
+        "CODE": "JMD",
+        "NAME": "DOLAR JAMAICA"
+    },
+    {
+        "CODE": "JOD",
+        "NAME": "DINAR IORDANIA"
+    },
+    {
+        "CODE": "JPY",
+        "NAME": "YEN JAPONEZ"
+    },
+    {
+        "CODE": "KES",
+        "NAME": "SILING KENYA"
+    },
+    {
+        "CODE": "KGS",
+        "NAME": "SOM KIRGHIZSTAN"
+    },
+    {
+        "CODE": "KHR",
+        "NAME": "RIEL CAMBODGIA"
+    },
+    {
+        "CODE": "KMF",
+        "NAME": "FRANC COMORIAN"
+    },
+    {
+        "CODE": "KPW",
+        "NAME": "WON NORD COREEAN"
+    },
+    {
+        "CODE": "KRW",
+        "NAME": "WON COREEAN (COREEA DE SUD)"
+    },
+    {
+        "CODE": "KWD",
+        "NAME": "DINAR KUWAIT"
+    },
+    {
+        "CODE": "KYD",
+        "NAME": "DOLAR INSULELE CAYMAN"
+    },
+    {
+        "CODE": "KZT",
+        "NAME": "TENGE KAZAKHSTAN"
+    },
+    {
+        "CODE": "LAK",
+        "NAME": "KIP LAOS"
+    },
+    {
+        "CODE": "LBP",
+        "NAME": "LIRA LIBAN"
+    },
+    {
+        "CODE": "LKR",
+        "NAME": "RUPIA SRI LANKA"
+    },
+    {
+        "CODE": "LRD",
+        "NAME": "DOLAR LIBERIA"
+    },
+    {
+        "CODE": "LSL",
+        "NAME": "MALOTI LESOTHO"
+    },
+    {
+        "CODE": "LTL",
+        "NAME": "LITU LITUANIAN"
+    },
+    {
+        "CODE": "LVL",
+        "NAME": "LATS LETONIA"
+    },
+    {
+        "CODE": "LYD",
+        "NAME": "DINAR LIBIA"
+    },
+    {
+        "CODE": "MAD",
+        "NAME": "DIRHAM MAROCAN"
+    },
+    {
+        "CODE": "MDL",
+        "NAME": "LEU MOLDOVENESC"
+    },
+    {
+        "CODE": "MGF",
+        "NAME": "FRANC MADAGASCAR"
+    },
+    {
+        "CODE": "MKD",
+        "NAME": "DENAR MACEDONIA"
+    },
+    {
+        "CODE": "MMK",
+        "NAME": "KYAT MYANMAR"
+    },
+    {
+        "CODE": "MNT",
+        "NAME": "TUGRIK MONGOLIA"
+    },
+    {
+        "CODE": "MOP",
+        "NAME": "PATACA MACAO"
+    },
+    {
+        "CODE": "MRO",
+        "NAME": "OUGUIYA MAURITANIA"
+    },
+    {
+        "CODE": "MUR",
+        "NAME": "RUPIA MAURITIUS"
+    },
+    {
+        "CODE": "MVR",
+        "NAME": "RUFIYAA MALDIVE"
+    },
+    {
+        "CODE": "MWK",
+        "NAME": "KWACHA MALAWI"
+    },
+    {
+        "CODE": "MXN",
+        "NAME": "PESO MEXICAN"
+    },
+    {
+        "CODE": "MYR",
+        "NAME": "RINGGIT MALAIEZIA"
+    },
+    {
+        "CODE": "MZN",
+        "NAME": "METICAL MOZAMBIC"
+    },
+    {
+        "CODE": "NAD",
+        "NAME": "DOLAR NAMIBIAN"
+    },
+    {
+        "CODE": "NGN",
+        "NAME": "NAIRA NIGERIA"
+    },
+    {
+        "CODE": "NIO",
+        "NAME": "CORDOBA NICARAGUA"
+    },
+    {
+        "CODE": "NOK",
+        "NAME": "COROANA NORVEGIANA"
+    },
+    {
+        "CODE": "NPR",
+        "NAME": "RUPIA NEPALEZĂ"
+    },
+    {
+        "CODE": "NZD",
+        "NAME": "DOLAR NEOZEELANDEZ"
+    },
+    {
+        "CODE": "OMR",
+        "NAME": "RIYAL OMAN"
+    },
+    {
+        "CODE": "PAB",
+        "NAME": "BALBOA PANAMEZA"
+    },
+    {
+        "CODE": "PEN",
+        "NAME": "SOL NOU PERU"
+    },
+    {
+        "CODE": "PGK",
+        "NAME": "KINA PAPUA SI NOUA GUINEE"
+    },
+    {
+        "CODE": "PHP",
+        "NAME": "PESO FILIPINE"
+    },
+    {
+        "CODE": "PKR",
+        "NAME": "RUPIA PAKISTAN"
+    },
+    {
+        "CODE": "PLN",
+        "NAME": "ZLOT POLONEZ"
+    },
+    {
+        "CODE": "PYG",
+        "NAME": "GUARANI PARAGUAY"
+    },
+    {
+        "CODE": "QAR",
+        "NAME": "RIYAL QATAR"
+    },
+    {
+        "CODE": "RON",
+        "NAME": "LEU NOU"
+    },
+    {
+        "CODE": "RSD",
+        "NAME": "DINAR REPUBLICA SERBIA"
+    },
+    {
+        "CODE": "RUB",
+        "NAME": "RUBLA RUSEASCA"
+    },
+    {
+        "CODE": "RWF",
+        "NAME": "FRANC RWANDA"
+    },
+    {
+        "CODE": "SAC",
+        "NAME": "RAND COMERCIAL SUD AFRICAN"
+    },
+    {
+        "CODE": "SAR",
+        "NAME": "RIYAL ARABIA SAUDITĂ"
+    },
+    {
+        "CODE": "SBD",
+        "NAME": "DOLAR INSULELE SOLOMON"
+    },
+    {
+        "CODE": "SCR",
+        "NAME": "RUPIE SEYCHELLES"
+    },
+    {
+        "CODE": "SDP",
+        "NAME": "LIRA SUDANEZĂ"
+    },
+    {
+        "CODE": "SEK",
+        "NAME": "COROANA SUEDEZA"
+    },
+    {
+        "CODE": "SGD",
+        "NAME": "DOLAR SINGAPORE"
+    },
+    {
+        "CODE": "SHP",
+        "NAME": "LIRA ST HELENA"
+    },
+    {
+        "CODE": "SKK",
+        "NAME": "COROANA SLOVACA"
+    },
+    {
+        "CODE": "SLL",
+        "NAME": "LEU SIERRA LEONE"
+    },
+    {
+        "CODE": "SOS",
+        "NAME": "SILING SOMALIA"
+    },
+    {
+        "CODE": "SRG",
+        "NAME": "GULDEN SURINAM"
+    },
+    {
+        "CODE": "STD",
+        "NAME": "DOBRA SAO TOME ŞI PR NCIPE"
+    },
+    {
+        "CODE": "SVC",
+        "NAME": "COL N EL SALVADOR"
+    },
+    {
+        "CODE": "SYP",
+        "NAME": "LIRA SIRIANĂ"
+    },
+    {
+        "CODE": "SZL",
+        "NAME": "LILANGENI SWAZILAND"
+    },
+    {
+        "CODE": "THB",
+        "NAME": "BAHT TAILANDEZ"
+    },
+    {
+        "CODE": "TJR",
+        "NAME": "RUBLA TADJIKISTAN"
+    },
+    {
+        "CODE": "TMM",
+        "NAME": "MANAT TURKMENISTAN"
+    },
+    {
+        "CODE": "TND",
+        "NAME": "DINAR TUNISIAN"
+    },
+    {
+        "CODE": "TOP",
+        "NAME": "TONGAN PARANGA"
+    },
+    {
+        "CODE": "TRY",
+        "NAME": "LIRA TURCEASCA NOUA"
+    },
+    {
+        "CODE": "TTD",
+        "NAME": "DOLAR TRINIDAD & TOBAGO"
+    },
+    {
+        "CODE": "TWD",
+        "NAME": "DOLAR NOU TAIWAN"
+    },
+    {
+        "CODE": "TZS",
+        "NAME": "SILING TANZANIAN"
+    },
+    {
+        "CODE": "UAH",
+        "NAME": "HRYVNA UCRAINIANA"
+    },
+    {
+        "CODE": "UGX",
+        "NAME": "SILING UGANDA"
+    },
+    {
+        "CODE": "USD",
+        "NAME": "DOLAR S.U.A."
+    },
+    {
+        "CODE": "UYU",
+        "NAME": "PESO NOU URUGUAY"
+    },
+    {
+        "CODE": "UZS",
+        "NAME": "SUM UZBEKISTAN"
+    },
+    {
+        "CODE": "VEB",
+        "NAME": "BOLIVAR VENEZUELA"
+    },
+    {
+        "CODE": "VND",
+        "NAME": "DONG VIETNAM"
+    },
+    {
+        "CODE": "VUV",
+        "NAME": "VATU VANUATU"
+    },
+    {
+        "CODE": "WST",
+        "NAME": "TALA SAMOA DE VEST"
+    },
+    {
+        "CODE": "XAF",
+        "NAME": "FRANC COMUNITATEA FINANCIARĂ"
+    },
+    {
+        "CODE": "XAU",
+        "NAME": "GRAM AUR"
+    },
+    {
+        "CODE": "XCD",
+        "NAME": "DOLAR CARAIBELE DE EST"
+    },
+    {
+        "CODE": "XDR",
+        "NAME": "DST"
+    },
+    {
+        "CODE": "XPF",
+        "NAME": "FRANC CFP"
+    },
+    {
+        "CODE": "YER",
+        "NAME": "RIYAL YEMEN"
+    },
+    {
+        "CODE": "ZAR",
+        "NAME": "RAND SUD-AFRICAN"
+    },
+    {
+        "CODE": "ZMK",
+        "NAME": "KWACHA ZAMBIA"
+    },
+    {
+        "CODE": "ZRN",
+        "NAME": "ZAIR NOU"
+    },
+    {
+        "CODE": "ZWD",
+        "NAME": "DOLAR ZIMBABWE"
+    }
+]

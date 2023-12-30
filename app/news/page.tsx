@@ -241,7 +241,7 @@ const itemTemplate = (product:any, layout:any) => {
                                  
                                   <Tag  value="Last added:"></Tag>
                                   
-                                  <InputText disabled value={'Days: '+days} onChange={(e:any) => setDays(e.target.value)} className="w-full" />
+                                  <InputText disabled value={'D: '+days} onChange={(e:any) => setDays(e.target.value)} className="w-full" />
                                   <Slider value={days} max={60} onChange={(e:any) => setDays(e.value)} className="w-full" />
                               </div>
 

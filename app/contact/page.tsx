@@ -18,6 +18,7 @@ import '../../css/style.css'
 import axios from 'axios';
 import { Toast } from 'primereact/toast';
 import Footer from '@/components/footer';
+import { Editor } from "primereact/editor";
 
 export default function Contact() {
 
@@ -69,10 +70,11 @@ export default function Contact() {
         <Card className="max-w-full min-h-screen ">
         <Toast ref={toast} />
        
-          <div className="grid nested-grid">
+          <div className="grid">
 
-          <div className="col-2"></div>
-            <div className="col-4 p-3">
+            <div className="xl:col-2 xs:col-1"></div>
+
+            <div className="xl:col-4 xs:col-4 p-3">
               <div className="grid">
                   <Card title="Get in touch" style={{height: "600px"}} className=' w-full'>
                     <div className="flex align-items-center border-bottom-1 surface-border surface-overlay w-full">
@@ -87,97 +89,64 @@ export default function Contact() {
                         <p className="w-4 text-xl text-left font-bold text-blue-500 mr-3">Address</p>
                         <p className="text-xl w-10">Brasov, Str. Zizinului, Nr. 23</p>
                     </div>
-                    <div className='pt-6' >
+                    <div className='pt-4' >
                         <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2789.016130395534!2d25.61965800082508!3d45.65049782017623!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sro!2sro!4v1702577334133!5m2!1sro!2sro" 
-                        style={{border:0}}   
-                        className='min-w-full h-26rem'
+                        style={{border:0, width: '100%'}}  
+                        className=' h-26rem'
                         loading="lazy">
                         </iframe>
                     </div>
                   </Card>
               </div>
             </div>
-            <div className='w-1rem'></div>
-            <div className="col-4 p-2">
-              <Card title="Contact Me"  style={{height: "600px"}}>
-                <div className="col-12">
-                  <div className="text-center border-round-sm font-bold">
-                    <div className="field col-12 md:col-12 p-2 min-w-full">
-                      <span className="p-float-label p-input-icon-left min-w-full">
-                        <i className="pi pi-user" />
-                        <InputText className='min-w-full'
-                          id="name" value={name} onChange={(e) => setName(e.target.value)} />
-                        <label htmlFor="name">Name</label>
-                      </span>
+            {/* <div className='xl: w-1rem'></div> */}
+            <div className="xl:col-4 xs:col-4 p-3">
+              <div className="grid">
+                  <Card title="Get in touch" style={{height: "600px"}} className=' w-full'>
+                    <div className="flex align-items-center  surface-border surface-overlay w-full">
+                        <span className="p-float-label p-input-icon-left w-full">
+                            <i className="pi pi-user" />
+                            <InputText className='w-full'
+                              id="name" value={name} onChange={(e:any) => setName(e.target.value)} />
+                            <label htmlFor="name" >Name</label>
+                          </span>
                     </div>
-                  </div>
-                </div>
-                <div className="col-12">
-                  <div className="text-center border-round-sm font-bold">
-                    <div className="field col-12 md:col-12 p-2 min-w-full">
-                      <span className="p-float-label p-input-icon-left min-w-full">
+                    <div className="flex align-items-center  surface-border surface-overlay w-full pt-4">
+                    <span className="p-float-label p-input-icon-left min-w-full">
                       <i className="pi pi-phone" />
                         <InputText className='min-w-full'
                           id="phone" value={phone} onChange={(e:any) => setPhone(e.target.value)} />
                         <label htmlFor="phone">Phone</label>
                       </span>
                     </div>
-                  </div>
-                </div>
-                <div className="col-12">
-                  <div className="text-center border-round-sm font-bold">
-                    <div className="field col-12 md:col-12 p-2 min-w-full">
-                      <span className="p-float-label p-input-icon-left min-w-full">
+                    <div className="flex align-items-center surface-border surface-overlay w-full pt-4">
+                    <span className="p-float-label p-input-icon-left min-w-full">
                       <i className="pi pi-envelope" />
                         <InputText className='min-w-full'
                           id="email" value={email} onChange={(e:any) => setEmail(e.target.value)} />
                         <label htmlFor="email">Email</label>
                       </span>
                     </div>
-                  </div>
-                </div>
-                <div className="col-12">
-                  <div className="text-center border-round-sm  font-bold">
-                    <div className="field col-12 md:col-12 pt-2">
-                      <span className="p-float-label">
-                        <InputTextarea className='min-w-full'
-                          autoResize
-                          id="message" value={message} onChange={(e:any) => setMessage(e.target.value)}
-                          pt={{
-                            root: {
-                              rows: 15,
-
-                            }
-                          }}
-                        />
+                    <div className="flex align-items-center  surface-border surface-overlay w-full pt-4" style={{width: '100%'}}>
+                       <span className="p-float-label">
+                       <Editor value={message} onTextChange={(e:any) => setMessage(e.htmlValue)} style={{ height: '260px' }} />
                         <label htmlFor="message">Message</label>
                       </span>
                     </div>
-                  </div>
-                </div>
-                <div className='ml-3'>
-                <Button label="Submit" icon="pi pi-check" onClick={sendData}/>         
-                </div>
-              
-              </Card>
-            </div>
-            <div className="col-2 p-3"></div>
-          
-            <div className="col-12 p-3 border-blue-500">
+                    <div className='pt-3'>
+                      <Button label="Submit" icon="pi pi-check" onClick={sendData}/>         
+                    </div>
 
+                  </Card>
+              </div>
             </div>
+            
+            <div className="xl:col-2 xs:col-3 p-3">
+
+            </div> 
 
           </div>
           
-
-          {/* <div className="flex flex-wrap align-items-center justify-content-center">
-              <div className="py-5 bg-primary-100 w-50rem border-round">
-                  <div className="border-round bg-primary font-bold p-3 flex align-items-center justify-content-center">
-                     <Tag severity="danger" value="Danger" className='py-5'></Tag>
-                  </div>
-              </div>
-          </div> */}
-
         </Card>
       
   </div>

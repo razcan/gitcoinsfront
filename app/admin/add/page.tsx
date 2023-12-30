@@ -10,23 +10,28 @@ import { FileUpload } from 'primereact/fileupload';
 import { Dropdown } from 'primereact/dropdown';
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import countries_all from "../../../css/country.json";
+import all_currencies from "../../../css/currency_simple.json" ;
 import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { useRouter } from 'next/navigation';
 import { Card } from 'primereact/card';
-import  '../../../css/style.css' 
+import  '../../../css/style.css' ;
+
 import { Calendar } from 'primereact/calendar';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { ScrollPanel } from 'primereact/scrollpanel';
 
 export default function Admin() {
-  const toast = useRef(null);
+  // const toast = useRef(null);
+  const toast = useRef<any>(null);
+
   const [arr, setArr] = useState<any[]>([])
   const router = useRouter();
   const axios = require('axios');
   const [selectedCountry, setSelectedCountry] = useState<any>();
+  const [selectedCurrency, setSelectedCurrency] = useState<any>();
   const [Code, setCode] = useState<any>();
   const countries = countries_all;
   const [Price, setPrice] = useState<any>();
@@ -47,7 +52,9 @@ export default function Admin() {
   const [endDate, setEndDate] = useState<any>();
 
   const showSuccess = () => {
-    // toast.current.show({severity:'success', summary: 'Result', detail:'The coin was saved succesfully', life: 3000});
+    if (toast.current != null) {
+   toast.current.show({severity:'success', summary: 'Result', detail:'The coin was saved succesfully', life: 3000});
+    }
 }
   
 
@@ -66,6 +73,22 @@ export default function Admin() {
 
     return <span>{props.placeholder}</span>;
   };
+
+  const selectedCurrencyTemplate = (option: any, props: any) => {
+    if (option) {
+      return (
+        <div className="flex align-items-center">
+          
+            <div style={{ paddingLeft: "40px" }}>
+            {option.NAME}
+            </div>
+        </div>
+      );
+    }
+    return <span>{props.placeholder}</span>;
+  };
+
+  
 
   const countryOptionTemplate = (option: { code: any; name: React.ReactNode; }) => {
     return (
@@ -95,8 +118,8 @@ export default function Admin() {
   };
 
   const showError = () => {
-    // toast.current.show({severity:'error', summary: 'Error', 
-    // detail:'You must upload two pictures', life: 3000});
+    toast.current.show({severity:'error', summary: 'Error', 
+    detail:'You must upload two pictures', life: 3000});
 }
 
 
@@ -140,7 +163,7 @@ formdata2.append('EndDate', endDate?.getFullYear() );
 // }
 
 const showSuccess = () => {
-  // toast.current.show({severity:'success', summary: 'Success', detail:'Message Content', life: 6000});
+   toast.current.show({severity:'success', summary: 'Success', detail:'Message Content', life: 6000});
 }
 
 var requestOptions: any = {
@@ -199,8 +222,9 @@ const coin_composition = [
         <div className="col-3 ">
             <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
                 <span className="p-float-label">
-                {/* <Calendar inputId="start_date" value={startDate} showIcon showWeek onChange={(e) => setStartDate(e.value)} dateFormat="dd/mm/yy"/> */}
-                <Calendar value={startDate} onChange={(e: any) => setStartDate(e.value)} view="year" dateFormat="yy" />
+                <InputText 
+                keyfilter="int"  
+                 value={startDate} onChange={(e: any) => setStartDate(e.value)}/>
                 <label htmlFor="start_date">Start Date Year</label>
                 
                 </span>
@@ -208,10 +232,22 @@ const coin_composition = [
             <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
                <span className="p-float-label">
                 {/* <Calendar inputId="end_date" value={endDate} showIcon showWeek onChange={(e) => setEndDate(e.value)} dateFormat="dd/mm/yy"/> */}
-                <Calendar value={endDate} onChange={(e: any) => setEndDate(e.value)} view="year" dateFormat="yy" />
+                {/* <Calendar value={endDate} onChange={(e: any) => setEndDate(e.value)} view="year" dateFormat="yy" /> */}
+                <InputText 
+                keyfilter="int"  
+                 value={endDate} onChange={(e: any) => setEndDate(e.value)}/>
                 <label htmlFor="end_date">End Date Year</label>
                 </span>
             </div>
+
+            <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
+              <span className="p-float-label">
+                <InputNumber useGrouping={false} placeholder="Enter year" value={Year} onValueChange={(e:any) => setYear(e.value)}/>
+                <label htmlFor="year">Year</label>
+              </span>
+              </div>
+
+
             <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
             <span className="p-float-label">
               <InputText id="catalog"  placeholder="Enter catalog code" value={Catalog} onChange={(e:any) => setCatalog(e.target.value)} />
@@ -226,19 +262,8 @@ const coin_composition = [
               </span>
               </div>
 
-              <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
-              <span className="p-float-label">
-              <InputText id="name"  placeholder="Enter name" value={Name} onChange={(e:any) => setName(e.target.value)}/>
-              <label htmlFor="name">Name</label>
-              </span>
-              </div>
 
-              <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
-              <span className="p-float-label">
-                <InputNumber useGrouping={false} placeholder="Enter year" value={Year} onValueChange={(e:any) => setYear(e.value)}/>
-                <label htmlFor="year">Year</label>
-              </span>
-              </div>
+
 
               <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
               <span className="p-float-label">  
@@ -264,12 +289,27 @@ const coin_composition = [
         {/* <div className="col-1"></div> */}
 
         <div className="col-4 xl:col-3">
-            <div className="flex-auto gap-3 xs:gap-1 p-3">
+
+
+            <div className="flex-auto p-3">
+            <div className="flex flex-column gap-3">
+            <Dropdown value={Name} onChange={(e:any) => setName(e.value)} 
+              options={all_currencies} optionLabel="NAME" 
+              filter valueTemplate={selectedCurrencyTemplate}
+                placeholder="Select a Currency" className="w-full" />
+              </div>
+          </div>
+
+          <div className="flex-auto p-3 ">
                 <div className="flex flex-column gap-3">
-                  <Dropdown value={Composition} options={coin_composition} optionLabel="name" onChange={(e:any) => setComposition(e.value)} 
-                    placeholder="Select composition"/>
+                  <Dropdown value={Composition} options={coin_composition} 
+                  optionLabel="name" onChange={(e:any) => setComposition(e.value)} 
+                  className="w-full"
+                  placeholder="Select composition"/>
                 </div>
             </div>
+           
+
             <div className="flex-auto p-3">
             <div className="flex flex-column gap-3">
               <Dropdown value= {selectedCountry} 
