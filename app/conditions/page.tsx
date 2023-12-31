@@ -73,20 +73,40 @@ export default function Contact() {
 <Menu activatedIndex={4} />
 
   <Card className='container'>
-
-  <ul>
+    <div className="grid">
+      <div className="col-2"></div>
+  <div className="col-6 flex flex-wrap pt-6">
+  
+  <div className="text-4xl font-bold">Termeni si conditii</div>
+<br></br>
+<br></br>
+<br></br>
+  <ul className="text-xl">
     <li><strong>ACHIZITIONEZ/ SCHIMB</strong> monede, in functie de stocurile de moment.</li>
+    <br></br>
     <li>&nbsp;<strong>NU LIVREZ</strong> colete sub valoarea de 100 RON.</li>
-    <li>&nbsp;<strong>FOTOGRAFIILE</strong> monedelor sunt cu titlu de exemplu (cu exceptia celor peste 20 de lei/buc, unde veti regasi fotografia monedei comandate).</li>
-    <li>Dupa plasarea comenzii/ realizarea platii, puteti solicita fotografii (avers-revers) cu lotul de monede achizitionat.</li>
+    <br></br>
+    <li>&nbsp;<strong>FOTOGRAFIILE</strong> monedelor sunt cu titlu de exemplu (cu exceptia celor peste 20 de lei/buc, unde veti regasi fotografia monedei comandate).
+    <div className="text-cyan-500">- Dupa plasarea comenzii/ realizarea platii, puteti solicita fotografii (avers-revers) cu lotul de monede achizitionat.</div> 
+    </li>
+    <br></br>
+    
     <li>&nbsp;<strong>PRETUL</strong> monedelor nu este negociabil.</li>
-    <li>&nbsp;Se aplica un discount de 5% pentru comenzile cu valoare mai mare de 200 RON si de 10% pentru comenzile cu valoare mai mare de 500 RON.</li>
-</ul>
-<p><strong>LIVRAREA</strong>:&nbsp;</p>
-<p><strong>TRANSPORTUL</strong> se va realiza prin FAN CURIER sau POSTA ROMANA si va fi suportat de catre cumparator.</p>
-<p><strong>PLATA</strong> se va realiza ramburs sau in avans, in contul RONCRT000000.. (coletul urmand a fi expediat ulterior confirmarii platii).</p>
+    &nbsp;Se aplica un discount de 5% pentru comenzile cu valoare mai mare de 200 RON si de 10% pentru comenzile cu valoare mai mare de 500 RON.
+<br></br>
+<li><p><strong>LIVRAREA</strong>:&nbsp;</p></li>
+
+<li><p><strong>TRANSPORTUL</strong> se va realiza prin FAN CURIER sau POSTA ROMANA si va fi suportat de catre cumparator.</p></li>
+<li><p><strong>PLATA</strong> se va realiza ramburs sau in avans, in contul RONCRT000000.. (coletul urmand a fi expediat ulterior confirmarii platii).</p></li>
 <p>- Se poate face PREDARE PERSONALA doar in mun. Brasov.</p>
 <p>- Coletele vor fi expediate in zilele de luni si marti ale fiecarei saptamani.</p>
+
+</ul>
+
+
+</div>
+
+</div>
   </Card>
   
   <Footer />

@@ -171,11 +171,13 @@ export default function Filters() {
 
 <PrimeReactProvider>
 
-<div className="grid pr-6">
+<div>
     
-<div className='sm:col-3 xl:col-8 md:col-6'>
+{/* <div className='sm:col-3 xl:col-8 md:col-6'> */}
+<div className='grid'>
+  <div className="xs:col-4 sm:col-6 xl:col-8 md:col-8">
 <InputText placeholder="Country" 
-className='xl: w-6rem sm: w-2rem'
+// className='xl: col-1 sm: col-2 xs: col-3'
       //  className="sm:p-inputtext-sm md:p-inputtext-sm xl:p-inputtext-lg"
          value={inputCountry}
           onChange={(e:any) => handleInputChangeCountry(e.target.value)} /> 
@@ -184,7 +186,7 @@ className='xl: w-6rem sm: w-2rem'
 <DataView value={filteredArray} itemTemplate={itemTemplate}  />
 </ScrollPanel>
 </div>
-
+</div>
 </div>
 
 

@@ -14,9 +14,7 @@ import { Card } from 'primereact/card';
 import { Tag } from 'primereact/tag';
 import { ScrollPanel } from 'primereact/scrollpanel';
 // import WorldMap from 'react-world-map';
-
 const WorldMap = require('react-world-map');
-
 // const { yourModule } = require('your-module');
 
 //https://github.com/heatherbooker/react-world-map/blob/main/docs/index.jsx
@@ -63,39 +61,46 @@ export default function MapWorld() {
 
     return (
 
-//  <Card className='container'>
-    // <div className='content'> 
+    <Card className='container'>
+         <div className='content'> 
 
-<div className="grid">
+        <div className="grid">
 
-<div className="col-2 sm:col-2 lg:col-3 xl:col-3">
-    
-            <div className="h-full flex">
-            
-                  
-                    <SelectedContextContinent.Provider value={selected1}>                                                    
-                            <ScrollPanel 
+            {/* <div className="col-2 sm:col-2 lg:col-3 xl:col-3"> */}
+            <div className="col-fixed" style={{ width: "180px" }}>
+
+                <div className="h-full flex">
+
+
+                    <SelectedContextContinent.Provider value={selected1}>
+                        <ScrollPanel
                             // style={{ height: '600px' }}
                             className='min-h-screen'
-                            >
-                                <Filters />
-                    </ScrollPanel>
-                        </SelectedContextContinent.Provider>
+                        >
+                            <Filters />
+                        </ScrollPanel>
+                    </SelectedContextContinent.Provider>
                 </div>
 
-</div>
-    <div className="col-1 sm:col-4 lg:col-4 xl:col-8">      
-    {selected1 ? <Tag  className='sm:text-xs xl:text-xl' severity="info" value={selected1} rounded></Tag> : null}    
-            <div className="sm:col-2 lg:col-3 xl:col-4">                  
-                        <WorldMap
-                            multiple={true}
-                            selected={ContinentSelectattrans} onSelect={setContinentSelectattrans} />
-                    
             </div>
-        
-    </div>
+            {/* <div className="col-1 sm:col-4 lg:col-4 xl:col-8">    */}
+            <div className="col-1 sm:col-4 lg:col-4 xl:col-8">
+                {selected1 ? <Tag className='sm:text-xs xl:text-xl' severity="info" value={selected1} rounded></Tag> : null}
+                <div className="body">
+                    <WorldMap
+                        multiple={true}
+                        selected={ContinentSelectattrans} onSelect={setContinentSelectattrans} />
+
+                </div>
+
+            </div>
 
         </div>
 
+</div>
+</Card>
+
+
     );
+
 }
