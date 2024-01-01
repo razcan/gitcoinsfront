@@ -62,7 +62,7 @@ export default function CoinEdit({ params: { edit } }: PageProps) {
   const [Stock, setStock] =  useState<any>();
   const [Photo1, setPhoto1] =  useState<any>();
   const [Photo2, setPhoto2] =  useState<any>();
-  const [picturefiles, setPicturefiles] =  useState<any>();
+  const [picturefiles, setPicturefiles] =  useState<any>([]);
   const [Id, setId] =  useState<any>();
 
   const showError = (message:any) => {

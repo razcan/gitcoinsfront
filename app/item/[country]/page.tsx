@@ -148,7 +148,7 @@ export default function Item(params: any) {
                         <img className="w-6 shadow-1 border-round"
                             src={`http://localhost:3000/coins/download/${product.Photo1}`}
                             alt={product.Photo1} />
-                        <div className="text-xl">{product.Value} / {product.Year}</div>
+                        <div className="text-xl">{product.Value} {product.Name}/{`An:${product.Year} Perioada:${product.StartDate}-${product.EndDate}`}</div>
 
                     </div>
                     <div className="flex align-items-center justify-content-between">

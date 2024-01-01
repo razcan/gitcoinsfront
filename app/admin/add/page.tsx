@@ -154,8 +154,8 @@ formdata2.append("files", picturefiles[0]);
 formdata2.append("files", picturefiles[1]);
 formdata2.append('Photo1', "Photo1");
 formdata2.append('Photo2', "Photo2" );
-formdata2.append('StartDate', startDate?.getFullYear());
-formdata2.append('EndDate', endDate?.getFullYear() );
+formdata2.append('StartDate', startDate);
+formdata2.append('EndDate', endDate);
 
 // Display the key/value pairs
 // for (var pair of formdata2.entries()) {
