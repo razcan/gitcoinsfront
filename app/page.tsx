@@ -21,15 +21,17 @@ export default function Home() {
 // style={{height: "90%"}}
 >
 <Menu activatedIndex={0} />
-<Card className='container'>
+<Card className='container' >
+
     {/* <Exchange />  */}
    <div className="content grid pt-6">
-   <div className="col-12 lg:col-2  ">
+   <div className="lg:col-1  xs:col-0">
      {/* <Filters /> */}
-     </div>
-       <div className="col-12 lg:col-12">
+   </div>
+       <div className="lg:col-10 xs: col-12">
          <MapWorld />
-       </div>      
+       </div>   
+       <div className="lg:col-2  xs:col-1"></div>   
    </div>
  </Card>
 <Footer />

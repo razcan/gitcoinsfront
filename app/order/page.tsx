@@ -28,8 +28,8 @@ export default function Order() {
   const searchParams = useSearchParams()
 
 
-  const [retrievedObject, setRetrievedObject] = useState<any>();
-  const [itemToBeRemoved, setItemToBeRemoved] = useState<any>();
+  const [retrievedObject, setRetrievedObject] = useState<any>([]);
+  const [itemToBeRemoved, setItemToBeRemoved] = useState<any>([]);
   const [menuIndex, setMenuIndex] = useState<any>(0);
 
   const [sumQttyItem, setSumQttyItem] = useState<any>(0);
@@ -90,8 +90,8 @@ export default function Order() {
 
   }
 
-  var elementToRemove = itemToBeRemoved;
-  var indexToRemove = retrievedObject.indexOf(elementToRemove);
+  const elementToRemove = itemToBeRemoved;
+  const indexToRemove = retrievedObject.indexOf(elementToRemove);
   if (indexToRemove !== -1) {
     retrievedObject.splice(indexToRemove, 1);
     // Convert the updated array to a string and store it back in localStorage

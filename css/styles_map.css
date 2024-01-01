@@ -12,7 +12,9 @@
 }
 
 .map-img {
-  height: 800 !important;
+  /* height: 800 !important; */
+  width: 100vh !important;
+  height: 60vh !important;
 }
 
 .tooltip {

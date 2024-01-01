@@ -182,7 +182,10 @@ export default function Filters() {
          value={inputCountry}
           onChange={(e:any) => handleInputChangeCountry(e.target.value)} /> 
 
-<ScrollPanel  key="sc" style={{ height: "auto"}}>
+<ScrollPanel  key="sc" 
+// style={{ height: "auto"}}
+style={{ width: '100%', height: "70vh" }} 
+>
 <DataView value={filteredArray} itemTemplate={itemTemplate}  />
 </ScrollPanel>
 </div>

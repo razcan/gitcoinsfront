@@ -15,7 +15,7 @@ import { usePathname, useSearchParams } from 'next/navigation'
 import '../../../css/style.css'
 
 export default function ClientOrder() {
-  const [order, setOrder] = useState<any>();
+  const [order, setOrder] = useState<any>([]);
   
   const [date, setOrderDate] = useState('1900-01-01');
   const [dateform, setDateform] = useState('1900-01-01');
