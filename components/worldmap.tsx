@@ -73,7 +73,7 @@ export default function MapWorld() {
 
 
             {/* <div className="col-2 sm:col-2 lg:col-3 xl:col-3"> */}
-            <div className="col-fixed" style={{ width: '20vh' }}>
+            <div className="col-fixed" style={{ width: '10vh' }}>
 
                 <div className="h-full flex">
 
@@ -89,7 +89,7 @@ export default function MapWorld() {
                 </div>
 
             </div>
-            <div className="col-fixed" style={{ width: '20vh' }}></div>
+            <div className="col-fixed" style={{ width: '10vh' }}></div>
             {/* <div className="col-1 sm:col-4 lg:col-4 xl:col-8">    */}
             <div style={{ width: '70vh', height: '70vh', }} className="xl: pl-8 sm: pl-6 xs: pl-0 pt-0">
                 {selected1 ? <Tag className='sm:text-xs xl:text-xl' severity="info" value={selected1} rounded></Tag> : null}

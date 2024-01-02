@@ -21,17 +21,57 @@ import { Galleria } from 'primereact/galleria';
 
 export default function Item(params: any) {
     const router = useRouter();
-    const [products, setProducts] = useState<any>();
+    const [products, setProducts] = useState<any>([]);
     const [layout, setLayout] = useState<any>('grid');
     const [visible, setVisible] = useState(false);
-    const [selected_product, setSelected_product] = useState<any>([]);
-    const [ordered_qtty, setOrdered_qtty] = useState<any>();
+    const [selected_product, setSelected_product] = useState<any>([]); 
+    const [ordered_qtty, setOrdered_qtty] = useState<any>(1);
     const [menuIndex, setMenuIndex] = useState<any>(0);
+    const [images, setImages] = useState<any>([]);
+ 
+    const responsiveOptions = [
+        {
+            breakpoint: '991px',
+            numVisible: 4
+        },
+        {
+            breakpoint: '767px',
+            numVisible: 3
+        },
+        {
+            breakpoint: '575px',
+            numVisible: 1
+        }
+    ];
+  
+    const itemTemplate = (item:any) => {
+        return <img src={`http://localhost:3000/coins/download/${item.Photos}`} alt={item.Photos}
+        style={{ width: '100%' }} />
+        
+    }
+    
+    const thumbnailTemplate = (item:any) => {
+        return <img src={`http://localhost:3000/coins/download/${item.Photos}`} alt={item.Photos}
+        style={{ width: '100%' }} />
+      }
 
 
     const setProductVisible = (product: any, bol: boolean) => {
         setSelected_product(product);
         setVisible(true);
+
+        type imagesType= {
+            Photos: string;
+        }
+        
+        let arrayOfImages: imagesType[] = [];
+
+        arrayOfImages.push({Photos: product.Photo1})
+        arrayOfImages.push({Photos: product.Photo2})
+
+        setImages(arrayOfImages);
+        console.log('ima',images)
+
 
     }
 
@@ -160,7 +200,7 @@ export default function Item(params: any) {
         );
     };
 
-    const itemTemplate = (product:any, layout: any) => {
+    const itemTemplate2 = (product:any, layout: any) => {
         if (!product) {
             return;
         }
@@ -185,15 +225,23 @@ export default function Item(params: any) {
         </div>
         <div className="container">
             <div className="content pt-6">
-
-                <div className="card">
-             
-
-                    <Dialog visible={visible} modal={false} style={{ width: '25vw' }}
+                <div className="card " >
+                    <Dialog visible={visible} modal={false} style={{ width: '20vw', height: '50vw' }}
                         onHide={() => resetValue()}>
-                        <p className="m-1">
-                            <img src={`http://localhost:3000/coins/download/${selected_product.Photo1}`} alt={selected_product.Photo1} style={{ width: '40%', padding: '10px' }} />
-                            <img src={`http://localhost:3000/coins/download/${selected_product.Photo2}`} alt={selected_product.Photo2} style={{ width: '40%', padding: '10px' }} />
+                        
+                        <p className="ml-6 mr-6">
+                            {/* <img src={`http://localhost:3000/coins/download/${selected_product.Photo1}`} alt={selected_product.Photo1} style={{ width: '40%', padding: '10px' }} />
+                            <img src={`http://localhost:3000/coins/download/${selected_product.Photo2}`} alt={selected_product.Photo2} style={{ width: '40%', padding: '10px' }} /> */}
+                            {products ?
+                                <div className="card pt-1">
+                                    <Galleria 
+                                    value={images} 
+                                    responsiveOptions={responsiveOptions} 
+                                    numVisible={2} 
+                                    style={{ maxWidth: '200px' }} 
+                                    item={itemTemplate} thumbnail={thumbnailTemplate} />
+                                </div> : null}
+
                             <div>
                                 <Divider />
 
@@ -233,46 +281,59 @@ export default function Item(params: any) {
                                     Price: {selected_product.Price}
                                 </div>
                                 <Divider />
-                                <br></br>
-                                <div className="text-orange-500 w-16rem h-2rem text-3xl font-bold pl-3">
-                                    Value: {selected_product.Price * ordered_qtty}
-                                    <br></br>
+                                <div className="text-orange-500 w-16rem h-2rem text-3xl font-bold pb-6">
+                                    Value:{selected_product.Price * ordered_qtty}
                                 </div>
-
-
-
                             </div>
-                            <div className="card flex flex-wrap gap-2 p-fluid">
-                                <label className="font-bold block"></label>
+
+                            <div className="card flex flex-wrap gap-1 p-fluid">
+                                <label className="font-bold "></label>
                                 <div className="flex-auto ml-auto">
-
-                                    {/* <InputNumber allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} /> */}
-                                    <i className="pi pi-cart-plus block ml-0" style={{ fontSize: '2rem' }} />
-
-                                    <InputNumber className="ml-0, pl-0" 
-                                    // allowEmpty={false}  
-                                    min={1}
-                                    max={1000} 
-                                    value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} />
-                                    {/* <InputText placeholder="Search" /> */}
+                                     <div className="flex-auto">
+                                     <i className="pi pi-cart-plus pr-2" style={{ fontSize: '1.5rem' }}></i>
+                                    <InputNumber className="pt-1" 
+                                     value={ordered_qtty} onValueChange={(e:any) => {
+                                        setOrdered_qtty(e.value)
+                                        selected_product.Value = (selected_product.Price * e.value)
+                                    }} 
+                                    showButtons 
+                                    
+                                    buttonLayout="horizontal" 
+                                    style={{ width: '12rem' }} 
+                                    decrementButtonClassName="p-button-indigo-600" 
+                                    incrementButtonClassName="p-button-indigo-600" 
+                                    
+                                    incrementButtonIcon="pi pi-plus" 
+                                    decrementButtonIcon="pi pi-minus" />
+                                  </div>
+                                    {/* <span className="p-input-icon-left p-float-label">
+                                    <InputNumber className="pt-5" 
+                                    id="qtty-input"
+                                    allowEmpty={false}  
+                                    value={ordered_qtty} onChange={
+                                        (e:any) => {
+                                            setOrdered_qtty(e.value); 
+                                            selected_product.Value = (selected_product.Price * e.value)}} />
+                                    </span> */}
 
                                 </div>
                                 <div className="flex-auto">
-                                    <label className="font-bold block mb-2 pt-4"></label>
+                                    <label className="font-bold block mb-1 pt-0"></label>
                                     <Button label="Add" onClick={addToOrder} ></Button>
                                 </div>
                                 <div className="flex-auto">
-                                    <label className="font-bold block mb-2 pt-4"></label>
+                                    <label className="font-bold block mb-1 pt-0"></label>
                                     <Button label="Check Order" onClick={viewOrder}></Button>
                                 </div>
                             </div>
                         </p>
                     </Dialog>
 
-                    <DataView value={products} itemTemplate={itemTemplate} layout={layout}
+                    <DataView value={products} itemTemplate={itemTemplate2} layout={layout}
                         // header={header()} --if we want buttons for list and grid
                         paginator rows={18} />
                 </div>
+           
             </div>
         </div>
 </PrimeReactProvider>

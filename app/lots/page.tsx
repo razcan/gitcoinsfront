@@ -29,13 +29,13 @@ export default function Order() {
   ];
 
 const itemTemplate = (item:any) => {
-    return <img src={`http://localhost:3000/coins/download/${item.Photo1}`} alt={products.Photo1}
+    return <img src={`http://localhost:3000/coins/download/${item.Photo1}`} alt={item.Photo1}
     style={{ width: '100%' }} />
     
 }
 
 const thumbnailTemplate = (item:any) => {
-    return <img src={`http://localhost:3000/coins/download/${item.Photo2}`} alt={products.Photo2}
+    return <img src={`http://localhost:3000/coins/download/${item.Photo1}`} alt={item.Photo1}
     style={{ width: '100%' }} />
   }
 
@@ -67,7 +67,7 @@ const thumbnailTemplate = (item:any) => {
             <Galleria 
             value={products} 
             responsiveOptions={responsiveOptions} 
-            numVisible={4} 
+            numVisible={2} 
             style={{ maxWidth: '340px' }} 
             item={itemTemplate} thumbnail={thumbnailTemplate} />
         </div> : null}
