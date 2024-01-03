@@ -70,9 +70,6 @@ export default function Item(params: any) {
         arrayOfImages.push({Photos: product.Photo2})
 
         setImages(arrayOfImages);
-        console.log('ima',images)
-
-
     }
 
     const resetValue = () => {
@@ -226,7 +223,7 @@ export default function Item(params: any) {
         <div className="container">
             <div className="content pt-6">
                 <div className="card " >
-                    <Dialog visible={visible} modal={false} style={{ width: '20vw', height: '50vw' }}
+                    <Dialog visible={visible} modal={false} style={{ width: '22vw', height: '50vw' }}
                         onHide={() => resetValue()}>
                         
                         <p className="ml-6 mr-6">
@@ -238,14 +235,14 @@ export default function Item(params: any) {
                                     value={images} 
                                     responsiveOptions={responsiveOptions} 
                                     numVisible={2} 
-                                    style={{ maxWidth: '200px' }} 
+                                    style={{ maxWidth: '240px' }} 
                                     item={itemTemplate} thumbnail={thumbnailTemplate} />
                                 </div> : null}
 
                             <div>
                                 <Divider />
 
-                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                <div className=" w-26rem h-1rem text-xl font-bold">
                                     Name: {selected_product.Name}
                                 </div>
                                 <Divider />
@@ -288,9 +285,9 @@ export default function Item(params: any) {
 
                             <div className="card flex flex-wrap gap-1 p-fluid">
                                 <label className="font-bold "></label>
-                                <div className="flex-auto ml-auto">
+                                <div className="flex-auto ">
                                      <div className="flex-auto">
-                                     <i className="pi pi-cart-plus pr-2" style={{ fontSize: '1.5rem' }}></i>
+                                     {/* <i className="pi pi-cart-plus pr-2" style={{ fontSize: '1.5rem' }}></i> */}
                                     <InputNumber className="pt-1" 
                                      value={ordered_qtty} onValueChange={(e:any) => {
                                         setOrdered_qtty(e.value)
@@ -299,7 +296,7 @@ export default function Item(params: any) {
                                     showButtons 
                                     
                                     buttonLayout="horizontal" 
-                                    style={{ width: '12rem' }} 
+                                    style={{ width: '14rem' }} 
                                     decrementButtonClassName="p-button-indigo-600" 
                                     incrementButtonClassName="p-button-indigo-600" 
                                     
@@ -322,13 +319,14 @@ export default function Item(params: any) {
                                     <Button label="Add" onClick={addToOrder} ></Button>
                                 </div>
                                 <div className="flex-auto">
-                                    <label className="font-bold block mb-1 pt-0"></label>
+                                    <label className="font-bold block mb-2 pt-0 "></label>
                                     <Button label="Check Order" onClick={viewOrder}></Button>
                                 </div>
                             </div>
                         </p>
                     </Dialog>
 
+                    
                     <DataView value={products} itemTemplate={itemTemplate2} layout={layout}
                         // header={header()} --if we want buttons for list and grid
                         paginator rows={18} />

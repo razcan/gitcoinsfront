@@ -19,8 +19,38 @@ import { ScrollPanel } from 'primereact/scrollpanel';
 import { InputNumber } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
 import { useRouter } from 'next/navigation';
+import { Galleria } from 'primereact/galleria';
+
 
 export default function News() {
+
+    const [images, setImages] = useState<any>([]);
+ 
+    const responsiveOptions = [
+        {
+            breakpoint: '991px',
+            numVisible: 4
+        },
+        {
+            breakpoint: '767px',
+            numVisible: 3
+        },
+        {
+            breakpoint: '575px',
+            numVisible: 1
+        }
+    ];
+  
+    const itemTemplate = (item:any) => {
+        return <img src={`http://localhost:3000/coins/download/${item.Photos}`} alt={item.Photos}
+        style={{ width: '100%' }} />
+        
+    }
+    
+    const thumbnailTemplate = (item:any) => {
+        return <img src={`http://localhost:3000/coins/download/${item.Photos}`} alt={item.Photos}
+        style={{ width: '100%' }} />
+      }
 
 
 const router = useRouter();
@@ -35,7 +65,17 @@ const [ordered_qtty, setOrdered_qtty] = useState<any>(1);
 const setProductVisible = (product: any, bol: boolean) => {
   setSelected_product(product);
   setVisible(true);
-  setOrdered_qtty(1);
+ 
+  type imagesType= {
+    Photos: string;
+}
+
+let arrayOfImages: imagesType[] = [];
+
+arrayOfImages.push({Photos: product.Photo1})
+arrayOfImages.push({Photos: product.Photo2})
+
+setImages(arrayOfImages);
 
 }
 
@@ -134,7 +174,7 @@ const gridItem = (product:any) => {
 };
 
 
-const itemTemplate = (product:any, layout:any) => {
+const itemTemplate2 = (product:any, layout:any) => {
   if (!product) {
       return;
   }
@@ -157,15 +197,26 @@ const itemTemplate = (product:any, layout:any) => {
    
                       <div className="card justify-content-center">
 
-                      <Dialog visible={visible} modal={false} style={{ width: '20vw' }}
+                      <Dialog visible={visible} modal={false} style={{ width: '22vw', height: '50vw' }}
                         onHide={() => resetValue()}>
-                        <p className="m-1">
-                            <img src={`http://localhost:3000/coins/download/${selected_product.Photo1}`} alt={selected_product.Photo1} style={{ width: '60%', padding: '10px' }} />
-                            <img src={`http://localhost:3000/coins/download/${selected_product.Photo2}`} alt={selected_product.Photo2} style={{ width: '60%', padding: '10px' }} />
+                        
+                        <p className="ml-6 mr-6">
+                            {/* <img src={`http://localhost:3000/coins/download/${selected_product.Photo1}`} alt={selected_product.Photo1} style={{ width: '40%', padding: '10px' }} />
+                            <img src={`http://localhost:3000/coins/download/${selected_product.Photo2}`} alt={selected_product.Photo2} style={{ width: '40%', padding: '10px' }} /> */}
+                            {images ?
+                                <div className="card pt-1">
+                                    <Galleria 
+                                    value={images} 
+                                    responsiveOptions={responsiveOptions} 
+                                    numVisible={2} 
+                                    style={{ maxWidth: '240px' }} 
+                                    item={itemTemplate} thumbnail={thumbnailTemplate} />
+                                </div> : null}
+
                             <div>
                                 <Divider />
 
-                                <div className=" w-16rem h-1rem text-xl font-bold">
+                                <div className="w-26rem  h-1rem text-xl font-bold">
                                     Name: {selected_product.Name}
                                 </div>
                                 <Divider />
@@ -201,37 +252,46 @@ const itemTemplate = (product:any, layout:any) => {
                                     Price: {selected_product.Price}
                                 </div>
                                 <Divider />
-                                <br></br>
-                                <div className="text-orange-500 w-16rem h-2rem text-3xl font-bold pl-3">
-                                    Value: {selected_product.Price * ordered_qtty}
-                                    <br></br>
+                                <div className="text-orange-500 w-16rem h-2rem text-3xl font-bold pb-6">
+                                    Value:{selected_product.Price * ordered_qtty}
                                 </div>
-
-
-
                             </div>
-                            <div className="card flex flex-wrap gap-2 p-fluid">
-                                <label className="font-bold block"></label>
-                                <div className="flex-auto ml-auto">
 
-                                    {/* <InputNumber allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e) => setOrdered_qtty(e.value)} /> */}
-                                    <i className="pi pi-cart-plus block ml-0" style={{ fontSize: '2rem' }} />
-
-                                    <InputNumber className="ml-0, pl-0" allowEmpty={false} min={1} max={1000} value={ordered_qtty} onValueChange={(e:any) => setOrdered_qtty(e.value)} />
-                                    {/* <InputText placeholder="Search" /> */}
+                            <div className="card flex flex-wrap gap-1 p-fluid">
+                                <label className="font-bold "></label>
+                                <div className="flex-auto ">
+                                     <div className="flex-auto">
+                                     {/* <i className="pi pi-cart-plus pr-2" style={{ fontSize: '1.5rem' }}></i> */}
+                                    <InputNumber className="pt-1" 
+                                     value={ordered_qtty} onValueChange={(e:any) => {
+                                        setOrdered_qtty(e.value)
+                                        selected_product.Value = (selected_product.Price * e.value)
+                                    }} 
+                                    showButtons 
+                                    
+                                    buttonLayout="horizontal" 
+                                    style={{ width: '14rem' }} 
+                                    decrementButtonClassName="p-button-indigo-600" 
+                                    incrementButtonClassName="p-button-indigo-600" 
+                                    
+                                    incrementButtonIcon="pi pi-plus" 
+                                    decrementButtonIcon="pi pi-minus" />
+                                  </div>
 
                                 </div>
                                 <div className="flex-auto">
-                                    <label className="font-bold block mb-2 pt-4"></label>
+                                    <label className="font-bold block mb-1 pt-0"></label>
                                     <Button label="Add" onClick={addToOrder} ></Button>
                                 </div>
                                 <div className="flex-auto">
-                                    <label className="font-bold block mb-2 pt-4"></label>
+                                    <label className="font-bold block mb-1 pt-0 "></label>
                                     <Button label="Check Order" onClick={viewOrder}></Button>
                                 </div>
                             </div>
                         </p>
                     </Dialog>
+
+                    
 
 
                       <div className="grid">
@@ -247,7 +307,7 @@ const itemTemplate = (product:any, layout:any) => {
 
                           </div>
                           <div className="col-11">
-                             <DataView value={products} itemTemplate={itemTemplate} layout={layout}
+                             <DataView value={products} itemTemplate={itemTemplate2} layout={layout}
                               // header={header()} --if we want buttons for list and grid
                               paginator rows={24} />
                           </div>

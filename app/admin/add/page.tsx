@@ -122,6 +122,11 @@ export default function Admin() {
     detail:'You must upload two pictures', life: 3000});
 }
 
+const showErrorAPI = (error:any) => {
+  toast.current.show({severity:'error', summary: 'Error', 
+  detail:error, life: 3000});
+}
+
 
   const onUpload =  ({ files }: any) => {
    setPicturefiles(files);
@@ -177,13 +182,23 @@ fetch("http://localhost:3000/coins/uploadm", requestOptions)
   .then(result => 
     {
       const obj  = JSON.parse(result);
-      if (obj.statusCode = 201){
-        showSuccess(); 
+      if (obj.statusCode == 201){
+        // console.log('validare',obj.statusCode)
+         showSuccess(); 
+         router.push('/admin');
       }
+      if ( parseInt(obj.statusCode , 10) >= 400){
+        //console.log('validare',obj.statusCode)
+        showErrorAPI(obj.message);
+      }
+   
     }
     )
-  .catch(error => console.log('error', error));
-  router.push('/admin');
+  .catch(error => 
+    { 
+      console.log('error', error)
+  });
+  // 
 }
 }
 
@@ -222,21 +237,14 @@ const coin_composition = [
         <div className="col-3 ">
             <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
                 <span className="p-float-label">
-                <InputText 
-                keyfilter="int"  
-                 value={startDate} onChange={(e: any) => setStartDate(e.value)}/>
-                <label htmlFor="start_date">Start Date Year</label>
-                
+                  <InputNumber useGrouping={false} placeholder="Start Date Year" value={startDate} onValueChange={(e:any) => setStartDate(e.value)}/>
+                  <label htmlFor="Start Date Year">Start Date Year</label>
                 </span>
             </div>
             <div className="flex-auto gap-3 xs:gap-1 p-3 xs:p-1">
                <span className="p-float-label">
-                {/* <Calendar inputId="end_date" value={endDate} showIcon showWeek onChange={(e) => setEndDate(e.value)} dateFormat="dd/mm/yy"/> */}
-                {/* <Calendar value={endDate} onChange={(e: any) => setEndDate(e.value)} view="year" dateFormat="yy" /> */}
-                <InputText 
-                keyfilter="int"  
-                 value={endDate} onChange={(e: any) => setEndDate(e.value)}/>
-                <label htmlFor="end_date">End Date Year</label>
+                  <InputNumber useGrouping={false} placeholder="End Date Year" value={endDate} onValueChange={(e:any) => setEndDate(e.value)}/>
+                  <label htmlFor="End Date Year">End Date Year</label>
                 </span>
             </div>
 

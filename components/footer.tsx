@@ -15,7 +15,7 @@ export default function Footer() {
 return (
 
 <div className='footer'>
-© [{year}] coinzzz.ro . All rights reserved. For inquiries, please contact: coins@coins.ro.
+© [{year}] coinzzz.ro . All rights reserved. For inquiries, please contact: coins@coins.ro.<a style={{color: 'white'}} href="http://localhost:3001/conditions">@Terms and condtions</a>
 </div>
 )
 
